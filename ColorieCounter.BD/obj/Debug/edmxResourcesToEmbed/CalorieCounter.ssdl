@@ -1,0 +1,333 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="CalorieCounterModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2008" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+  <EntityType Name="tb_classificationDetail">
+    <Key>
+      <PropertyRef Name="id_classificationDetail" />
+    </Key>
+    <Property Name="id_classificationDetail" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="id_classificationFood" Type="int" Nullable="false" />
+    <Property Name="id_detailFood" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityType Name="tb_classificationFood">
+    <Key>
+      <PropertyRef Name="id_classificationFood" />
+    </Key>
+    <Property Name="id_classificationFood" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="id_food" Type="int" Nullable="false" />
+    <Property Name="descripcion" Type="varchar" MaxLength="100" />
+    <Property Name="activo" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityType Name="tb_cliente">
+    <Key>
+      <PropertyRef Name="id_cliente" />
+    </Key>
+    <Property Name="id_cliente" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="nombre" Type="varchar" MaxLength="50" />
+    <Property Name="apellido" Type="varchar" MaxLength="50" />
+    <Property Name="correo" Type="varchar" MaxLength="50" Nullable="false" />
+    <Property Name="tipoDocumento" Type="varchar" MaxLength="2" />
+    <Property Name="documento" Type="int" />
+    <Property Name="telefono" Type="varchar" MaxLength="20" />
+    <Property Name="activo" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityType Name="tb_columnsFood">
+    <Key>
+      <PropertyRef Name="id_columnsfood" />
+    </Key>
+    <Property Name="id_columnsfood" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="descripcion" Type="int" Nullable="false" />
+    <Property Name="activo" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityType Name="tb_detailFood">
+    <Key>
+      <PropertyRef Name="id_detailFood" />
+    </Key>
+    <Property Name="id_detailFood" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="descripcion" Type="varchar" MaxLength="100" />
+    <Property Name="id_measurementType" Type="int" Nullable="false" />
+    <Property Name="activo" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityType Name="tb_detailFoodColumn">
+    <Key>
+      <PropertyRef Name="id_detailFoodColumn" />
+    </Key>
+    <Property Name="id_detailFoodColumn" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="id_detailFood" Type="int" Nullable="false" />
+    <Property Name="id_columnsfood" Type="int" Nullable="false" />
+    <Property Name="foodValue" Type="int" />
+    <Property Name="activo" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityType Name="tb_food">
+    <Key>
+      <PropertyRef Name="id_food" />
+    </Key>
+    <Property Name="id_food" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="id_foodtype" Type="int" Nullable="false" />
+    <Property Name="id_reference" Type="int" Nullable="false" />
+    <Property Name="description" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="datecreated" Type="datetime" Nullable="false" />
+    <Property Name="active" Type="bit" Nullable="false" />
+  </EntityType>
+  <EntityType Name="tb_foodtype">
+    <Key>
+      <PropertyRef Name="id_foodtype" />
+    </Key>
+    <Property Name="id_foodtype" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="description" Type="nvarchar(max)" />
+    <Property Name="active" Type="bit" Nullable="false" />
+  </EntityType>
+  <EntityType Name="tb_measurementType">
+    <Key>
+      <PropertyRef Name="id_measurementType" />
+    </Key>
+    <Property Name="id_measurementType" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="unit" Type="varchar" MaxLength="10" Nullable="false" />
+    <Property Name="activo" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityType Name="tb_perfil">
+    <Key>
+      <PropertyRef Name="id_perfil" />
+    </Key>
+    <Property Name="id_perfil" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="perfil" Type="varchar" MaxLength="200" Nullable="false" />
+    <Property Name="descripcion" Type="varchar" MaxLength="512" />
+    <Property Name="fechaRegistro" Type="datetime" Nullable="false" />
+    <Property Name="activo" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityType Name="tb_sesion">
+    <Key>
+      <PropertyRef Name="id_sesion" />
+    </Key>
+    <Property Name="id_sesion" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="sesion" Type="varchar" MaxLength="100" Nullable="false" />
+    <Property Name="fechaInicio" Type="datetime" Nullable="false" />
+    <Property Name="fechaUlOper" Type="datetime" Nullable="false" />
+    <Property Name="activo" Type="int" Nullable="false" />
+    <Property Name="id_usuario" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityType Name="tb_usuario">
+    <Key>
+      <PropertyRef Name="id_usuario" />
+    </Key>
+    <Property Name="id_usuario" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="usuario" Type="varchar" MaxLength="200" Nullable="false" />
+    <Property Name="usuarioCorreo" Type="varchar" MaxLength="200" />
+    <Property Name="usuarioFacebook" Type="varchar" MaxLength="200" />
+    <Property Name="usuarioTwiter" Type="varchar" MaxLength="200" />
+    <Property Name="contrasena" Type="varchar" MaxLength="50" />
+    <Property Name="fechaRegistro" Type="datetime" Nullable="false" />
+    <Property Name="id_cliente" Type="int" Nullable="false" />
+    <Property Name="activo" Type="int" Nullable="false" />
+    <Property Name="validateToken" Type="varchar" MaxLength="50" />
+  </EntityType>
+  <EntityType Name="tb_usuarioPerfil">
+    <Key>
+      <PropertyRef Name="id_usuarioPerfil" />
+    </Key>
+    <Property Name="id_usuarioPerfil" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="id_usuario" Type="int" Nullable="false" />
+    <Property Name="id_perfil" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityType Name="sysdiagrams">
+    <Key>
+      <PropertyRef Name="diagram_id" />
+    </Key>
+    <Property Name="name" Type="nvarchar" MaxLength="128" Nullable="false" />
+    <Property Name="principal_id" Type="int" Nullable="false" />
+    <Property Name="diagram_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="version" Type="int" />
+    <Property Name="definition" Type="varbinary(max)" />
+  </EntityType>
+  <Association Name="FK_tb_classificationFoodtb_classificationDetail">
+    <End Role="tb_classificationFood" Type="Self.tb_classificationFood" Multiplicity="1" />
+    <End Role="tb_classificationDetail" Type="Self.tb_classificationDetail" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="tb_classificationFood">
+        <PropertyRef Name="id_classificationFood" />
+      </Principal>
+      <Dependent Role="tb_classificationDetail">
+        <PropertyRef Name="id_classificationFood" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_tb_detailFood_tb_measurementType">
+    <End Role="tb_measurementType" Type="Self.tb_measurementType" Multiplicity="1" />
+    <End Role="tb_detailFood" Type="Self.tb_detailFood" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="tb_measurementType">
+        <PropertyRef Name="id_measurementType" />
+      </Principal>
+      <Dependent Role="tb_detailFood">
+        <PropertyRef Name="id_measurementType" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_tb_detailFoodColumn_tb_columnsFood">
+    <End Role="tb_columnsFood" Type="Self.tb_columnsFood" Multiplicity="1" />
+    <End Role="tb_detailFoodColumn" Type="Self.tb_detailFoodColumn" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="tb_columnsFood">
+        <PropertyRef Name="id_columnsfood" />
+      </Principal>
+      <Dependent Role="tb_detailFoodColumn">
+        <PropertyRef Name="id_columnsfood" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_tb_detailFoodtb_classificationDetail">
+    <End Role="tb_detailFood" Type="Self.tb_detailFood" Multiplicity="1" />
+    <End Role="tb_classificationDetail" Type="Self.tb_classificationDetail" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="tb_detailFood">
+        <PropertyRef Name="id_detailFood" />
+      </Principal>
+      <Dependent Role="tb_classificationDetail">
+        <PropertyRef Name="id_detailFood" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_tb_detailFoodtb_detailFoodColumn">
+    <End Role="tb_detailFood" Type="Self.tb_detailFood" Multiplicity="1" />
+    <End Role="tb_detailFoodColumn" Type="Self.tb_detailFoodColumn" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="tb_detailFood">
+        <PropertyRef Name="id_detailFood" />
+      </Principal>
+      <Dependent Role="tb_detailFoodColumn">
+        <PropertyRef Name="id_detailFood" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_tb_food_tb_foodtype">
+    <End Role="tb_foodtype" Type="Self.tb_foodtype" Multiplicity="1" />
+    <End Role="tb_food" Type="Self.tb_food" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="tb_foodtype">
+        <PropertyRef Name="id_foodtype" />
+      </Principal>
+      <Dependent Role="tb_food">
+        <PropertyRef Name="id_foodtype" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_tb_foodtb_classificationFood">
+    <End Role="tb_food" Type="Self.tb_food" Multiplicity="1" />
+    <End Role="tb_classificationFood" Type="Self.tb_classificationFood" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="tb_food">
+        <PropertyRef Name="id_food" />
+      </Principal>
+      <Dependent Role="tb_classificationFood">
+        <PropertyRef Name="id_food" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_tb_perfiltb_usuarioPerfil">
+    <End Role="tb_perfil" Type="Self.tb_perfil" Multiplicity="1" />
+    <End Role="tb_usuarioPerfil" Type="Self.tb_usuarioPerfil" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="tb_perfil">
+        <PropertyRef Name="id_perfil" />
+      </Principal>
+      <Dependent Role="tb_usuarioPerfil">
+        <PropertyRef Name="id_perfil" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_tb_usuairotb_usuarioPerfil">
+    <End Role="tb_usuario" Type="Self.tb_usuario" Multiplicity="1" />
+    <End Role="tb_usuarioPerfil" Type="Self.tb_usuarioPerfil" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="tb_usuario">
+        <PropertyRef Name="id_usuario" />
+      </Principal>
+      <Dependent Role="tb_usuarioPerfil">
+        <PropertyRef Name="id_usuario" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_tb_usuariotb_cliente">
+    <End Role="tb_cliente" Type="Self.tb_cliente" Multiplicity="1" />
+    <End Role="tb_usuario" Type="Self.tb_usuario" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="tb_cliente">
+        <PropertyRef Name="id_cliente" />
+      </Principal>
+      <Dependent Role="tb_usuario">
+        <PropertyRef Name="id_cliente" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_tb_usuariotb_sesion">
+    <End Role="tb_usuario" Type="Self.tb_usuario" Multiplicity="1" />
+    <End Role="tb_sesion" Type="Self.tb_sesion" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="tb_usuario">
+        <PropertyRef Name="id_usuario" />
+      </Principal>
+      <Dependent Role="tb_sesion">
+        <PropertyRef Name="id_usuario" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityContainer Name="CalorieCounterModelStoreContainer">
+    <EntitySet Name="tb_classificationDetail" EntityType="Self.tb_classificationDetail" Schema="cc" store:Type="Tables" />
+    <EntitySet Name="tb_classificationFood" EntityType="Self.tb_classificationFood" Schema="cc" store:Type="Tables" />
+    <EntitySet Name="tb_cliente" EntityType="Self.tb_cliente" Schema="cc" store:Type="Tables" />
+    <EntitySet Name="tb_columnsFood" EntityType="Self.tb_columnsFood" Schema="cc" store:Type="Tables" />
+    <EntitySet Name="tb_detailFood" EntityType="Self.tb_detailFood" Schema="cc" store:Type="Tables" />
+    <EntitySet Name="tb_detailFoodColumn" EntityType="Self.tb_detailFoodColumn" Schema="cc" store:Type="Tables" />
+    <EntitySet Name="tb_food" EntityType="Self.tb_food" Schema="cc" store:Type="Tables" />
+    <EntitySet Name="tb_foodtype" EntityType="Self.tb_foodtype" Schema="cc" store:Type="Tables" />
+    <EntitySet Name="tb_measurementType" EntityType="Self.tb_measurementType" Schema="cc" store:Type="Tables" />
+    <EntitySet Name="tb_perfil" EntityType="Self.tb_perfil" Schema="cc" store:Type="Tables" />
+    <EntitySet Name="tb_sesion" EntityType="Self.tb_sesion" Schema="cc" store:Type="Tables" />
+    <EntitySet Name="tb_usuario" EntityType="Self.tb_usuario" Schema="cc" store:Type="Tables" />
+    <EntitySet Name="tb_usuarioPerfil" EntityType="Self.tb_usuarioPerfil" Schema="cc" store:Type="Tables" />
+    <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" Schema="dbo" store:Type="Tables" />
+    <AssociationSet Name="FK_tb_classificationFoodtb_classificationDetail" Association="Self.FK_tb_classificationFoodtb_classificationDetail">
+      <End Role="tb_classificationFood" EntitySet="tb_classificationFood" />
+      <End Role="tb_classificationDetail" EntitySet="tb_classificationDetail" />
+    </AssociationSet>
+    <AssociationSet Name="FK_tb_detailFood_tb_measurementType" Association="Self.FK_tb_detailFood_tb_measurementType">
+      <End Role="tb_measurementType" EntitySet="tb_measurementType" />
+      <End Role="tb_detailFood" EntitySet="tb_detailFood" />
+    </AssociationSet>
+    <AssociationSet Name="FK_tb_detailFoodColumn_tb_columnsFood" Association="Self.FK_tb_detailFoodColumn_tb_columnsFood">
+      <End Role="tb_columnsFood" EntitySet="tb_columnsFood" />
+      <End Role="tb_detailFoodColumn" EntitySet="tb_detailFoodColumn" />
+    </AssociationSet>
+    <AssociationSet Name="FK_tb_detailFoodtb_classificationDetail" Association="Self.FK_tb_detailFoodtb_classificationDetail">
+      <End Role="tb_detailFood" EntitySet="tb_detailFood" />
+      <End Role="tb_classificationDetail" EntitySet="tb_classificationDetail" />
+    </AssociationSet>
+    <AssociationSet Name="FK_tb_detailFoodtb_detailFoodColumn" Association="Self.FK_tb_detailFoodtb_detailFoodColumn">
+      <End Role="tb_detailFood" EntitySet="tb_detailFood" />
+      <End Role="tb_detailFoodColumn" EntitySet="tb_detailFoodColumn" />
+    </AssociationSet>
+    <AssociationSet Name="FK_tb_food_tb_foodtype" Association="Self.FK_tb_food_tb_foodtype">
+      <End Role="tb_foodtype" EntitySet="tb_foodtype" />
+      <End Role="tb_food" EntitySet="tb_food" />
+    </AssociationSet>
+    <AssociationSet Name="FK_tb_foodtb_classificationFood" Association="Self.FK_tb_foodtb_classificationFood">
+      <End Role="tb_food" EntitySet="tb_food" />
+      <End Role="tb_classificationFood" EntitySet="tb_classificationFood" />
+    </AssociationSet>
+    <AssociationSet Name="FK_tb_perfiltb_usuarioPerfil" Association="Self.FK_tb_perfiltb_usuarioPerfil">
+      <End Role="tb_perfil" EntitySet="tb_perfil" />
+      <End Role="tb_usuarioPerfil" EntitySet="tb_usuarioPerfil" />
+    </AssociationSet>
+    <AssociationSet Name="FK_tb_usuairotb_usuarioPerfil" Association="Self.FK_tb_usuairotb_usuarioPerfil">
+      <End Role="tb_usuario" EntitySet="tb_usuario" />
+      <End Role="tb_usuarioPerfil" EntitySet="tb_usuarioPerfil" />
+    </AssociationSet>
+    <AssociationSet Name="FK_tb_usuariotb_cliente" Association="Self.FK_tb_usuariotb_cliente">
+      <End Role="tb_cliente" EntitySet="tb_cliente" />
+      <End Role="tb_usuario" EntitySet="tb_usuario" />
+    </AssociationSet>
+    <AssociationSet Name="FK_tb_usuariotb_sesion" Association="Self.FK_tb_usuariotb_sesion">
+      <End Role="tb_usuario" EntitySet="tb_usuario" />
+      <End Role="tb_sesion" EntitySet="tb_sesion" />
+    </AssociationSet>
+  </EntityContainer>
+</Schema>

@@ -1,0 +1,355 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="CalorieCounterModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+  <EntityContainer Name="CalorieCounterEntities" annotation:LazyLoadingEnabled="true">
+    <EntitySet Name="tb_classificationDetail" EntityType="CalorieCounterModel.tb_classificationDetail" />
+    <EntitySet Name="tb_classificationFood" EntityType="CalorieCounterModel.tb_classificationFood" />
+    <EntitySet Name="tb_cliente" EntityType="CalorieCounterModel.tb_cliente" />
+    <EntitySet Name="tb_columnsFood" EntityType="CalorieCounterModel.tb_columnsFood" />
+    <EntitySet Name="tb_detailFood" EntityType="CalorieCounterModel.tb_detailFood" />
+    <EntitySet Name="tb_detailFoodColumn" EntityType="CalorieCounterModel.tb_detailFoodColumn" />
+    <EntitySet Name="tb_food" EntityType="CalorieCounterModel.tb_food" />
+    <EntitySet Name="tb_foodtype" EntityType="CalorieCounterModel.tb_foodtype" />
+    <EntitySet Name="tb_measurementType" EntityType="CalorieCounterModel.tb_measurementType" />
+    <EntitySet Name="tb_perfil" EntityType="CalorieCounterModel.tb_perfil" />
+    <EntitySet Name="tb_sesion" EntityType="CalorieCounterModel.tb_sesion" />
+    <EntitySet Name="tb_usuario" EntityType="CalorieCounterModel.tb_usuario" />
+    <EntitySet Name="tb_usuarioPerfil" EntityType="CalorieCounterModel.tb_usuarioPerfil" />
+    <EntitySet Name="sysdiagrams" EntityType="CalorieCounterModel.sysdiagram" />
+    <AssociationSet Name="FK_tb_classificationFoodtb_classificationDetail" Association="CalorieCounterModel.FK_tb_classificationFoodtb_classificationDetail">
+      <End Role="tb_classificationFood" EntitySet="tb_classificationFood" />
+      <End Role="tb_classificationDetail" EntitySet="tb_classificationDetail" />
+    </AssociationSet>
+    <AssociationSet Name="FK_tb_detailFoodtb_classificationDetail" Association="CalorieCounterModel.FK_tb_detailFoodtb_classificationDetail">
+      <End Role="tb_detailFood" EntitySet="tb_detailFood" />
+      <End Role="tb_classificationDetail" EntitySet="tb_classificationDetail" />
+    </AssociationSet>
+    <AssociationSet Name="FK_tb_foodtb_classificationFood" Association="CalorieCounterModel.FK_tb_foodtb_classificationFood">
+      <End Role="tb_food" EntitySet="tb_food" />
+      <End Role="tb_classificationFood" EntitySet="tb_classificationFood" />
+    </AssociationSet>
+    <AssociationSet Name="FK_tb_usuariotb_cliente" Association="CalorieCounterModel.FK_tb_usuariotb_cliente">
+      <End Role="tb_cliente" EntitySet="tb_cliente" />
+      <End Role="tb_usuario" EntitySet="tb_usuario" />
+    </AssociationSet>
+    <AssociationSet Name="FK_tb_detailFoodColumn_tb_columnsFood" Association="CalorieCounterModel.FK_tb_detailFoodColumn_tb_columnsFood">
+      <End Role="tb_columnsFood" EntitySet="tb_columnsFood" />
+      <End Role="tb_detailFoodColumn" EntitySet="tb_detailFoodColumn" />
+    </AssociationSet>
+    <AssociationSet Name="FK_tb_detailFood_tb_measurementType" Association="CalorieCounterModel.FK_tb_detailFood_tb_measurementType">
+      <End Role="tb_measurementType" EntitySet="tb_measurementType" />
+      <End Role="tb_detailFood" EntitySet="tb_detailFood" />
+    </AssociationSet>
+    <AssociationSet Name="FK_tb_detailFoodtb_detailFoodColumn" Association="CalorieCounterModel.FK_tb_detailFoodtb_detailFoodColumn">
+      <End Role="tb_detailFood" EntitySet="tb_detailFood" />
+      <End Role="tb_detailFoodColumn" EntitySet="tb_detailFoodColumn" />
+    </AssociationSet>
+    <AssociationSet Name="FK_tb_food_tb_foodtype" Association="CalorieCounterModel.FK_tb_food_tb_foodtype">
+      <End Role="tb_foodtype" EntitySet="tb_foodtype" />
+      <End Role="tb_food" EntitySet="tb_food" />
+    </AssociationSet>
+    <AssociationSet Name="FK_tb_perfiltb_usuarioPerfil" Association="CalorieCounterModel.FK_tb_perfiltb_usuarioPerfil">
+      <End Role="tb_perfil" EntitySet="tb_perfil" />
+      <End Role="tb_usuarioPerfil" EntitySet="tb_usuarioPerfil" />
+    </AssociationSet>
+    <AssociationSet Name="FK_tb_usuariotb_sesion" Association="CalorieCounterModel.FK_tb_usuariotb_sesion">
+      <End Role="tb_usuario" EntitySet="tb_usuario" />
+      <End Role="tb_sesion" EntitySet="tb_sesion" />
+    </AssociationSet>
+    <AssociationSet Name="FK_tb_usuairotb_usuarioPerfil" Association="CalorieCounterModel.FK_tb_usuairotb_usuarioPerfil">
+      <End Role="tb_usuario" EntitySet="tb_usuario" />
+      <End Role="tb_usuarioPerfil" EntitySet="tb_usuarioPerfil" />
+    </AssociationSet>
+  </EntityContainer>
+  <EntityType Name="tb_classificationDetail">
+    <Key>
+      <PropertyRef Name="id_classificationDetail" />
+    </Key>
+    <Property Name="id_classificationDetail" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="id_classificationFood" Type="Int32" Nullable="false" />
+    <Property Name="id_detailFood" Type="Int32" Nullable="false" />
+    <NavigationProperty Name="tb_classificationFood" Relationship="CalorieCounterModel.FK_tb_classificationFoodtb_classificationDetail" FromRole="tb_classificationDetail" ToRole="tb_classificationFood" />
+    <NavigationProperty Name="tb_detailFood" Relationship="CalorieCounterModel.FK_tb_detailFoodtb_classificationDetail" FromRole="tb_classificationDetail" ToRole="tb_detailFood" />
+  </EntityType>
+  <EntityType Name="tb_classificationFood">
+    <Key>
+      <PropertyRef Name="id_classificationFood" />
+    </Key>
+    <Property Name="id_classificationFood" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="id_food" Type="Int32" Nullable="false" />
+    <Property Name="descripcion" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+    <Property Name="activo" Type="Int32" Nullable="false" />
+    <NavigationProperty Name="tb_classificationDetail" Relationship="CalorieCounterModel.FK_tb_classificationFoodtb_classificationDetail" FromRole="tb_classificationFood" ToRole="tb_classificationDetail" />
+    <NavigationProperty Name="tb_food" Relationship="CalorieCounterModel.FK_tb_foodtb_classificationFood" FromRole="tb_classificationFood" ToRole="tb_food" />
+  </EntityType>
+  <EntityType Name="tb_cliente">
+    <Key>
+      <PropertyRef Name="id_cliente" />
+    </Key>
+    <Property Name="id_cliente" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="nombre" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="apellido" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="correo" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="tipoDocumento" Type="String" MaxLength="2" FixedLength="false" Unicode="false" />
+    <Property Name="documento" Type="Int32" />
+    <Property Name="telefono" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+    <Property Name="activo" Type="Int32" Nullable="false" />
+    <NavigationProperty Name="tb_usuario" Relationship="CalorieCounterModel.FK_tb_usuariotb_cliente" FromRole="tb_cliente" ToRole="tb_usuario" />
+  </EntityType>
+  <EntityType Name="tb_columnsFood">
+    <Key>
+      <PropertyRef Name="id_columnsfood" />
+    </Key>
+    <Property Name="id_columnsfood" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="descripcion" Type="Int32" Nullable="false" />
+    <Property Name="activo" Type="Int32" Nullable="false" />
+    <NavigationProperty Name="tb_detailFoodColumn" Relationship="CalorieCounterModel.FK_tb_detailFoodColumn_tb_columnsFood" FromRole="tb_columnsFood" ToRole="tb_detailFoodColumn" />
+  </EntityType>
+  <EntityType Name="tb_detailFood">
+    <Key>
+      <PropertyRef Name="id_detailFood" />
+    </Key>
+    <Property Name="id_detailFood" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="descripcion" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+    <Property Name="id_measurementType" Type="Int32" Nullable="false" />
+    <Property Name="activo" Type="Int32" Nullable="false" />
+    <NavigationProperty Name="tb_classificationDetail" Relationship="CalorieCounterModel.FK_tb_detailFoodtb_classificationDetail" FromRole="tb_detailFood" ToRole="tb_classificationDetail" />
+    <NavigationProperty Name="tb_measurementType" Relationship="CalorieCounterModel.FK_tb_detailFood_tb_measurementType" FromRole="tb_detailFood" ToRole="tb_measurementType" />
+    <NavigationProperty Name="tb_detailFoodColumn" Relationship="CalorieCounterModel.FK_tb_detailFoodtb_detailFoodColumn" FromRole="tb_detailFood" ToRole="tb_detailFoodColumn" />
+  </EntityType>
+  <EntityType Name="tb_detailFoodColumn">
+    <Key>
+      <PropertyRef Name="id_detailFoodColumn" />
+    </Key>
+    <Property Name="id_detailFoodColumn" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="id_detailFood" Type="Int32" Nullable="false" />
+    <Property Name="id_columnsfood" Type="Int32" Nullable="false" />
+    <Property Name="foodValue" Type="Int32" />
+    <Property Name="activo" Type="Int32" Nullable="false" />
+    <NavigationProperty Name="tb_columnsFood" Relationship="CalorieCounterModel.FK_tb_detailFoodColumn_tb_columnsFood" FromRole="tb_detailFoodColumn" ToRole="tb_columnsFood" />
+    <NavigationProperty Name="tb_detailFood" Relationship="CalorieCounterModel.FK_tb_detailFoodtb_detailFoodColumn" FromRole="tb_detailFoodColumn" ToRole="tb_detailFood" />
+  </EntityType>
+  <EntityType Name="tb_food">
+    <Key>
+      <PropertyRef Name="id_food" />
+    </Key>
+    <Property Name="id_food" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="id_foodtype" Type="Int32" Nullable="false" />
+    <Property Name="id_reference" Type="Int32" Nullable="false" />
+    <Property Name="description" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="datecreated" Type="DateTime" Nullable="false" Precision="3" />
+    <Property Name="active" Type="Boolean" Nullable="false" />
+    <NavigationProperty Name="tb_classificationFood" Relationship="CalorieCounterModel.FK_tb_foodtb_classificationFood" FromRole="tb_food" ToRole="tb_classificationFood" />
+    <NavigationProperty Name="tb_foodtype" Relationship="CalorieCounterModel.FK_tb_food_tb_foodtype" FromRole="tb_food" ToRole="tb_foodtype" />
+  </EntityType>
+  <EntityType Name="tb_foodtype">
+    <Key>
+      <PropertyRef Name="id_foodtype" />
+    </Key>
+    <Property Name="id_foodtype" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="description" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="active" Type="Boolean" Nullable="false" />
+    <NavigationProperty Name="tb_food" Relationship="CalorieCounterModel.FK_tb_food_tb_foodtype" FromRole="tb_foodtype" ToRole="tb_food" />
+  </EntityType>
+  <EntityType Name="tb_measurementType">
+    <Key>
+      <PropertyRef Name="id_measurementType" />
+    </Key>
+    <Property Name="id_measurementType" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="unit" Type="String" Nullable="false" MaxLength="10" FixedLength="false" Unicode="false" />
+    <Property Name="activo" Type="Int32" Nullable="false" />
+    <NavigationProperty Name="tb_detailFood" Relationship="CalorieCounterModel.FK_tb_detailFood_tb_measurementType" FromRole="tb_measurementType" ToRole="tb_detailFood" />
+  </EntityType>
+  <EntityType Name="tb_perfil">
+    <Key>
+      <PropertyRef Name="id_perfil" />
+    </Key>
+    <Property Name="id_perfil" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="perfil" Type="String" Nullable="false" MaxLength="200" FixedLength="false" Unicode="false" />
+    <Property Name="descripcion" Type="String" MaxLength="512" FixedLength="false" Unicode="false" />
+    <Property Name="fechaRegistro" Type="DateTime" Nullable="false" Precision="3" />
+    <Property Name="activo" Type="Int32" Nullable="false" />
+    <NavigationProperty Name="tb_usuarioPerfil" Relationship="CalorieCounterModel.FK_tb_perfiltb_usuarioPerfil" FromRole="tb_perfil" ToRole="tb_usuarioPerfil" />
+  </EntityType>
+  <EntityType Name="tb_sesion">
+    <Key>
+      <PropertyRef Name="id_sesion" />
+    </Key>
+    <Property Name="id_sesion" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="sesion" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
+    <Property Name="fechaInicio" Type="DateTime" Nullable="false" Precision="3" />
+    <Property Name="fechaUlOper" Type="DateTime" Nullable="false" Precision="3" />
+    <Property Name="activo" Type="Int32" Nullable="false" />
+    <Property Name="id_usuario" Type="Int32" Nullable="false" />
+    <NavigationProperty Name="tb_usuario" Relationship="CalorieCounterModel.FK_tb_usuariotb_sesion" FromRole="tb_sesion" ToRole="tb_usuario" />
+  </EntityType>
+  <EntityType Name="tb_usuario">
+    <Key>
+      <PropertyRef Name="id_usuario" />
+    </Key>
+    <Property Name="id_usuario" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="usuario" Type="String" Nullable="false" MaxLength="200" FixedLength="false" Unicode="false" />
+    <Property Name="usuarioCorreo" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
+    <Property Name="usuarioFacebook" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
+    <Property Name="usuarioTwiter" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
+    <Property Name="contrasena" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="fechaRegistro" Type="DateTime" Nullable="false" Precision="3" />
+    <Property Name="id_cliente" Type="Int32" Nullable="false" />
+    <Property Name="activo" Type="Int32" Nullable="false" />
+    <Property Name="validateToken" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <NavigationProperty Name="tb_cliente" Relationship="CalorieCounterModel.FK_tb_usuariotb_cliente" FromRole="tb_usuario" ToRole="tb_cliente" />
+    <NavigationProperty Name="tb_sesion" Relationship="CalorieCounterModel.FK_tb_usuariotb_sesion" FromRole="tb_usuario" ToRole="tb_sesion" />
+    <NavigationProperty Name="tb_usuarioPerfil" Relationship="CalorieCounterModel.FK_tb_usuairotb_usuarioPerfil" FromRole="tb_usuario" ToRole="tb_usuarioPerfil" />
+  </EntityType>
+  <EntityType Name="tb_usuarioPerfil">
+    <Key>
+      <PropertyRef Name="id_usuarioPerfil" />
+    </Key>
+    <Property Name="id_usuarioPerfil" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="id_usuario" Type="Int32" Nullable="false" />
+    <Property Name="id_perfil" Type="Int32" Nullable="false" />
+    <NavigationProperty Name="tb_perfil" Relationship="CalorieCounterModel.FK_tb_perfiltb_usuarioPerfil" FromRole="tb_usuarioPerfil" ToRole="tb_perfil" />
+    <NavigationProperty Name="tb_usuario" Relationship="CalorieCounterModel.FK_tb_usuairotb_usuarioPerfil" FromRole="tb_usuarioPerfil" ToRole="tb_usuario" />
+  </EntityType>
+  <EntityType Name="sysdiagram">
+    <Key>
+      <PropertyRef Name="diagram_id" />
+    </Key>
+    <Property Name="name" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
+    <Property Name="principal_id" Type="Int32" Nullable="false" />
+    <Property Name="diagram_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="version" Type="Int32" />
+    <Property Name="definition" Type="Binary" MaxLength="Max" FixedLength="false" />
+  </EntityType>
+  <Association Name="FK_tb_classificationFoodtb_classificationDetail">
+    <End Type="CalorieCounterModel.tb_classificationFood" Role="tb_classificationFood" Multiplicity="1" />
+    <End Type="CalorieCounterModel.tb_classificationDetail" Role="tb_classificationDetail" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="tb_classificationFood">
+        <PropertyRef Name="id_classificationFood" />
+      </Principal>
+      <Dependent Role="tb_classificationDetail">
+        <PropertyRef Name="id_classificationFood" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_tb_detailFoodtb_classificationDetail">
+    <End Type="CalorieCounterModel.tb_detailFood" Role="tb_detailFood" Multiplicity="1" />
+    <End Type="CalorieCounterModel.tb_classificationDetail" Role="tb_classificationDetail" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="tb_detailFood">
+        <PropertyRef Name="id_detailFood" />
+      </Principal>
+      <Dependent Role="tb_classificationDetail">
+        <PropertyRef Name="id_detailFood" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_tb_foodtb_classificationFood">
+    <End Type="CalorieCounterModel.tb_food" Role="tb_food" Multiplicity="1" />
+    <End Type="CalorieCounterModel.tb_classificationFood" Role="tb_classificationFood" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="tb_food">
+        <PropertyRef Name="id_food" />
+      </Principal>
+      <Dependent Role="tb_classificationFood">
+        <PropertyRef Name="id_food" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_tb_usuariotb_cliente">
+    <End Type="CalorieCounterModel.tb_cliente" Role="tb_cliente" Multiplicity="1" />
+    <End Type="CalorieCounterModel.tb_usuario" Role="tb_usuario" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="tb_cliente">
+        <PropertyRef Name="id_cliente" />
+      </Principal>
+      <Dependent Role="tb_usuario">
+        <PropertyRef Name="id_cliente" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_tb_detailFoodColumn_tb_columnsFood">
+    <End Type="CalorieCounterModel.tb_columnsFood" Role="tb_columnsFood" Multiplicity="1" />
+    <End Type="CalorieCounterModel.tb_detailFoodColumn" Role="tb_detailFoodColumn" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="tb_columnsFood">
+        <PropertyRef Name="id_columnsfood" />
+      </Principal>
+      <Dependent Role="tb_detailFoodColumn">
+        <PropertyRef Name="id_columnsfood" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_tb_detailFood_tb_measurementType">
+    <End Type="CalorieCounterModel.tb_measurementType" Role="tb_measurementType" Multiplicity="1" />
+    <End Type="CalorieCounterModel.tb_detailFood" Role="tb_detailFood" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="tb_measurementType">
+        <PropertyRef Name="id_measurementType" />
+      </Principal>
+      <Dependent Role="tb_detailFood">
+        <PropertyRef Name="id_measurementType" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_tb_detailFoodtb_detailFoodColumn">
+    <End Type="CalorieCounterModel.tb_detailFood" Role="tb_detailFood" Multiplicity="1" />
+    <End Type="CalorieCounterModel.tb_detailFoodColumn" Role="tb_detailFoodColumn" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="tb_detailFood">
+        <PropertyRef Name="id_detailFood" />
+      </Principal>
+      <Dependent Role="tb_detailFoodColumn">
+        <PropertyRef Name="id_detailFood" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_tb_food_tb_foodtype">
+    <End Type="CalorieCounterModel.tb_foodtype" Role="tb_foodtype" Multiplicity="1" />
+    <End Type="CalorieCounterModel.tb_food" Role="tb_food" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="tb_foodtype">
+        <PropertyRef Name="id_foodtype" />
+      </Principal>
+      <Dependent Role="tb_food">
+        <PropertyRef Name="id_foodtype" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_tb_perfiltb_usuarioPerfil">
+    <End Type="CalorieCounterModel.tb_perfil" Role="tb_perfil" Multiplicity="1" />
+    <End Type="CalorieCounterModel.tb_usuarioPerfil" Role="tb_usuarioPerfil" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="tb_perfil">
+        <PropertyRef Name="id_perfil" />
+      </Principal>
+      <Dependent Role="tb_usuarioPerfil">
+        <PropertyRef Name="id_perfil" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_tb_usuariotb_sesion">
+    <End Type="CalorieCounterModel.tb_usuario" Role="tb_usuario" Multiplicity="1" />
+    <End Type="CalorieCounterModel.tb_sesion" Role="tb_sesion" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="tb_usuario">
+        <PropertyRef Name="id_usuario" />
+      </Principal>
+      <Dependent Role="tb_sesion">
+        <PropertyRef Name="id_usuario" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_tb_usuairotb_usuarioPerfil">
+    <End Type="CalorieCounterModel.tb_usuario" Role="tb_usuario" Multiplicity="1" />
+    <End Type="CalorieCounterModel.tb_usuarioPerfil" Role="tb_usuarioPerfil" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="tb_usuario">
+        <PropertyRef Name="id_usuario" />
+      </Principal>
+      <Dependent Role="tb_usuarioPerfil">
+        <PropertyRef Name="id_usuario" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+</Schema>

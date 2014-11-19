@@ -1,0 +1,46 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 2013
+VisualStudioVersion = 12.0.30501.0
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CalorieCounter.BD", "ColorieCounter.BD\CalorieCounter.BD.csproj", "{8500F0DF-E33F-4304-9283-FFD37C403D9A}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CalorieCounter.ServicioBD", "CalorieCounter.ServicioBD\CalorieCounter.ServicioBD.csproj", "{9F2BEC04-597B-4C81-B19F-05FE26E309ED}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CalorieCounter.Controlador", "CalorieCounter.Controlador\CalorieCounter.Controlador.csproj", "{FFBD4A22-9F69-4655-8B5B-D6B8B071C686}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CalorieCounter.Objetos", "CalorieCounter.Objetos\CalorieCounter.Objetos.csproj", "{4143BFE6-131E-4766-9CBB-5E60FFADA251}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CalorieCounter.WS", "CalorieCounter.WS\CalorieCounter.WS.csproj", "{32DFFCD0-86E2-45BD-B2F5-F4A4F62AF82D}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{8500F0DF-E33F-4304-9283-FFD37C403D9A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8500F0DF-E33F-4304-9283-FFD37C403D9A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8500F0DF-E33F-4304-9283-FFD37C403D9A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8500F0DF-E33F-4304-9283-FFD37C403D9A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9F2BEC04-597B-4C81-B19F-05FE26E309ED}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9F2BEC04-597B-4C81-B19F-05FE26E309ED}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9F2BEC04-597B-4C81-B19F-05FE26E309ED}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9F2BEC04-597B-4C81-B19F-05FE26E309ED}.Release|Any CPU.Build.0 = Release|Any CPU
+		{FFBD4A22-9F69-4655-8B5B-D6B8B071C686}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{FFBD4A22-9F69-4655-8B5B-D6B8B071C686}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{FFBD4A22-9F69-4655-8B5B-D6B8B071C686}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{FFBD4A22-9F69-4655-8B5B-D6B8B071C686}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4143BFE6-131E-4766-9CBB-5E60FFADA251}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4143BFE6-131E-4766-9CBB-5E60FFADA251}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4143BFE6-131E-4766-9CBB-5E60FFADA251}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4143BFE6-131E-4766-9CBB-5E60FFADA251}.Release|Any CPU.Build.0 = Release|Any CPU
+		{32DFFCD0-86E2-45BD-B2F5-F4A4F62AF82D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{32DFFCD0-86E2-45BD-B2F5-F4A4F62AF82D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{32DFFCD0-86E2-45BD-B2F5-F4A4F62AF82D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{32DFFCD0-86E2-45BD-B2F5-F4A4F62AF82D}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal

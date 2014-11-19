@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="cb4f2b372718421b921adea61d7eb3b7" Name="Diagram1" ZoomLevel="85">
+        <EntityTypeShape EntityType="CalorieCounterModel.tb_classificationDetail" Width="2" PointX="10" PointY="5.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="CalorieCounterModel.tb_classificationFood" Width="2.25" PointX="12.875" PointY="5" IsExpanded="true" />
+        <EntityTypeShape EntityType="CalorieCounterModel.tb_cliente" Width="1.5" PointX="0.75" PointY="3" IsExpanded="false" />
+        <EntityTypeShape EntityType="CalorieCounterModel.tb_columnsFood" Width="1.875" PointX="7.375" PointY="5" IsExpanded="false" />
+        <EntityTypeShape EntityType="CalorieCounterModel.tb_detailFood" Width="1.5" PointX="10.625" PointY="2.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="CalorieCounterModel.tb_detailFoodColumn" Width="2.125" PointX="7.375" PointY="2.75" IsExpanded="false" />
+        <EntityTypeShape EntityType="CalorieCounterModel.tb_food" Width="1.5" PointX="12" PointY="6.625" IsExpanded="false" />
+        <EntityTypeShape EntityType="CalorieCounterModel.tb_foodtype" Width="1.5" PointX="8.5" PointY="6.75" IsExpanded="false" />
+        <EntityTypeShape EntityType="CalorieCounterModel.tb_measurementType" Width="1.875" PointX="13.125" PointY="2.75" IsExpanded="false" />
+        <EntityTypeShape EntityType="CalorieCounterModel.tb_perfil" Width="1.5" PointX="4.625" PointY="4.875" IsExpanded="false" />
+        <EntityTypeShape EntityType="CalorieCounterModel.tb_sesion" Width="1.5" PointX="1.75" PointY="6" IsExpanded="false" />
+        <EntityTypeShape EntityType="CalorieCounterModel.tb_usuario" Width="1.5" PointX="3" PointY="3" IsExpanded="false" />
+        <EntityTypeShape EntityType="CalorieCounterModel.tb_usuarioPerfil" Width="1.5" PointX="5.25" PointY="3" IsExpanded="false" />
+        <EntityTypeShape EntityType="CalorieCounterModel.sysdiagram" Width="1.5" PointX="0.75" PointY="11" IsExpanded="false" />
+        <AssociationConnector Association="CalorieCounterModel.FK_tb_classificationFoodtb_classificationDetail" />
+        <AssociationConnector Association="CalorieCounterModel.FK_tb_detailFoodtb_classificationDetail" />
+        <AssociationConnector Association="CalorieCounterModel.FK_tb_foodtb_classificationFood" />
+        <AssociationConnector Association="CalorieCounterModel.FK_tb_usuariotb_cliente" />
+        <AssociationConnector Association="CalorieCounterModel.FK_tb_detailFoodColumn_tb_columnsFood" />
+        <AssociationConnector Association="CalorieCounterModel.FK_tb_detailFood_tb_measurementType" />
+        <AssociationConnector Association="CalorieCounterModel.FK_tb_detailFoodtb_detailFoodColumn" />
+        <AssociationConnector Association="CalorieCounterModel.FK_tb_food_tb_foodtype" />
+        <AssociationConnector Association="CalorieCounterModel.FK_tb_perfiltb_usuarioPerfil" />
+        <AssociationConnector Association="CalorieCounterModel.FK_tb_usuariotb_sesion" />
+        <AssociationConnector Association="CalorieCounterModel.FK_tb_usuairotb_usuarioPerfil" />
+        <EntityTypeShape EntityType="CalorieCounterModel.vw_FoodDetail" Width="1.75" PointX="4.375" PointY="6.75" IsExpanded="false" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>

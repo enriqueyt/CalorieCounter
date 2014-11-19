@@ -1,0 +1,144 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="12.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{8500F0DF-E33F-4304-9283-FFD37C403D9A}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>CalorieCounter.BD</RootNamespace>
+    <AssemblyName>CalorieCounter.BD</AssemblyName>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="EntityFramework">
+      <HintPath>..\packages\EntityFramework.5.0.0\lib\net45\EntityFramework.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.ComponentModel.DataAnnotations" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Data.Entity" />
+    <Reference Include="System.Runtime.Serialization" />
+    <Reference Include="System.Security" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="CalorieCounter.Context.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>CalorieCounter.Context.tt</DependentUpon>
+    </Compile>
+    <Compile Include="CalorieCounter.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>CalorieCounter.tt</DependentUpon>
+    </Compile>
+    <Compile Include="CalorieCounter.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>CalorieCounter.edmx</DependentUpon>
+    </Compile>
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="sysdiagram.cs">
+      <DependentUpon>CalorieCounter.tt</DependentUpon>
+    </Compile>
+    <Compile Include="tb_classificationDetail.cs">
+      <DependentUpon>CalorieCounter.tt</DependentUpon>
+    </Compile>
+    <Compile Include="tb_classificationFood.cs">
+      <DependentUpon>CalorieCounter.tt</DependentUpon>
+    </Compile>
+    <Compile Include="tb_cliente.cs">
+      <DependentUpon>CalorieCounter.tt</DependentUpon>
+    </Compile>
+    <Compile Include="tb_columnsFood.cs">
+      <DependentUpon>CalorieCounter.tt</DependentUpon>
+    </Compile>
+    <Compile Include="tb_detailFood.cs">
+      <DependentUpon>CalorieCounter.tt</DependentUpon>
+    </Compile>
+    <Compile Include="tb_detailFoodColumn.cs">
+      <DependentUpon>CalorieCounter.tt</DependentUpon>
+    </Compile>
+    <Compile Include="tb_food.cs">
+      <DependentUpon>CalorieCounter.tt</DependentUpon>
+    </Compile>
+    <Compile Include="tb_foodtype.cs">
+      <DependentUpon>CalorieCounter.tt</DependentUpon>
+    </Compile>
+    <Compile Include="tb_measurementType.cs">
+      <DependentUpon>CalorieCounter.tt</DependentUpon>
+    </Compile>
+    <Compile Include="tb_perfil.cs">
+      <DependentUpon>CalorieCounter.tt</DependentUpon>
+    </Compile>
+    <Compile Include="tb_sesion.cs">
+      <DependentUpon>CalorieCounter.tt</DependentUpon>
+    </Compile>
+    <Compile Include="tb_usuario.cs">
+      <DependentUpon>CalorieCounter.tt</DependentUpon>
+    </Compile>
+    <Compile Include="tb_usuarioPerfil.cs">
+      <DependentUpon>CalorieCounter.tt</DependentUpon>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <EntityDeploy Include="CalorieCounter.edmx">
+      <Generator>EntityModelCodeGenerator</Generator>
+      <LastGenOutput>CalorieCounter.Designer.cs</LastGenOutput>
+    </EntityDeploy>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="App.Config">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="CalorieCounter.Context.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>CalorieCounter.edmx</DependentUpon>
+      <LastGenOutput>CalorieCounter.Context.cs</LastGenOutput>
+    </None>
+    <None Include="CalorieCounter.edmx.diagram">
+      <DependentUpon>CalorieCounter.edmx</DependentUpon>
+    </None>
+    <None Include="CalorieCounter.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>CalorieCounter.edmx</DependentUpon>
+      <LastGenOutput>CalorieCounter.cs</LastGenOutput>
+    </None>
+    <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>
