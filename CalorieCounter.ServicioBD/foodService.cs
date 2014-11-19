@@ -80,9 +80,7 @@ namespace CalorieCounter.ServicioBD
             try
             {
                 using (calorieCounterBD = new CalorieCounterEntities())
-                {
-                    
-                }
+                {}
             }
             catch (Exception ex)
             {
@@ -91,4 +89,26 @@ namespace CalorieCounter.ServicioBD
         }
 
     }
+
+    public class objFoodDetailsSearchResponse : objBasicResponse 
+    {
+        public List<objClassificationFood> list_classificationFood { get; set; }
+
+        public int columnsCount { get; set; }
+
+    }
+
+    public class objClassificationFood 
+    {
+        public string name { get; set; }
+
+        public List<objFoodDeteil> list_foodDetails { get; set; }
+
+    }
+
+    public class objFoodDeteil 
+    {
+
+    }
+
 }

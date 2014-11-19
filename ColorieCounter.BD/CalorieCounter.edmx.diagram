@@ -5,11 +5,11 @@
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
       <Diagram DiagramId="cb4f2b372718421b921adea61d7eb3b7" Name="Diagram1" ZoomLevel="85">
-        <EntityTypeShape EntityType="CalorieCounterModel.tb_classificationDetail" Width="2" PointX="10" PointY="5.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="CalorieCounterModel.tb_classificationDetail" Width="2" PointX="10" PointY="5.125" IsExpanded="false" />
         <EntityTypeShape EntityType="CalorieCounterModel.tb_classificationFood" Width="2.25" PointX="12.875" PointY="5" IsExpanded="true" />
         <EntityTypeShape EntityType="CalorieCounterModel.tb_cliente" Width="1.5" PointX="0.75" PointY="3" IsExpanded="false" />
         <EntityTypeShape EntityType="CalorieCounterModel.tb_columnsFood" Width="1.875" PointX="7.375" PointY="5" IsExpanded="false" />
-        <EntityTypeShape EntityType="CalorieCounterModel.tb_detailFood" Width="1.5" PointX="10.625" PointY="2.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="CalorieCounterModel.tb_detailFood" Width="1.5" PointX="10.625" PointY="2.75" IsExpanded="false" />
         <EntityTypeShape EntityType="CalorieCounterModel.tb_detailFoodColumn" Width="2.125" PointX="7.375" PointY="2.75" IsExpanded="false" />
         <EntityTypeShape EntityType="CalorieCounterModel.tb_food" Width="1.5" PointX="12" PointY="6.625" IsExpanded="false" />
         <EntityTypeShape EntityType="CalorieCounterModel.tb_foodtype" Width="1.5" PointX="8.5" PointY="6.75" IsExpanded="false" />
