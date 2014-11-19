@@ -35,7 +35,7 @@
       <PropertyRef Name="id_columnsfood" />
     </Key>
     <Property Name="id_columnsfood" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-    <Property Name="descripcion" Type="int" Nullable="false" />
+    <Property Name="descripcion" Type="nvarchar" MaxLength="500" Nullable="false" />
     <Property Name="activo" Type="int" Nullable="false" />
   </EntityType>
   <EntityType Name="tb_detailFood">
@@ -54,7 +54,7 @@
     <Property Name="id_detailFoodColumn" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
     <Property Name="id_detailFood" Type="int" Nullable="false" />
     <Property Name="id_columnsfood" Type="int" Nullable="false" />
-    <Property Name="foodValue" Type="int" />
+    <Property Name="foodValue" Type="float" />
     <Property Name="activo" Type="int" Nullable="false" />
   </EntityType>
   <EntityType Name="tb_food">
@@ -64,6 +64,7 @@
     <Property Name="id_food" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
     <Property Name="id_foodtype" Type="int" Nullable="false" />
     <Property Name="id_reference" Type="int" Nullable="false" />
+    <Property Name="NDB" Type="int" />
     <Property Name="description" Type="nvarchar(max)" Nullable="false" />
     <Property Name="datecreated" Type="datetime" Nullable="false" />
     <Property Name="active" Type="bit" Nullable="false" />
@@ -138,8 +139,28 @@
     <Property Name="version" Type="int" />
     <Property Name="definition" Type="varbinary(max)" />
   </EntityType>
+  <!--Errores durante la generación:
+advertencia 6002: La tabla o vista 'CalorieCounter.cc.vw_FoodDetail' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
+  <EntityType Name="vw_FoodDetail">
+    <Key>
+      <PropertyRef Name="FoodID" />
+      <PropertyRef Name="FoodReference" />
+      <PropertyRef Name="ValType" />
+      <PropertyRef Name="UnitType" />
+    </Key>
+    <Property Name="FoodID" Type="int" Nullable="false" />
+    <Property Name="FoodReference" Type="int" Nullable="false" />
+    <Property Name="NDB" Type="int" />
+    <Property Name="ValGroup" Type="varchar" MaxLength="100" />
+    <Property Name="ValName" Type="varchar" MaxLength="100" />
+    <Property Name="ValType" Type="nvarchar" MaxLength="500" Nullable="false" />
+    <Property Name="Val" Type="float" />
+    <Property Name="UnitType" Type="varchar" MaxLength="10" Nullable="false" />
+  </EntityType>
   <Association Name="FK_tb_classificationFoodtb_classificationDetail">
-    <End Role="tb_classificationFood" Type="Self.tb_classificationFood" Multiplicity="1" />
+    <End Role="tb_classificationFood" Type="Self.tb_classificationFood" Multiplicity="1">
+      <OnDelete Action="Cascade" />
+    </End>
     <End Role="tb_classificationDetail" Type="Self.tb_classificationDetail" Multiplicity="*" />
     <ReferentialConstraint>
       <Principal Role="tb_classificationFood">
@@ -151,7 +172,9 @@
     </ReferentialConstraint>
   </Association>
   <Association Name="FK_tb_detailFood_tb_measurementType">
-    <End Role="tb_measurementType" Type="Self.tb_measurementType" Multiplicity="1" />
+    <End Role="tb_measurementType" Type="Self.tb_measurementType" Multiplicity="1">
+      <OnDelete Action="Cascade" />
+    </End>
     <End Role="tb_detailFood" Type="Self.tb_detailFood" Multiplicity="*" />
     <ReferentialConstraint>
       <Principal Role="tb_measurementType">
@@ -163,7 +186,9 @@
     </ReferentialConstraint>
   </Association>
   <Association Name="FK_tb_detailFoodColumn_tb_columnsFood">
-    <End Role="tb_columnsFood" Type="Self.tb_columnsFood" Multiplicity="1" />
+    <End Role="tb_columnsFood" Type="Self.tb_columnsFood" Multiplicity="1">
+      <OnDelete Action="Cascade" />
+    </End>
     <End Role="tb_detailFoodColumn" Type="Self.tb_detailFoodColumn" Multiplicity="*" />
     <ReferentialConstraint>
       <Principal Role="tb_columnsFood">
@@ -175,7 +200,9 @@
     </ReferentialConstraint>
   </Association>
   <Association Name="FK_tb_detailFoodtb_classificationDetail">
-    <End Role="tb_detailFood" Type="Self.tb_detailFood" Multiplicity="1" />
+    <End Role="tb_detailFood" Type="Self.tb_detailFood" Multiplicity="1">
+      <OnDelete Action="Cascade" />
+    </End>
     <End Role="tb_classificationDetail" Type="Self.tb_classificationDetail" Multiplicity="*" />
     <ReferentialConstraint>
       <Principal Role="tb_detailFood">
@@ -187,7 +214,9 @@
     </ReferentialConstraint>
   </Association>
   <Association Name="FK_tb_detailFoodtb_detailFoodColumn">
-    <End Role="tb_detailFood" Type="Self.tb_detailFood" Multiplicity="1" />
+    <End Role="tb_detailFood" Type="Self.tb_detailFood" Multiplicity="1">
+      <OnDelete Action="Cascade" />
+    </End>
     <End Role="tb_detailFoodColumn" Type="Self.tb_detailFoodColumn" Multiplicity="*" />
     <ReferentialConstraint>
       <Principal Role="tb_detailFood">
@@ -199,7 +228,9 @@
     </ReferentialConstraint>
   </Association>
   <Association Name="FK_tb_food_tb_foodtype">
-    <End Role="tb_foodtype" Type="Self.tb_foodtype" Multiplicity="1" />
+    <End Role="tb_foodtype" Type="Self.tb_foodtype" Multiplicity="1">
+      <OnDelete Action="Cascade" />
+    </End>
     <End Role="tb_food" Type="Self.tb_food" Multiplicity="*" />
     <ReferentialConstraint>
       <Principal Role="tb_foodtype">
@@ -211,7 +242,9 @@
     </ReferentialConstraint>
   </Association>
   <Association Name="FK_tb_foodtb_classificationFood">
-    <End Role="tb_food" Type="Self.tb_food" Multiplicity="1" />
+    <End Role="tb_food" Type="Self.tb_food" Multiplicity="1">
+      <OnDelete Action="Cascade" />
+    </End>
     <End Role="tb_classificationFood" Type="Self.tb_classificationFood" Multiplicity="*" />
     <ReferentialConstraint>
       <Principal Role="tb_food">
@@ -285,6 +318,18 @@
     <EntitySet Name="tb_usuario" EntityType="Self.tb_usuario" Schema="cc" store:Type="Tables" />
     <EntitySet Name="tb_usuarioPerfil" EntityType="Self.tb_usuarioPerfil" Schema="cc" store:Type="Tables" />
     <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="vw_FoodDetail" EntityType="Self.vw_FoodDetail" store:Type="Views" store:Schema="cc">
+      <DefiningQuery>SELECT 
+[vw_FoodDetail].[FoodID] AS [FoodID], 
+[vw_FoodDetail].[FoodReference] AS [FoodReference], 
+[vw_FoodDetail].[NDB] AS [NDB], 
+[vw_FoodDetail].[ValGroup] AS [ValGroup], 
+[vw_FoodDetail].[ValName] AS [ValName], 
+[vw_FoodDetail].[ValType] AS [ValType], 
+[vw_FoodDetail].[Val] AS [Val], 
+[vw_FoodDetail].[UnitType] AS [UnitType]
+FROM [cc].[vw_FoodDetail] AS [vw_FoodDetail]</DefiningQuery>
+    </EntitySet>
     <AssociationSet Name="FK_tb_classificationFoodtb_classificationDetail" Association="Self.FK_tb_classificationFoodtb_classificationDetail">
       <End Role="tb_classificationFood" EntitySet="tb_classificationFood" />
       <End Role="tb_classificationDetail" EntitySet="tb_classificationDetail" />

@@ -59,6 +59,7 @@
       <End Role="tb_usuario" EntitySet="tb_usuario" />
       <End Role="tb_usuarioPerfil" EntitySet="tb_usuarioPerfil" />
     </AssociationSet>
+    <EntitySet Name="vw_FoodDetail" EntityType="CalorieCounterModel.vw_FoodDetail" />
   </EntityContainer>
   <EntityType Name="tb_classificationDetail">
     <Key>
@@ -100,7 +101,7 @@
       <PropertyRef Name="id_columnsfood" />
     </Key>
     <Property Name="id_columnsfood" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-    <Property Name="descripcion" Type="Int32" Nullable="false" />
+    <Property Name="descripcion" Type="String" Nullable="false" MaxLength="500" FixedLength="false" Unicode="true" />
     <Property Name="activo" Type="Int32" Nullable="false" />
     <NavigationProperty Name="tb_detailFoodColumn" Relationship="CalorieCounterModel.FK_tb_detailFoodColumn_tb_columnsFood" FromRole="tb_columnsFood" ToRole="tb_detailFoodColumn" />
   </EntityType>
@@ -123,7 +124,7 @@
     <Property Name="id_detailFoodColumn" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
     <Property Name="id_detailFood" Type="Int32" Nullable="false" />
     <Property Name="id_columnsfood" Type="Int32" Nullable="false" />
-    <Property Name="foodValue" Type="Int32" />
+    <Property Name="foodValue" Type="Double" />
     <Property Name="activo" Type="Int32" Nullable="false" />
     <NavigationProperty Name="tb_columnsFood" Relationship="CalorieCounterModel.FK_tb_detailFoodColumn_tb_columnsFood" FromRole="tb_detailFoodColumn" ToRole="tb_columnsFood" />
     <NavigationProperty Name="tb_detailFood" Relationship="CalorieCounterModel.FK_tb_detailFoodtb_detailFoodColumn" FromRole="tb_detailFoodColumn" ToRole="tb_detailFood" />
@@ -135,6 +136,7 @@
     <Property Name="id_food" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
     <Property Name="id_foodtype" Type="Int32" Nullable="false" />
     <Property Name="id_reference" Type="Int32" Nullable="false" />
+    <Property Name="NDB" Type="Int32" />
     <Property Name="description" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
     <Property Name="datecreated" Type="DateTime" Nullable="false" Precision="3" />
     <Property Name="active" Type="Boolean" Nullable="false" />
@@ -221,7 +223,9 @@
     <Property Name="definition" Type="Binary" MaxLength="Max" FixedLength="false" />
   </EntityType>
   <Association Name="FK_tb_classificationFoodtb_classificationDetail">
-    <End Type="CalorieCounterModel.tb_classificationFood" Role="tb_classificationFood" Multiplicity="1" />
+    <End Type="CalorieCounterModel.tb_classificationFood" Role="tb_classificationFood" Multiplicity="1">
+      <OnDelete Action="Cascade" />
+    </End>
     <End Type="CalorieCounterModel.tb_classificationDetail" Role="tb_classificationDetail" Multiplicity="*" />
     <ReferentialConstraint>
       <Principal Role="tb_classificationFood">
@@ -233,7 +237,9 @@
     </ReferentialConstraint>
   </Association>
   <Association Name="FK_tb_detailFoodtb_classificationDetail">
-    <End Type="CalorieCounterModel.tb_detailFood" Role="tb_detailFood" Multiplicity="1" />
+    <End Type="CalorieCounterModel.tb_detailFood" Role="tb_detailFood" Multiplicity="1">
+      <OnDelete Action="Cascade" />
+    </End>
     <End Type="CalorieCounterModel.tb_classificationDetail" Role="tb_classificationDetail" Multiplicity="*" />
     <ReferentialConstraint>
       <Principal Role="tb_detailFood">
@@ -245,7 +251,9 @@
     </ReferentialConstraint>
   </Association>
   <Association Name="FK_tb_foodtb_classificationFood">
-    <End Type="CalorieCounterModel.tb_food" Role="tb_food" Multiplicity="1" />
+    <End Type="CalorieCounterModel.tb_food" Role="tb_food" Multiplicity="1">
+      <OnDelete Action="Cascade" />
+    </End>
     <End Type="CalorieCounterModel.tb_classificationFood" Role="tb_classificationFood" Multiplicity="*" />
     <ReferentialConstraint>
       <Principal Role="tb_food">
@@ -269,7 +277,9 @@
     </ReferentialConstraint>
   </Association>
   <Association Name="FK_tb_detailFoodColumn_tb_columnsFood">
-    <End Type="CalorieCounterModel.tb_columnsFood" Role="tb_columnsFood" Multiplicity="1" />
+    <End Type="CalorieCounterModel.tb_columnsFood" Role="tb_columnsFood" Multiplicity="1">
+      <OnDelete Action="Cascade" />
+    </End>
     <End Type="CalorieCounterModel.tb_detailFoodColumn" Role="tb_detailFoodColumn" Multiplicity="*" />
     <ReferentialConstraint>
       <Principal Role="tb_columnsFood">
@@ -281,7 +291,9 @@
     </ReferentialConstraint>
   </Association>
   <Association Name="FK_tb_detailFood_tb_measurementType">
-    <End Type="CalorieCounterModel.tb_measurementType" Role="tb_measurementType" Multiplicity="1" />
+    <End Type="CalorieCounterModel.tb_measurementType" Role="tb_measurementType" Multiplicity="1">
+      <OnDelete Action="Cascade" />
+    </End>
     <End Type="CalorieCounterModel.tb_detailFood" Role="tb_detailFood" Multiplicity="*" />
     <ReferentialConstraint>
       <Principal Role="tb_measurementType">
@@ -293,7 +305,9 @@
     </ReferentialConstraint>
   </Association>
   <Association Name="FK_tb_detailFoodtb_detailFoodColumn">
-    <End Type="CalorieCounterModel.tb_detailFood" Role="tb_detailFood" Multiplicity="1" />
+    <End Type="CalorieCounterModel.tb_detailFood" Role="tb_detailFood" Multiplicity="1">
+      <OnDelete Action="Cascade" />
+    </End>
     <End Type="CalorieCounterModel.tb_detailFoodColumn" Role="tb_detailFoodColumn" Multiplicity="*" />
     <ReferentialConstraint>
       <Principal Role="tb_detailFood">
@@ -305,7 +319,9 @@
     </ReferentialConstraint>
   </Association>
   <Association Name="FK_tb_food_tb_foodtype">
-    <End Type="CalorieCounterModel.tb_foodtype" Role="tb_foodtype" Multiplicity="1" />
+    <End Type="CalorieCounterModel.tb_foodtype" Role="tb_foodtype" Multiplicity="1">
+      <OnDelete Action="Cascade" />
+    </End>
     <End Type="CalorieCounterModel.tb_food" Role="tb_food" Multiplicity="*" />
     <ReferentialConstraint>
       <Principal Role="tb_foodtype">
@@ -352,4 +368,20 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
+  <EntityType Name="vw_FoodDetail">
+    <Key>
+      <PropertyRef Name="FoodID" />
+      <PropertyRef Name="FoodReference" />
+      <PropertyRef Name="ValType" />
+      <PropertyRef Name="UnitType" />
+    </Key>
+    <Property Name="FoodID" Type="Int32" Nullable="false" />
+    <Property Name="FoodReference" Type="Int32" Nullable="false" />
+    <Property Name="NDB" Type="Int32" />
+    <Property Name="ValGroup" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+    <Property Name="ValName" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+    <Property Name="ValType" Type="String" Nullable="false" MaxLength="500" FixedLength="false" Unicode="true" />
+    <Property Name="Val" Type="Double" />
+    <Property Name="UnitType" Type="String" Nullable="false" MaxLength="10" FixedLength="false" Unicode="false" />
+  </EntityType>
 </Schema>

@@ -104,6 +104,9 @@
     <Compile Include="tb_usuarioPerfil.cs">
       <DependentUpon>CalorieCounter.tt</DependentUpon>
     </Compile>
+    <Compile Include="vw_FoodDetail.cs">
+      <DependentUpon>CalorieCounter.tt</DependentUpon>
+    </Compile>
   </ItemGroup>
   <ItemGroup>
     <EntityDeploy Include="CalorieCounter.edmx">
