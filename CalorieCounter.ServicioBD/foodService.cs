@@ -77,34 +77,17 @@ namespace CalorieCounter.ServicioBD
 
         public void FoodDetailsSearch() 
         {
-            vw_FoodDetail a = new vw_FoodDetail();
-            a.FoodID = 0;
-            a.FoodReference = 0;
-            a.NDB = 0;
-            a.UnitType = "";
-            a.Val = 1.2;
-            a.ValGroup = "";
-            a.ValName = "";
-            a.ValType = "";         
-        }
-
-        public class foodDetails 
-        {
-            public int foodId           { get; set; }
-            public int foodI { get; set; }
-            public int foodReference    { get; set; }
-
-            public int? ndb             { get; set; }
-
-            public string unitType      { get; set; }
-
-            public double? val          { get; set; }
-
-            public string valGroup      { get; set; }
-
-            public string valName       { get; set; } 
-
-            public string valType       { get; set; }
+            try
+            {
+                using (calorieCounterBD = new CalorieCounterEntities())
+                {
+                    
+                }
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.Message, ex.InnerException);
+            }
         }
 
     }
