@@ -11,6 +11,12 @@ namespace CalorieCounter.Controlador
     public class ControllerFood
     {
 
+        objBasicResponse respuesta = null;
+        public ControllerFood() 
+        {
+            respuesta = new objBasicResponse();
+        }
+
         public objFoodSearchResponse FoodSearch(int ID, string Description, int GroupID) {
             var R = new objFoodSearchResponse();
             try {
@@ -41,5 +47,26 @@ namespace CalorieCounter.Controlador
             }
             return R;
         }
+
+        public objFoodDetailsSearchResponse GetFoodDetailsSearch(string idFood) 
+        {
+
+            objFoodDetailsSearchResponse res = null;
+
+            try
+            {
+                res = new foodService().FoodDetailsSearch(Convert.ToInt32(idFood));
+            }
+            catch (Exception e)
+            {
+                res.message = e.Message;
+                res.tarce = e.StackTrace;
+                res.code = "ERROR";
+            }
+
+            return res;
+            
+        }
+
     }
 }

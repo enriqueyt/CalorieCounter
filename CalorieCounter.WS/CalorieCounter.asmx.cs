@@ -51,5 +51,11 @@ namespace CalorieCounter.WS
             return new ControllerFood().GetFoodTypes();
         }
 
+        [WebMethod]
+        public objFoodDetailsSearchResponse GetFoodDetailsSearch(string idFood)
+        {
+            return new ControllerFood().GetFoodDetailsSearch(idFood);
+        }
+
     }
 }

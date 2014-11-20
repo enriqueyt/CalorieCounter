@@ -41,6 +41,7 @@
   <ItemGroup>
     <Compile Include="objBasicResponse.cs" />
     <Compile Include="objFood.cs" />
+    <Compile Include="objFoodDetailsSearchResponse.cs" />
     <Compile Include="objFoodSearchResponse.cs" />
     <Compile Include="objFoodType.cs" />
     <Compile Include="objFoodTypesResponse.cs" />

@@ -75,12 +75,90 @@ namespace CalorieCounter.ServicioBD
 
         }
 
-        public void FoodDetailsSearch() 
+        /// <summary>
+        /// Busca un detalle de una comida
+        /// </summary>
+        /// <param name="idFood"></param>
+        public objFoodDetailsSearchResponse FoodDetailsSearch(int idFood) 
         {
+
+            List<objClassificationFood> _objClassificationFood = null;
+            List<objClasificationDef> clasifications = new List<objClasificationDef>();
+
             try
             {
                 using (calorieCounterBD = new CalorieCounterEntities())
-                {}
+                {
+                    _objClassificationFood =
+                        calorieCounterBD.tb_classificationFood
+                            .Where(w  => w.id_food == idFood)
+                            .Select(s => new
+                            {
+                                name    = s.descripcion,
+                                id      = s.id_classificationFood
+                            }).AsEnumerable()
+                            .Select(se => new objClassificationFood
+                            {
+                                name    = se.name,
+                                id      = se.id,
+                                list_foodDetails =
+                                (
+                                    from cd in calorieCounterBD.tb_classificationDetail
+                                    join df in calorieCounterBD.tb_detailFood on cd.id_detailFood equals df.id_detailFood
+                                    join mt in calorieCounterBD.tb_measurementType on df.id_measurementType equals mt.id_measurementType
+                                    where cd.id_classificationFood == se.id
+                                    select new 
+                                    {
+                                        descripcion = df.descripcion,
+                                        unit        = mt.unit,
+                                        id          = df.id_detailFood
+                                    }
+                                 ).AsEnumerable()
+                                    .Select(sel => new objFoodDetail {
+                                        descripcion = sel.descripcion,
+                                        unit        = sel.unit,
+                                        count       = 
+                                                calorieCounterBD.tb_detailFoodColumn
+                                                    .Join(calorieCounterBD.tb_columnsFood, a => a.id_columnsfood, b => b.id_columnsfood, (a,b) => new {a,b})
+                                                    .Where(w=>w.a.id_detailFood == sel.id)
+                                                    .Select(s=>s.a.id_detailFood).Count(),
+                                        valuesFoodDetail =
+                                            calorieCounterBD.tb_detailFoodColumn
+                                                .Where(w  => w.id_detailFood == sel.id)
+                                                .Select(s => new objFoodDetailValues {
+                                                    value = s.foodValue
+                                                }).ToList()
+                                    }).ToList()
+                            }).ToList();
+
+                    _objClassificationFood.ForEach(f => {
+
+                        objClasificationDef _objClasificationDef = clasifications.Find(fin => fin.name == f.name);
+
+                        if (_objClasificationDef == null)
+                        {
+
+                            clasifications.Add(new objClasificationDef
+                            {
+                                name                = f.name,
+                                listObjFoodDetail   = new List<List<objFoodDetail>>()
+                            });
+
+                            clasifications.Find(fin => fin.name == f.name).listObjFoodDetail.Add(f.list_foodDetails);
+                        
+                        }
+                        else
+                        {
+                            _objClasificationDef.listObjFoodDetail.Add(f.list_foodDetails);
+                        }
+
+                    });
+
+                    return new objFoodDetailsSearchResponse {   
+                        _objClasificationDef = clasifications, 
+                        columnsCount = clasifications[0].listObjFoodDetail[0].FirstOrDefault().count 
+                    };
+                }
             }
             catch (Exception ex)
             {
@@ -90,25 +168,11 @@ namespace CalorieCounter.ServicioBD
 
     }
 
-    public class objFoodDetailsSearchResponse : objBasicResponse 
-    {
-        public List<objClassificationFood> list_classificationFood { get; set; }
 
-        public int columnsCount { get; set; }
 
-    }
-
-    public class objClassificationFood 
-    {
-        public string name { get; set; }
-
-        public List<objFoodDeteil> list_foodDetails { get; set; }
-
-    }
-
-    public class objFoodDeteil 
-    {
-
-    }
-
+   
 }
+
+
+
+    
