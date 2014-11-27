@@ -116,6 +116,91 @@ namespace CalorieCounter.ServicioBD
 
             return _objClient;
         }
-    
+
+        /// <summary>
+        /// obtiene una lista de mis comidas diarias
+        /// </summary>
+        public objDataClientFoodsResponse GetListFoodClient(string token, DateTime? date = null)
+        {
+
+            objClient _objClient = null;
+            objDataClientFoodsResponse _objDataClientFoodsResponse = null;
+
+            try
+            {
+                _objClient = this.findClientebyToken(token);
+
+                using (calorieCounterBD = new CalorieCounterEntities())
+                {
+
+                    _objDataClientFoodsResponse = new objDataClientFoodsResponse
+                    {
+                        objDataClientFoods = calorieCounterBD.tb_userFood
+                                .Where(w => w.id_user == _objClient.idUsuario)
+                                .Select(s => new objDataClientFoods
+                                {
+                                    id_food = s.id_food,
+                                    description = s.tb_food.description,
+                                    count = s.count,
+                                    scale = s.scale,
+                                    meal = s.tb_meal.id_meal,
+                                    descMeal = s.tb_meal.description
+
+                                }).AsEnumerable()
+                                .GroupBy(g => new
+                                {
+                                    g.meal,
+                                    g.id_food,
+                                    g.description,
+                                    g.count,
+                                    g.scale,
+                                    g.descMeal
+                                })
+                                .Select(se => new objDataClientFoods
+                                {
+                                    id_food = se.Key.id_food,
+                                    description = se.Key.description,
+                                    count = se.Key.count,
+                                    scale = se.Key.scale,
+                                    meal = se.Key.meal,
+                                    descMeal = se.Key.descMeal
+
+                                }).ToList()
+
+                    };
+
+                    /*
+                                        objDataClientFoodsResponse _aobjDataClientFoodsResponse = new objDataClientFoodsResponse
+                                        {
+                                            objDataClientFoods =
+                                                   calorieCounterBD.tb_meal
+                                                    .Join(calorieCounterBD.tb_userFood, meal => meal.id_meal, userFood => userFood.meal, (meal, userFood) => new {meal,userFood })
+                                                    .Where(w => w.userFood.id_user == _objClient.idUsuario)
+                                                    .Select(s => new objDataClientFoods
+                                                    {
+
+                                                        id_food     = s.userFood.id_food,
+                                                        description = s.userFood.tb_food.description,
+                                                        count       = s.userFood.count,
+                                                        scale       = s.userFood.scale,
+                                                        meal        = s.userFood.tb_meal.id_meal,
+                                                        descMeal    = s.userFood.tb_meal.description
+
+                                                    }).ToList()
+
+                                        };*/
+
+
+                }
+
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.Message, ex.InnerException);
+            }
+
+            return _objDataClientFoodsResponse;
+        }
+
     }
 }

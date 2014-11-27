@@ -57,5 +57,22 @@ namespace CalorieCounter.WS
             return new foodController().GetFoodDetailsSearch(idFood);
         }
 
+        [WebMethod]
+        public objUtilitiResponse GetMealType() 
+        {
+            return new foodController().GetMealType();
+        }
+
+        [WebMethod]
+        public objBasicResponse SaveFood(string token, int idFood, double count, string scale, int meal)
+        {
+            return new clientController().saveFood(token, idFood, count, scale, meal);
+        }
+
+        [WebMethod]
+        public objDataClientFoodsResponse GetListFoodClient(string token, DateTime? date = null)
+        {
+            return new clientController().GetListFoodClient(token, date);
+        }
     }
 }
