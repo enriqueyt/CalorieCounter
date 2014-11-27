@@ -22,24 +22,24 @@ namespace CalorieCounter.WS
         [WebMethod]
         public objBasicResponse Login(string user, string password)
         {
-            return new ControladorLogin().Login(user, password);
+            return new loginController().Login(user, password);
         }
 
         [WebMethod]
         public objBasicResponse LoginSocial(string user, string idFacebook, string idTwiter, string validateToken, string name, string lastname)
         {
-            return new ControladorLogin().LoginSocial(user, idFacebook, idTwiter, validateToken, name, lastname);
+            return new loginController().LoginSocial(user, idFacebook, idTwiter, validateToken, name, lastname);
         }
 
         [WebMethod]
         public objBasicResponse Register(string user, string password, string name, string lastname)
         {
-            return new ControladorLogin().Register(user, password, name, lastname);
+            return new loginController().Register(user, password, name, lastname);
         }
 
         [WebMethod]
         public objFoodSearchResponse FoodSearch(string ID, string Description, string GroupID) {
-            return new ControllerFood().FoodSearch(
+            return new foodController().FoodSearch(
                 String.IsNullOrEmpty(ID)?-1:Convert.ToInt32(ID),
                 Description, 
                 String.IsNullOrEmpty(GroupID) ? -1 : Convert.ToInt32(GroupID));
@@ -48,13 +48,13 @@ namespace CalorieCounter.WS
         [WebMethod]
         public objFoodTypesResponse GetFoodTypes()
         {
-            return new ControllerFood().GetFoodTypes();
+            return new foodController().GetFoodTypes();
         }
 
         [WebMethod]
         public objFoodDetailsSearchResponse GetFoodDetailsSearch(string idFood)
         {
-            return new ControllerFood().GetFoodDetailsSearch(idFood);
+            return new foodController().GetFoodDetailsSearch(idFood);
         }
 
     }

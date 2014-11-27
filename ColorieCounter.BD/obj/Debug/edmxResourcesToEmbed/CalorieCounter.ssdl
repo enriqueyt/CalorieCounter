@@ -57,6 +57,14 @@
     <Property Name="foodValue" Type="float" />
     <Property Name="activo" Type="int" Nullable="false" />
   </EntityType>
+  <EntityType Name="tb_favoriteFood">
+    <Key>
+      <PropertyRef Name="id_favoriteFood" />
+    </Key>
+    <Property Name="id_favoriteFood" Type="int" Nullable="false" />
+    <Property Name="id_user" Type="int" Nullable="false" />
+    <Property Name="id_food" Type="int" Nullable="false" />
+  </EntityType>
   <EntityType Name="tb_food">
     <Key>
       <PropertyRef Name="id_food" />
@@ -64,7 +72,6 @@
     <Property Name="id_food" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
     <Property Name="id_foodtype" Type="int" Nullable="false" />
     <Property Name="id_reference" Type="int" Nullable="false" />
-    <Property Name="NDB" Type="int" />
     <Property Name="description" Type="nvarchar(max)" Nullable="false" />
     <Property Name="datecreated" Type="datetime" Nullable="false" />
     <Property Name="active" Type="bit" Nullable="false" />
@@ -76,6 +83,14 @@
     <Property Name="id_foodtype" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
     <Property Name="description" Type="nvarchar(max)" />
     <Property Name="active" Type="bit" Nullable="false" />
+  </EntityType>
+  <EntityType Name="tb_meal">
+    <Key>
+      <PropertyRef Name="id_meal" />
+    </Key>
+    <Property Name="id_meal" Type="int" Nullable="false" />
+    <Property Name="description" Type="varchar" MaxLength="50" />
+    <Property Name="activo" Type="int" Nullable="false" />
   </EntityType>
   <EntityType Name="tb_measurementType">
     <Key>
@@ -105,6 +120,18 @@
     <Property Name="fechaUlOper" Type="datetime" Nullable="false" />
     <Property Name="activo" Type="int" Nullable="false" />
     <Property Name="id_usuario" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityType Name="tb_userFood">
+    <Key>
+      <PropertyRef Name="id_userFood" />
+    </Key>
+    <Property Name="id_userFood" Type="int" Nullable="false" />
+    <Property Name="id_user" Type="int" />
+    <Property Name="id_food" Type="int" />
+    <Property Name="date" Type="date" />
+    <Property Name="count" Type="float" />
+    <Property Name="scale" Type="nchar" MaxLength="10" />
+    <Property Name="meal" Type="int" />
   </EntityType>
   <EntityType Name="tb_usuario">
     <Key>
@@ -227,10 +254,32 @@ advertencia 6002: La tabla o vista 'CalorieCounter.cc.vw_FoodDetail' no tiene de
       </Dependent>
     </ReferentialConstraint>
   </Association>
+  <Association Name="FK_tb_favoriteFood_tb_food">
+    <End Role="tb_food" Type="Self.tb_food" Multiplicity="1" />
+    <End Role="tb_favoriteFood" Type="Self.tb_favoriteFood" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="tb_food">
+        <PropertyRef Name="id_food" />
+      </Principal>
+      <Dependent Role="tb_favoriteFood">
+        <PropertyRef Name="id_food" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_tb_favoriteFood_tb_usuario">
+    <End Role="tb_usuario" Type="Self.tb_usuario" Multiplicity="1" />
+    <End Role="tb_favoriteFood" Type="Self.tb_favoriteFood" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="tb_usuario">
+        <PropertyRef Name="id_usuario" />
+      </Principal>
+      <Dependent Role="tb_favoriteFood">
+        <PropertyRef Name="id_user" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
   <Association Name="FK_tb_food_tb_foodtype">
-    <End Role="tb_foodtype" Type="Self.tb_foodtype" Multiplicity="1">
-      <OnDelete Action="Cascade" />
-    </End>
+    <End Role="tb_foodtype" Type="Self.tb_foodtype" Multiplicity="1" />
     <End Role="tb_food" Type="Self.tb_food" Multiplicity="*" />
     <ReferentialConstraint>
       <Principal Role="tb_foodtype">
@@ -242,9 +291,7 @@ advertencia 6002: La tabla o vista 'CalorieCounter.cc.vw_FoodDetail' no tiene de
     </ReferentialConstraint>
   </Association>
   <Association Name="FK_tb_foodtb_classificationFood">
-    <End Role="tb_food" Type="Self.tb_food" Multiplicity="1">
-      <OnDelete Action="Cascade" />
-    </End>
+    <End Role="tb_food" Type="Self.tb_food" Multiplicity="1" />
     <End Role="tb_classificationFood" Type="Self.tb_classificationFood" Multiplicity="*" />
     <ReferentialConstraint>
       <Principal Role="tb_food">
@@ -264,6 +311,42 @@ advertencia 6002: La tabla o vista 'CalorieCounter.cc.vw_FoodDetail' no tiene de
       </Principal>
       <Dependent Role="tb_usuarioPerfil">
         <PropertyRef Name="id_perfil" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_tb_userFood_tb_food">
+    <End Role="tb_food" Type="Self.tb_food" Multiplicity="0..1" />
+    <End Role="tb_userFood" Type="Self.tb_userFood" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="tb_food">
+        <PropertyRef Name="id_food" />
+      </Principal>
+      <Dependent Role="tb_userFood">
+        <PropertyRef Name="id_food" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_tb_userFood_tb_meal">
+    <End Role="tb_meal" Type="Self.tb_meal" Multiplicity="0..1" />
+    <End Role="tb_userFood" Type="Self.tb_userFood" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="tb_meal">
+        <PropertyRef Name="id_meal" />
+      </Principal>
+      <Dependent Role="tb_userFood">
+        <PropertyRef Name="meal" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_tb_userFood_tb_usuario">
+    <End Role="tb_usuario" Type="Self.tb_usuario" Multiplicity="0..1" />
+    <End Role="tb_userFood" Type="Self.tb_userFood" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="tb_usuario">
+        <PropertyRef Name="id_usuario" />
+      </Principal>
+      <Dependent Role="tb_userFood">
+        <PropertyRef Name="id_user" />
       </Dependent>
     </ReferentialConstraint>
   </Association>
@@ -310,11 +393,14 @@ advertencia 6002: La tabla o vista 'CalorieCounter.cc.vw_FoodDetail' no tiene de
     <EntitySet Name="tb_columnsFood" EntityType="Self.tb_columnsFood" Schema="cc" store:Type="Tables" />
     <EntitySet Name="tb_detailFood" EntityType="Self.tb_detailFood" Schema="cc" store:Type="Tables" />
     <EntitySet Name="tb_detailFoodColumn" EntityType="Self.tb_detailFoodColumn" Schema="cc" store:Type="Tables" />
+    <EntitySet Name="tb_favoriteFood" EntityType="Self.tb_favoriteFood" Schema="cc" store:Type="Tables" />
     <EntitySet Name="tb_food" EntityType="Self.tb_food" Schema="cc" store:Type="Tables" />
     <EntitySet Name="tb_foodtype" EntityType="Self.tb_foodtype" Schema="cc" store:Type="Tables" />
+    <EntitySet Name="tb_meal" EntityType="Self.tb_meal" Schema="cc" store:Type="Tables" />
     <EntitySet Name="tb_measurementType" EntityType="Self.tb_measurementType" Schema="cc" store:Type="Tables" />
     <EntitySet Name="tb_perfil" EntityType="Self.tb_perfil" Schema="cc" store:Type="Tables" />
     <EntitySet Name="tb_sesion" EntityType="Self.tb_sesion" Schema="cc" store:Type="Tables" />
+    <EntitySet Name="tb_userFood" EntityType="Self.tb_userFood" Schema="cc" store:Type="Tables" />
     <EntitySet Name="tb_usuario" EntityType="Self.tb_usuario" Schema="cc" store:Type="Tables" />
     <EntitySet Name="tb_usuarioPerfil" EntityType="Self.tb_usuarioPerfil" Schema="cc" store:Type="Tables" />
     <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" Schema="dbo" store:Type="Tables" />
@@ -350,6 +436,14 @@ FROM [cc].[vw_FoodDetail] AS [vw_FoodDetail]</DefiningQuery>
       <End Role="tb_detailFood" EntitySet="tb_detailFood" />
       <End Role="tb_detailFoodColumn" EntitySet="tb_detailFoodColumn" />
     </AssociationSet>
+    <AssociationSet Name="FK_tb_favoriteFood_tb_food" Association="Self.FK_tb_favoriteFood_tb_food">
+      <End Role="tb_food" EntitySet="tb_food" />
+      <End Role="tb_favoriteFood" EntitySet="tb_favoriteFood" />
+    </AssociationSet>
+    <AssociationSet Name="FK_tb_favoriteFood_tb_usuario" Association="Self.FK_tb_favoriteFood_tb_usuario">
+      <End Role="tb_usuario" EntitySet="tb_usuario" />
+      <End Role="tb_favoriteFood" EntitySet="tb_favoriteFood" />
+    </AssociationSet>
     <AssociationSet Name="FK_tb_food_tb_foodtype" Association="Self.FK_tb_food_tb_foodtype">
       <End Role="tb_foodtype" EntitySet="tb_foodtype" />
       <End Role="tb_food" EntitySet="tb_food" />
@@ -361,6 +455,18 @@ FROM [cc].[vw_FoodDetail] AS [vw_FoodDetail]</DefiningQuery>
     <AssociationSet Name="FK_tb_perfiltb_usuarioPerfil" Association="Self.FK_tb_perfiltb_usuarioPerfil">
       <End Role="tb_perfil" EntitySet="tb_perfil" />
       <End Role="tb_usuarioPerfil" EntitySet="tb_usuarioPerfil" />
+    </AssociationSet>
+    <AssociationSet Name="FK_tb_userFood_tb_food" Association="Self.FK_tb_userFood_tb_food">
+      <End Role="tb_food" EntitySet="tb_food" />
+      <End Role="tb_userFood" EntitySet="tb_userFood" />
+    </AssociationSet>
+    <AssociationSet Name="FK_tb_userFood_tb_meal" Association="Self.FK_tb_userFood_tb_meal">
+      <End Role="tb_meal" EntitySet="tb_meal" />
+      <End Role="tb_userFood" EntitySet="tb_userFood" />
+    </AssociationSet>
+    <AssociationSet Name="FK_tb_userFood_tb_usuario" Association="Self.FK_tb_userFood_tb_usuario">
+      <End Role="tb_usuario" EntitySet="tb_usuario" />
+      <End Role="tb_userFood" EntitySet="tb_userFood" />
     </AssociationSet>
     <AssociationSet Name="FK_tb_usuairotb_usuarioPerfil" Association="Self.FK_tb_usuairotb_usuarioPerfil">
       <End Role="tb_usuario" EntitySet="tb_usuario" />

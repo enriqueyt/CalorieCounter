@@ -6,11 +6,11 @@ using System.Threading.Tasks;
 
 namespace CalorieCounter.Objetos
 {
-    public class objRegistro
+    public class objClient
     {
         public int idCliente        { get; set; }
 
-        public int idUsuario { get; set; }
+        public int idUsuario        { get; set; }
 
         public string nombre        { get; set; }
 

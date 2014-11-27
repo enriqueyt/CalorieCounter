@@ -43,9 +43,10 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="clientService.cs" />
     <Compile Include="foodService.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="servicioLogin.cs" />
+    <Compile Include="loginService.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\CalorieCounter.Objetos\CalorieCounter.Objetos.csproj">

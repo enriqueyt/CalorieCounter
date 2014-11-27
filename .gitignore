@@ -10,10 +10,9 @@
 *.sln
 *.suo
 *.sql
+
 /packages/
-
 /ColorieCounter.BD/
-
 /CalorieCounter.Controlador/bin/
 /CalorieCounter.Controlador/obj/
 /CalorieCounter.Controlador/Properties/

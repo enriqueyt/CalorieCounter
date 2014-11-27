@@ -83,10 +83,16 @@
     <Compile Include="tb_detailFoodColumn.cs">
       <DependentUpon>CalorieCounter.tt</DependentUpon>
     </Compile>
+    <Compile Include="tb_favoriteFood.cs">
+      <DependentUpon>CalorieCounter.tt</DependentUpon>
+    </Compile>
     <Compile Include="tb_food.cs">
       <DependentUpon>CalorieCounter.tt</DependentUpon>
     </Compile>
     <Compile Include="tb_foodtype.cs">
+      <DependentUpon>CalorieCounter.tt</DependentUpon>
+    </Compile>
+    <Compile Include="tb_meal.cs">
       <DependentUpon>CalorieCounter.tt</DependentUpon>
     </Compile>
     <Compile Include="tb_measurementType.cs">
@@ -96,6 +102,9 @@
       <DependentUpon>CalorieCounter.tt</DependentUpon>
     </Compile>
     <Compile Include="tb_sesion.cs">
+      <DependentUpon>CalorieCounter.tt</DependentUpon>
+    </Compile>
+    <Compile Include="tb_userFood.cs">
       <DependentUpon>CalorieCounter.tt</DependentUpon>
     </Compile>
     <Compile Include="tb_usuario.cs">

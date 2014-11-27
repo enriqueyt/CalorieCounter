@@ -39,8 +39,9 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="ControladorLogin.cs" />
-    <Compile Include="ControllerFood.cs" />
+    <Compile Include="clientController.cs" />
+    <Compile Include="loginController.cs" />
+    <Compile Include="foodController.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

@@ -8,10 +8,10 @@ using CalorieCounter.Objetos;
 
 namespace CalorieCounter.ServicioBD
 {
-    public class servicioLogin
+    public class loginService
     {
         CalorieCounterEntities calorieCounterBD = null;
-        public servicioLogin() 
+        public loginService() 
         {
             calorieCounterBD = new CalorieCounterEntities();
         }
@@ -87,7 +87,7 @@ namespace CalorieCounter.ServicioBD
         /// <param name="login"></param>
         /// <param name="registro"></param>
         /// <returns></returns>
-        public object loginSocial(objLogin login, objRegistro registro) 
+        public object loginSocial(objLogin login, objClient registro) 
         {
             tb_usuario usuario = null;
 
@@ -106,7 +106,7 @@ namespace CalorieCounter.ServicioBD
                 }
                 else 
                 {
-                    registro        = this.registrarCliente(registro, login, false);
+                    registro        = new clientService().saveClient(registro, login, false);
                     login.idUsuario = registro.idUsuario;
                 }
 
@@ -118,77 +118,7 @@ namespace CalorieCounter.ServicioBD
                 throw new Exception(ex.Message + " " + ex.StackTrace, ex.InnerException);
             }
         }
-
-        /// <summary>
-        /// Registra un nuevo cliente 
-        /// </summary>
-        /// <param name="regitro">obj segun parametros recibidos</param>
-        /// <param name="login">=</param>
-        /// <returns></returns>
-        public objRegistro registrarCliente(objRegistro regitro, objLogin login, bool modo = true) 
-        {
-
-            int aux = 0;
-
-            try
-            {
-
-                calorieCounterBD
-                    .tb_cliente.Add
-                        (
-                            new tb_cliente
-                            {
-                                nombre      = regitro.nombre,
-                                apellido    = regitro.apellido,
-                                correo      = regitro.correo,
-                                activo = 1
-                            }
-                        );
-
-                aux = Convert.ToInt32(calorieCounterBD.tb_cliente.OrderByDescending(o => o.id_cliente).Select(s => s.id_cliente).FirstOrDefault()) + 1;
-
-                tb_usuario a =
-                            (
-                                (modo)
-                                ?
-                                    new tb_usuario
-                                    {
-                                        usuario         = login.usuario,
-                                        contrasena      = login.contrasena,
-                                        fechaRegistro   = DateTime.Now,
-                                        activo          = 2,
-                                        id_cliente      = aux
-                                    }
-                                :
-                                    new tb_usuario
-                                    {
-                                        usuario         = login.usuario,
-                                        contrasena      = login.contrasena,
-                                        usuarioFacebook = login.usuarioFacebook,
-                                        usuarioTwiter   = login.usuarioTwiter,
-                                        validateToken   = login.validateToken,
-                                        fechaRegistro   = DateTime.Now,
-                                        id_cliente      = aux,
-                                        activo = 1
-                                    }
-                            );
-
-                calorieCounterBD.tb_usuario.Add(a);
-
-                calorieCounterBD.SaveChanges();
-
-                regitro.idCliente = aux;
-
-                regitro.idUsuario = calorieCounterBD.tb_usuario.Where(w => w.id_cliente == aux).Select(s => s.id_usuario).FirstOrDefault();
-
-                return regitro;
-            }
-            catch (Exception ex)
-            {
-                throw new Exception(ex.Message + " " + ex.StackTrace, ex.InnerException);
-            }
-        }
-
+   
         /// <summary>
         /// Inicio la sesion del usuario y devuelve un objSesion
         /// </summary>

@@ -40,14 +40,17 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="objBasicResponse.cs" />
+    <Compile Include="objDataClientFoods.cs" />
     <Compile Include="objFood.cs" />
     <Compile Include="objFoodDetailsSearchResponse.cs" />
     <Compile Include="objFoodSearchResponse.cs" />
     <Compile Include="objFoodType.cs" />
     <Compile Include="objFoodTypesResponse.cs" />
     <Compile Include="objLogin.cs" />
-    <Compile Include="objRegistro.cs" />
+    <Compile Include="objClient.cs" />
+    <Compile Include="objSaveFood.cs" />
     <Compile Include="objSesion.cs" />
+    <Compile Include="objUtilitiResponse.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

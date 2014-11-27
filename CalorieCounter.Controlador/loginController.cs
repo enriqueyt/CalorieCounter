@@ -8,10 +8,10 @@ using CalorieCounter.ServicioBD;
 
 namespace CalorieCounter.Controlador
 {
-    public class ControladorLogin
+    public class loginController
     {
         objBasicResponse respuesta = null;
-        public ControladorLogin() 
+        public loginController() 
         {
             respuesta = new objBasicResponse();
         }
@@ -27,12 +27,12 @@ namespace CalorieCounter.Controlador
 
             objLogin login = new objLogin { usuario = usuario, contrasena = contrasena };
 
-            servicioLogin loginService = null;
+            loginService loginService = null;
 
             try 
             {
 
-                loginService = new servicioLogin();
+                loginService = new loginService();
 
                 if (loginService.existeUsuario(login))
                 {
@@ -76,13 +76,13 @@ namespace CalorieCounter.Controlador
         {
 
             objLogin login          = new objLogin { usuario = usuario, usuarioFacebook = idFacebook, usuarioTwiter = idTwiter, validateToken = validateToken };
-            objRegistro registro    = new objRegistro { nombre = name, apellido = lastname, correo = usuario };
+            objClient registro    = new objClient { nombre = name, apellido = lastname, correo = usuario };
             object res = null;
-            servicioLogin loginService = null;
+            loginService loginService = null;
 
             try
             {
-                loginService = new servicioLogin();
+                loginService = new loginService();
 
                 res = loginService.loginSocial(login, registro);
 
@@ -119,11 +119,11 @@ namespace CalorieCounter.Controlador
         {
 
             objLogin login          = new objLogin { usuario = Username, contrasena = Password, usuarioCorreo = Username };
-            objRegistro registro    = new objRegistro { nombre = name, apellido = lastname, correo = Username };
+            objClient registro    = new objClient { nombre = name, apellido = lastname, correo = Username };
 
             try
             {
-               registro = new servicioLogin().registrarCliente(registro, login);
+               registro = new clientService().saveClient(registro, login);
 
                if (registro != null)
                 {

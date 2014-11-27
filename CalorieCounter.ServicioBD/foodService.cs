@@ -131,6 +131,8 @@ namespace CalorieCounter.ServicioBD
                                     }).ToList()
                             }).ToList();
 
+                    if (_objClassificationFood.Count == 0) return new objFoodDetailsSearchResponse {code = "100"};
+
                     _objClassificationFood.ForEach(f => {
 
                         objClasificationDef _objClasificationDef = clasifications.Find(fin => fin.name == f.name);
@@ -166,11 +168,183 @@ namespace CalorieCounter.ServicioBD
             }
         }
 
+        /// <summary>
+        /// obtiene meal (breakfast, lunch, etc)
+        /// </summary>
+        /// <returns></returns>
+        public List<objUtiliti> GetMealType() 
+        {
+
+            try
+            {
+                using (calorieCounterBD = new CalorieCounterEntities())
+                {
+                   return  calorieCounterBD.tb_meal.Select(s => new objUtiliti { id = s.id_meal, description = s.description }).ToList<objUtiliti>();
+                }
+
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.Message, ex.InnerException);
+            }
+
+        }
+
+        /// <summary>
+        /// salva una comida seleccionada
+        /// </summary>
+        /// <param name="token">sesion</param>
+        /// <returns></returns>
+        public bool SaveFood(string token, int idFood, double count, string scale, int meal) 
+        {
+
+            objSaveFood _objSaveFood    = null;
+            objClient _objClient        = null;
+            tb_userFood _tb_userFood    = null;
+            bool ok = false;
+
+            try
+            {
+                _objSaveFood = new objSaveFood {
+                    token   = token,
+                    id_food = idFood,
+                    count   = count,
+                    scale   = scale,
+                    meal    = meal
+                };
+
+                _objClient = new clientService().findClientebyToken(token);
+
+                _objSaveFood.id_user = _objClient.idUsuario;
+
+                using (calorieCounterBD = new CalorieCounterEntities())
+                {
+                    _tb_userFood = calorieCounterBD.tb_userFood.Where(w => w.id_food == _objSaveFood.id_food).FirstOrDefault();
+
+                    if (_tb_userFood == null)
+                    {
+                        _tb_userFood = new tb_userFood 
+                        {
+                            id_user = _objSaveFood.id_user,
+                            id_food = _objSaveFood.id_food,
+                            count   = _objSaveFood.count,
+                            date    = DateTime.Now,
+                            scale   = _objSaveFood.scale,
+                            meal    = _objSaveFood.meal
+                        };
+
+                        calorieCounterBD.SaveChanges();
+
+                        ok = true;
+                    }
+
+                }
+
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.Message, ex.InnerException);
+            }
+
+            return ok;
+        }
+
+        /// <summary>
+        /// obtiene una lista de mis comidas diarias
+        /// </summary>
+        public objDataClientFoodsResponse GetListFoodOwn(string token, DateTime? date = null) 
+        {
+
+            objClient _objClient = null;
+            objDataClientFoodsResponse _objDataClientFoodsResponse = null;
+
+            try
+            {
+                _objClient = new clientService().findClientebyToken(token);
+
+                using(calorieCounterBD = new CalorieCounterEntities())
+	            {
+                   
+                    _objDataClientFoodsResponse = new objDataClientFoodsResponse {
+                        objDataClientFoods = calorieCounterBD.tb_userFood
+                                .Where(w => w.id_user == _objClient.idUsuario)
+                                .Select(s => new objDataClientFoods
+                                {
+                                    id_food = s.id_food,
+                                    description = s.tb_food.description,
+                                    count = s.count,
+                                    scale = s.scale,
+                                    meal = s.tb_meal.id_meal,
+                                    descMeal = s.tb_meal.description
+
+                                }).AsEnumerable()
+                                .GroupBy(g => new 
+                                { 
+                                    g.meal, 
+                                    g.id_food, 
+                                    g.description, 
+                                    g.count, 
+                                    g.scale, 
+                                    g.descMeal
+                                })
+                                .Select(se => new objDataClientFoods
+                                {
+                                    id_food     = se.Key.id_food,
+                                    description = se.Key.description,
+                                    count = se.Key.count,
+                                    scale = se.Key.scale,
+                                    meal = se.Key.meal,
+                                    descMeal = se.Key.descMeal
+
+                                }).ToList()
+                                
+                    };
+
+/*
+                    objDataClientFoodsResponse _aobjDataClientFoodsResponse = new objDataClientFoodsResponse
+                    {
+                        objDataClientFoods =
+                               calorieCounterBD.tb_meal
+                                .Join(calorieCounterBD.tb_userFood, meal => meal.id_meal, userFood => userFood.meal, (meal, userFood) => new {meal,userFood })
+                                .Where(w => w.userFood.id_user == _objClient.idUsuario)
+                                .Select(s => new objDataClientFoods
+                                {
+
+                                    id_food     = s.userFood.id_food,
+                                    description = s.userFood.tb_food.description,
+                                    count       = s.userFood.count,
+                                    scale       = s.userFood.scale,
+                                    meal        = s.userFood.tb_meal.id_meal,
+                                    descMeal    = s.userFood.tb_meal.description
+
+                                }).ToList()
+
+                    };*/
+
+                        
+	            }
+
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.Message, ex.InnerException);
+            }
+
+            return _objDataClientFoodsResponse;
+        }
     }
 
+    public class objDataClientFoodsResponse
+    {
+        public List<objDataClientFoods> objDataClientFoods {get;set;}
 
+        public int id_meal{get;set;}
 
-   
+        public string meal{get;set;}
+    }
+
+    
+
 }
 
 
