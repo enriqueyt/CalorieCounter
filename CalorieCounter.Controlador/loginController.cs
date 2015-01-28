@@ -118,7 +118,7 @@ namespace CalorieCounter.Controlador
         public objBasicResponse Register(string Username, string Password, string name, string lastname)
         {
 
-            objLogin login          = new objLogin { usuario = Username, contrasena = Password, usuarioCorreo = Username };
+            objLogin login        = new objLogin { usuario = Username, contrasena = Password, usuarioCorreo = Username };
             objClient registro    = new objClient { nombre = name, apellido = lastname, correo = Username };
 
             try

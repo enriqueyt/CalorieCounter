@@ -27,19 +27,19 @@
         <AssociationConnector Association="CalorieCounterModel.FK_tb_perfiltb_usuarioPerfil" />
         <AssociationConnector Association="CalorieCounterModel.FK_tb_usuariotb_sesion" />
         <AssociationConnector Association="CalorieCounterModel.FK_tb_usuairotb_usuarioPerfil" />
-        <EntityTypeShape EntityType="CalorieCounterModel.vw_FoodDetail" Width="1.75" PointX="0.5" PointY="8.5" IsExpanded="false" />
-        <EntityTypeShape EntityType="CalorieCounterModel.tb_favoriteFood" Width="1.5" PointX="4.125" PointY="6.375" IsExpanded="false" />
-        <EntityTypeShape EntityType="CalorieCounterModel.tb_meal" Width="1.5" PointX="4.375" PointY="8.875" IsExpanded="false" />
-        <EntityTypeShape EntityType="CalorieCounterModel.tb_userFood" Width="1.5" PointX="6" PointY="7.25" IsExpanded="true" />
-        <AssociationConnector Association="CalorieCounterModel.FK_tb_favoriteFood_tb_usuario" />
-        <AssociationConnector Association="CalorieCounterModel.FK_tb_userFood_tb_meal" />
-        <AssociationConnector Association="CalorieCounterModel.FK_tb_userFood_tb_usuario" />
+        <EntityTypeShape EntityType="CalorieCounterModel.vw_FoodDetail" Width="1.75" PointX="3.875" PointY="11.25" IsExpanded="false" />
         <EntityTypeShape EntityType="CalorieCounterModel.tb_food" Width="1.5" PointX="10" PointY="7" IsExpanded="false" />
         <AssociationConnector Association="CalorieCounterModel.FK_tb_foodtb_classificationFood" />
-        <AssociationConnector Association="CalorieCounterModel.FK_tb_favoriteFood_tb_food" />
         <AssociationConnector Association="CalorieCounterModel.FK_tb_food_tb_foodtype" />
+        <EntityTypeShape EntityType="CalorieCounterModel.tb_meal" Width="1.5" PointX="3.875" PointY="9.125" IsExpanded="false" />
+        <EntityTypeShape EntityType="CalorieCounterModel.tb_userFood" Width="1.5" PointX="6.75" PointY="7.75" IsExpanded="false" />
         <AssociationConnector Association="CalorieCounterModel.FK_tb_userFood_tb_food" />
-      </Diagram>
+        <AssociationConnector Association="CalorieCounterModel.FK_tb_userFood_tb_meal" />
+        <AssociationConnector Association="CalorieCounterModel.FK_tb_userFood_tb_usuario" />
+        <EntityTypeShape EntityType="CalorieCounterModel.tb_favoriteFood" Width="1.5" PointX="5.375" PointY="6" IsExpanded="false" />
+        <AssociationConnector Association="CalorieCounterModel.FK_tb_favoriteFood_tb_food" />
+        <AssociationConnector Association="CalorieCounterModel.FK_tb_favoriteFood_tb_usuario" />
+        </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>
 </edmx:Edmx>

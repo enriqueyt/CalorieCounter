@@ -33,14 +33,20 @@ namespace CalorieCounter.ServicioBD
                             (
                                 new tb_cliente
                                 {
-                                    nombre = registro.nombre,
-                                    apellido = registro.apellido,
-                                    correo = registro.correo,
-                                    activo = 1
+                                    nombre      = registro.nombre,
+                                    apellido    = registro.apellido,
+                                    correo      = registro.correo,
+                                    activo      = 1
                                 }
                             );
 
                     aux = Convert.ToInt32(calorieCounterBD.tb_cliente.OrderByDescending(o => o.id_cliente).Select(s => s.id_cliente).FirstOrDefault()) + 1;
+
+                    if (calorieCounterBD.tb_usuario.Any(a => a.usuario == login.usuario)){
+                        registro.message = "existing user";
+                        return registro;
+                    }
+                        
 
                     tb_usuario tbUsuario =
                                 (
@@ -48,23 +54,23 @@ namespace CalorieCounter.ServicioBD
                                     ?
                                         new tb_usuario
                                         {
-                                            usuario = login.usuario,
-                                            contrasena = login.contrasena,
-                                            fechaRegistro = DateTime.Now,
-                                            activo = 2,
-                                            id_cliente = aux
+                                            usuario         = login.usuario,
+                                            contrasena      = login.contrasena,
+                                            fechaRegistro   = DateTime.Now,
+                                            activo          = 1,
+                                            id_cliente      = aux
                                         }
                                     :
                                         new tb_usuario
                                         {
-                                            usuario = login.usuario,
-                                            contrasena = login.contrasena,
+                                            usuario         = login.usuario,
+                                            contrasena      = login.contrasena,
                                             usuarioFacebook = login.usuarioFacebook,
-                                            usuarioTwiter = login.usuarioTwiter,
-                                            validateToken = login.validateToken,
-                                            fechaRegistro = DateTime.Now,
-                                            id_cliente = aux,
-                                            activo = 1
+                                            usuarioTwiter   = login.usuarioTwiter,
+                                            validateToken   = login.validateToken,
+                                            fechaRegistro   = DateTime.Now,
+                                            id_cliente      = aux,
+                                            activo          = 1
                                         }
                                 );
 
@@ -85,6 +91,11 @@ namespace CalorieCounter.ServicioBD
             }
         }
 
+        /// <summary>
+        /// obtiene el cliente con solo pasarle el token de la sesion
+        /// </summary>
+        /// <param name="token"></param>
+        /// <returns></returns>
         public objClient findClientebyToken(string token) 
         {
             objClient _objClient = null;
@@ -94,12 +105,9 @@ namespace CalorieCounter.ServicioBD
                 {
                     _objClient = (
                                 calorieCounterBD.tb_sesion
-                                .Join(
-                                    calorieCounterBD.tb_usuario, sesion => sesion.id_usuario, usuario => usuario.id_usuario, (sesion, usuario) => new { sesion, usuario }
-                                )
+                                .Join(calorieCounterBD.tb_usuario, sesion => sesion.id_usuario, usuario => usuario.id_usuario, (sesion, usuario) => new { sesion, usuario })
                                 .Where(w => w.sesion.sesion == token && w.sesion.activo == 1)
-                                .Select(s => new objClient
-                                {
+                                .Select(s => new objClient {
                                     idUsuario   = s.usuario.id_usuario,
                                     idCliente   = s.usuario.tb_cliente.id_cliente,
                                     nombre      = s.usuario.tb_cliente.nombre,
@@ -120,7 +128,7 @@ namespace CalorieCounter.ServicioBD
         /// <summary>
         /// obtiene una lista de mis comidas diarias
         /// </summary>
-        public objDataClientFoodsResponse GetListFoodClient(string token, DateTime? date = null)
+        public objDataClientFoodsResponse GetListFoodClient(string token, string date = null)
         {
 
             objClient _objClient = null;
@@ -142,18 +150,18 @@ namespace CalorieCounter.ServicioBD
                                     id_food = s.id_food,
                                     description = s.tb_food.description,
                                     count = s.count,
-                                    scale = s.scale,
-                                    meal = s.tb_meal.id_meal,
+                                    id_scale = s.id_scale,
+                                    id_meal = s.tb_meal.id_meal,
                                     descMeal = s.tb_meal.description
 
                                 }).AsEnumerable()
                                 .GroupBy(g => new
                                 {
-                                    g.meal,
+                                    g.id_meal,
                                     g.id_food,
                                     g.description,
                                     g.count,
-                                    g.scale,
+                                    g.id_scale,
                                     g.descMeal
                                 })
                                 .Select(se => new objDataClientFoods
@@ -161,35 +169,13 @@ namespace CalorieCounter.ServicioBD
                                     id_food = se.Key.id_food,
                                     description = se.Key.description,
                                     count = se.Key.count,
-                                    scale = se.Key.scale,
-                                    meal = se.Key.meal,
+                                    id_scale = se.Key.id_scale,
+                                    id_meal = se.Key.id_meal,
                                     descMeal = se.Key.descMeal
 
                                 }).ToList()
 
                     };
-
-                    /*
-                                        objDataClientFoodsResponse _aobjDataClientFoodsResponse = new objDataClientFoodsResponse
-                                        {
-                                            objDataClientFoods =
-                                                   calorieCounterBD.tb_meal
-                                                    .Join(calorieCounterBD.tb_userFood, meal => meal.id_meal, userFood => userFood.meal, (meal, userFood) => new {meal,userFood })
-                                                    .Where(w => w.userFood.id_user == _objClient.idUsuario)
-                                                    .Select(s => new objDataClientFoods
-                                                    {
-
-                                                        id_food     = s.userFood.id_food,
-                                                        description = s.userFood.tb_food.description,
-                                                        count       = s.userFood.count,
-                                                        scale       = s.userFood.scale,
-                                                        meal        = s.userFood.tb_meal.id_meal,
-                                                        descMeal    = s.userFood.tb_meal.description
-
-                                                    }).ToList()
-
-                                        };*/
-
 
                 }
 
@@ -202,5 +188,86 @@ namespace CalorieCounter.ServicioBD
             return _objDataClientFoodsResponse;
         }
 
+        /// <summary>
+        /// obtiene el resumen de camidas agregadas por dia, funciona para la 
+        /// pagina inicial (para esta solo se deben sumar los totales y listo.)
+        /// y tambien para la pagina principal del historial que comidas en el dia
+        /// para este si se encuentra desglosado por tipo de alimento (desayuno,
+        /// almuerzo, merienditas y cena)
+        /// </summary>
+        /// <param name="dia"></param>
+        /// <returns></returns>
+        public List<objResumenDiario> GetRecordFood(string token, out double? total, DateTime? dia = null)
+        {
+            try
+            {
+                List<objResumenDiario> resumenDiario = null;
+                objClient _objClient = this.findClientebyToken(token);
+                dia = (dia == null ? DateTime.Now.Date : dia);
+                double? _total = 0;
+
+                using (calorieCounterBD = new CalorieCounterEntities())
+                {
+
+                    resumenDiario =
+                        calorieCounterBD.tb_meal
+                        .Select(s => new
+                        {
+                            description = s.description,
+                            id = s.id_meal
+                        }).AsEnumerable()
+                        .Select(se => new objResumenDiario
+                        {
+                            description = se.description,
+                            id = se.id,
+                            objfood =
+                               calorieCounterBD.tb_userFood
+                               .Where(w => w.id_user == _objClient.idUsuario && w.id_meal == se.id && w.date == dia)
+                               .Select(sel => new
+                               {
+                                   count = sel.count,
+                                   date = sel.date,
+                                   id_food = sel.id_food,
+                                   description = sel.tb_food.description,
+                                   scale = sel.id_scale
+                               })
+                               .AsEnumerable()
+                               .Select(sele => new objFood
+                               {
+                                   count = sele.count,
+                                   date = sele.date,
+                                   id_food = sele.id_food,
+                                   description = sele.description,
+                                   descScale = calorieCounterBD.tb_columnsFood.Where(wh => wh.id_columnsfood == sele.scale).Select(selec => selec.descripcion).FirstOrDefault()
+                               }).ToList()
+                        })
+                        .ToList();
+
+
+                    double? aux = 0;
+                    if (resumenDiario != null)
+                        foreach (var item in resumenDiario) {
+                            aux = 0;
+                            if (item.objfood.Count > 0) {
+                                foreach (var item1 in item.objfood) {
+                                    aux += item1.count;
+                                    
+                                }
+                            }
+                            item.cant = aux;
+                            _total += item.cant;
+                        }
+                            
+
+                }
+                total = _total;
+                return resumenDiario;
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.Message, ex.InnerException);
+            }
+        }
+   
     }
 }

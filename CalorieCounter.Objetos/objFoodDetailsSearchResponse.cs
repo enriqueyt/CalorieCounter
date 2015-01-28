@@ -12,6 +12,8 @@ namespace CalorieCounter.Objetos
 
         public List<objClasificationDef> _objClasificationDef { get; set; }
 
+        public List<objUtiliti> listScale { get; set; }
+
         public int columnsCount { get; set; }
 
     }

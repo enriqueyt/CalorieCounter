@@ -1,7 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using CalorieCounter.BD;
 using CalorieCounter.Objetos;
@@ -16,8 +18,8 @@ namespace CalorieCounter.ServicioBD
         /// return a speciific food
         /// </summary>
         /// <param name="ID"></param>
-        /// <param name="Description"></param>
-        /// <param name="GroupID"></param>
+        /// <param name="description"></param>
+        /// <param name="groupID"></param>
         /// <returns></returns>
         public List<objFood> FoodSearch(int ID, string Description, int GroupID) {
 
@@ -27,14 +29,45 @@ namespace CalorieCounter.ServicioBD
             {
                 using (calorieCounterBD = new CalorieCounterEntities())
                 {
-                    l_objFood = 
-                        calorieCounterBD.tb_food
-                            .Where(w => w.id_food == ID || w.description.Contains(Description) || w.id_foodtype == GroupID)
-                            .Select(s => new objFood {
-                                Id = s.id_food,
-                                Description = s.description,
-                                GroupID = s.id_foodtype
-                            }).ToList<objFood>();
+
+                    if (ID != -1) 
+                    {
+                        l_objFood =
+                           calorieCounterBD.tb_food
+                               .Where(w => w.id_food == ID)
+                               .Select(s => new objFood
+                               {
+                                   id_food = s.id_food,
+                                   description = s.description,
+                                   groupID = s.id_foodtype
+                               }).ToList<objFood>();
+                    }
+                    else if (GroupID != -1) 
+                    {
+                        l_objFood =
+                           calorieCounterBD.tb_food
+                               .Where(w => w.id_foodtype == GroupID)
+                               .Select(s => new objFood
+                               {
+                                   id_food = s.id_food,
+                                   description = s.description,
+                                   groupID = s.id_foodtype
+                               }).ToList<objFood>();
+                    }
+                    else if (!string.IsNullOrEmpty(Description)) 
+                    {
+                        l_objFood =
+                           calorieCounterBD.tb_food
+                               .Where(w => w.description.Contains(Description))
+                               .Select(s => new objFood
+                               {
+                                   id_food = s.id_food,
+                                   description = s.description,
+                                   groupID = s.id_foodtype
+                               }).ToList<objFood>();
+                    }
+
+                   
                 }
 
                 return l_objFood;
@@ -157,8 +190,9 @@ namespace CalorieCounter.ServicioBD
                     });
 
                     return new objFoodDetailsSearchResponse {   
-                        _objClasificationDef = clasifications, 
-                        columnsCount = clasifications[0].listObjFoodDetail[0].FirstOrDefault().count 
+                        _objClasificationDef    = clasifications,
+                        listScale               = this.GetListScale(idFood),
+                        columnsCount            = clasifications[0].listObjFoodDetail[0].FirstOrDefault().count 
                     };
                 }
             }
@@ -195,7 +229,7 @@ namespace CalorieCounter.ServicioBD
         /// </summary>
         /// <param name="token">sesion</param>
         /// <returns></returns>
-        public bool SaveFood(string token, int idFood, double count, string scale, int meal) 
+        public bool SaveFood(string token, int idFood, double amount, int scale, int meal, bool favorite) 
         {
 
             objSaveFood _objSaveFood    = null;
@@ -208,7 +242,7 @@ namespace CalorieCounter.ServicioBD
                 _objSaveFood = new objSaveFood {
                     token   = token,
                     id_food = idFood,
-                    count   = count,
+                    amount = amount,
                     scale   = scale,
                     meal    = meal
                 };
@@ -219,19 +253,36 @@ namespace CalorieCounter.ServicioBD
 
                 using (calorieCounterBD = new CalorieCounterEntities())
                 {
-                    _tb_userFood = calorieCounterBD.tb_userFood.Where(w => w.id_food == _objSaveFood.id_food).FirstOrDefault();
+                    _tb_userFood = calorieCounterBD.tb_userFood.Where(w => w.id_food == _objSaveFood.id_food && w.id_meal == _objSaveFood.meal).FirstOrDefault();
 
                     if (_tb_userFood == null)
                     {
-                        _tb_userFood = new tb_userFood 
+
+                        calorieCounterBD.tb_userFood.Add(
+                            new tb_userFood
+                            {
+                                id_user = _objSaveFood.id_user,
+                                id_food = _objSaveFood.id_food,
+                                count = _objSaveFood.amount,
+                                date = DateTime.Now,
+                                id_scale = _objSaveFood.scale,
+                                id_meal = _objSaveFood.meal
+                            }
+                        );
+
+                        if (favorite) 
                         {
-                            id_user = _objSaveFood.id_user,
-                            id_food = _objSaveFood.id_food,
-                            count   = _objSaveFood.count,
-                            date    = DateTime.Now,
-                            scale   = _objSaveFood.scale,
-                            meal    = _objSaveFood.meal
-                        };
+                            if (!calorieCounterBD.tb_favoriteFood.Any(a => a.id_food == _objSaveFood.id_food && a.id_user == _objSaveFood.id_user)) {
+                                calorieCounterBD.tb_favoriteFood.Add(
+                                       new tb_favoriteFood
+                                       {
+                                           id_user = _objSaveFood.id_user,
+                                           id_food = _objSaveFood.id_food
+                                       }
+                                   );
+                            }
+                           
+                        }
 
                         calorieCounterBD.SaveChanges();
 
@@ -249,7 +300,81 @@ namespace CalorieCounter.ServicioBD
             return ok;
         }
 
-       
+        /// <summary>
+        /// obtiene la scala y los valores en gramos
+        /// </summary>
+        /// <param name="id_food"></param>
+        /// <returns></returns>
+        public List<objUtiliti> GetListScale(int id_food) 
+        {
+            try
+            {
+                List<objUtiliti> resp = null;
+
+                double? aux = this.GetGramoskalorias(id_food);
+
+                using (calorieCounterBD = new CalorieCounterEntities())
+                {
+                    resp =
+                        calorieCounterBD.tb_food
+                        .Join(calorieCounterBD.tb_classificationFood, food => food.id_food, claFood => claFood.id_food, (food, claFood) => new { food, claFood })
+                        .Join(calorieCounterBD.tb_classificationDetail, tbClaFo => tbClaFo.claFood.id_classificationFood, tbClaDe => tbClaDe.id_classificationFood, (tbClaFo, tbClaDe) => new { tbClaFo, tbClaDe })
+                        .Join(calorieCounterBD.tb_detailFood, claDe_detFood => claDe_detFood.tbClaDe.id_detailFood, detFood => detFood.id_detailFood, (claDe_detFood, detFood) => new { claDe_detFood, detFood })
+                        .Join(calorieCounterBD.tb_detailFoodColumn, detFood_detFoodCol => detFood_detFoodCol.detFood.id_detailFood, detFoodCol => detFoodCol.id_detailFood, (detFood_detFoodCol, detFoodCol) => new { detFood_detFoodCol, detFoodCol })
+                        .Join(calorieCounterBD.tb_columnsFood, detFoodCol_colFood => detFoodCol_colFood.detFoodCol.id_columnsfood, colFood => colFood.id_columnsfood, (detFoodCol_colFood, colFood) => new { detFoodCol_colFood, colFood })
+                        .Where(w => w.detFoodCol_colFood.detFood_detFoodCol.claDe_detFood.tbClaFo.food.id_food == id_food)
+                        .GroupBy(g => g.colFood.descripcion)
+                        .Select(s => new { description = s.Select(se => se.colFood.descripcion).FirstOrDefault(), id = s.Select(sel=> sel.colFood.id_columnsfood).FirstOrDefault() })
+                        .AsEnumerable()
+                        .Select(s => new objUtiliti
+                        {
+                            id  = s.id,
+                            description = new Regex(@"-?[0-9]*(\.|)[0-9]+(\s|)g", RegexOptions.IgnoreCase).Replace(s.description, "").Trim(),
+                            value = new Regex(@"-?[0-9]*(\.|)[0-9]+(\s|)g", RegexOptions.IgnoreCase).Match(s.description).Value,
+                            value1 = ((Double.Parse((new Regex(@"-?[0-9]*(\.|)[0-9]+(\s|)g", RegexOptions.IgnoreCase).Match(s.description).Value).Replace("g", ""), CultureInfo.InvariantCulture) * (aux)) / 100),
+
+                        }).ToList();
+
+                    return resp;
+                }
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.Message, ex.InnerException);
+            }
+        }
+
+        /// <summary>
+        /// obtiene las calorias por cada 100 gramos de cada comida
+        /// </summary>
+        /// <param name="id_food"></param>
+        /// <returns></returns>
+        private double? GetGramoskalorias(int id_food) 
+        {
+            try
+            {
+                double? value = 0;
+
+                using (calorieCounterBD = new CalorieCounterEntities())
+                {
+                    value =
+                        calorieCounterBD.tb_classificationFood
+                        .Join(calorieCounterBD.tb_classificationDetail, a => a.id_classificationFood, b => b.id_classificationFood, (a, b) => new { a, b })
+                        .Join(calorieCounterBD.tb_detailFood, c => c.b.id_detailFood, d => d.id_detailFood, (c, d) => new { c, d })
+                        .Join(calorieCounterBD.tb_detailFoodColumn, e => e.d.id_detailFood, f => f.id_detailFood, (e, f) => new { e, f })
+                        .Where(w => w.e.c.a.id_food == id_food && w.e.c.a.descripcion.Contains("Proximates") && w.e.d.descripcion.Contains("Energy"))
+                        .Select(s =>  s.f.foodValue).FirstOrDefault();
+
+                }
+                return value;
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.Message, ex.InnerException);
+            }
+        }
+
+
     }
 
 }

@@ -23,5 +23,7 @@ namespace CalorieCounter.Objetos
         public string documento     { get; set; }
 
         public string telefono      { get; set; }
+
+        public string message       { get; set; }
     }
 }

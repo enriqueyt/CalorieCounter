@@ -10,11 +10,11 @@ namespace CalorieCounter.Controlador
 {
     public class clientController
     {
-        public objBasicResponse saveFood(string token, int idFood, double count, string scale, int meal) 
+        public objBasicResponse saveFood(string token, int idFood, double count, int scale, int meal, bool favorite) 
         {
             try
             {
-                if (new foodService().SaveFood(token, idFood, count, scale, meal))
+                if (new foodService().SaveFood(token, idFood, count, scale, meal, favorite))
                     return new objBasicResponse { code = "200", result = "true" };
                 else
                     return new objBasicResponse { code = "500", result = "false" };
@@ -25,7 +25,7 @@ namespace CalorieCounter.Controlador
             }
         }
 
-        public objDataClientFoodsResponse GetListFoodClient(string token, DateTime? date = null) 
+        public objDataClientFoodsResponse GetListFoodClient(string token, string date ) 
         {
             try
             {
@@ -36,5 +36,19 @@ namespace CalorieCounter.Controlador
                 return new objDataClientFoodsResponse { message = ex.Message, tarce = ex.StackTrace };
             }
         }
+
+        public objDataClientFoodsResponse  GetRecordFood(string token, string date)
+        {
+            try
+            {
+                double? _total = 0;
+                return new objDataClientFoodsResponse { objResumenDiario = new clientService().GetRecordFood(token, out _total, null), total = _total };
+            }
+            catch (Exception ex)
+            {
+                return new objDataClientFoodsResponse { message = ex.Message, tarce = ex.StackTrace };
+            }
+        }
+
     }
 }

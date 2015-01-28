@@ -12,13 +12,13 @@ namespace CalorieCounter.Objetos
 
         public int? id_food { get; set; }
 
-        public int meal { get; set; }
+        public int id_meal { get; set; }
 
         public string descMeal { get; set; }
 
         public double? count { get; set; }
 
-        public string scale { get; set; }
+        public int? id_scale { get; set; }
 
     }
 }

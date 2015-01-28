@@ -61,7 +61,7 @@
     <Key>
       <PropertyRef Name="id_favoriteFood" />
     </Key>
-    <Property Name="id_favoriteFood" Type="int" Nullable="false" />
+    <Property Name="id_favoriteFood" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
     <Property Name="id_user" Type="int" Nullable="false" />
     <Property Name="id_food" Type="int" Nullable="false" />
   </EntityType>
@@ -88,7 +88,7 @@
     <Key>
       <PropertyRef Name="id_meal" />
     </Key>
-    <Property Name="id_meal" Type="int" Nullable="false" />
+    <Property Name="id_meal" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
     <Property Name="description" Type="varchar" MaxLength="50" />
     <Property Name="activo" Type="int" Nullable="false" />
   </EntityType>
@@ -125,13 +125,13 @@
     <Key>
       <PropertyRef Name="id_userFood" />
     </Key>
-    <Property Name="id_userFood" Type="int" Nullable="false" />
+    <Property Name="id_userFood" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
     <Property Name="id_user" Type="int" />
     <Property Name="id_food" Type="int" />
     <Property Name="date" Type="date" />
     <Property Name="count" Type="float" />
-    <Property Name="scale" Type="nchar" MaxLength="10" />
-    <Property Name="meal" Type="int" />
+    <Property Name="id_scale" Type="int" />
+    <Property Name="id_meal" Type="int" />
   </EntityType>
   <EntityType Name="tb_usuario">
     <Key>
@@ -334,7 +334,7 @@ advertencia 6002: La tabla o vista 'CalorieCounter.cc.vw_FoodDetail' no tiene de
         <PropertyRef Name="id_meal" />
       </Principal>
       <Dependent Role="tb_userFood">
-        <PropertyRef Name="meal" />
+        <PropertyRef Name="id_meal" />
       </Dependent>
     </ReferentialConstraint>
   </Association>

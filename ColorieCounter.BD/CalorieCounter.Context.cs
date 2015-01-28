@@ -39,9 +39,9 @@ namespace CalorieCounter.BD
         public DbSet<tb_usuarioPerfil> tb_usuarioPerfil { get; set; }
         public DbSet<sysdiagram> sysdiagrams { get; set; }
         public DbSet<vw_FoodDetail> vw_FoodDetail { get; set; }
-        public DbSet<tb_favoriteFood> tb_favoriteFood { get; set; }
+        public DbSet<tb_food> tb_food { get; set; }
         public DbSet<tb_meal> tb_meal { get; set; }
         public DbSet<tb_userFood> tb_userFood { get; set; }
-        public DbSet<tb_food> tb_food { get; set; }
+        public DbSet<tb_favoriteFood> tb_favoriteFood { get; set; }
     }
 }

@@ -17,8 +17,8 @@ namespace CalorieCounter.BD
         public tb_food()
         {
             this.tb_classificationFood = new HashSet<tb_classificationFood>();
-            this.tb_favoriteFood = new HashSet<tb_favoriteFood>();
             this.tb_userFood = new HashSet<tb_userFood>();
+            this.tb_favoriteFood = new HashSet<tb_favoriteFood>();
         }
     
         public int id_food { get; set; }
@@ -29,8 +29,8 @@ namespace CalorieCounter.BD
         public bool active { get; set; }
     
         public virtual ICollection<tb_classificationFood> tb_classificationFood { get; set; }
-        public virtual ICollection<tb_favoriteFood> tb_favoriteFood { get; set; }
         public virtual tb_foodtype tb_foodtype { get; set; }
         public virtual ICollection<tb_userFood> tb_userFood { get; set; }
+        public virtual ICollection<tb_favoriteFood> tb_favoriteFood { get; set; }
     }
 }

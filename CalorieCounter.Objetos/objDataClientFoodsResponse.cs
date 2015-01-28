@@ -10,8 +10,10 @@ namespace CalorieCounter.Objetos
     {
         public List<objDataClientFoods> objDataClientFoods { get; set; }
 
+        public List<objResumenDiario> objResumenDiario { get; set; }
         public int id_meal { get; set; }
 
+        public double? total { get; set; }
         public string meal { get; set; }
     }
 }

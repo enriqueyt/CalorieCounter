@@ -16,9 +16,9 @@ namespace CalorieCounter.Objetos
 
         public DateTime? date { get; set; }
 
-        public double count { get; set; }
+        public double amount { get; set; }
 
-        public string scale { get; set; }
+        public int scale { get; set; }
 
         public int meal { get; set; }
     }

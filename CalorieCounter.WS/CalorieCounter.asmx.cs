@@ -22,57 +22,67 @@ namespace CalorieCounter.WS
         [WebMethod]
         public objBasicResponse Login(string user, string password)
         {
-            return new loginController().Login(user, password);
+            return responseController.CheckJson(new loginController().Login(user, password)) as objBasicResponse;
         }
 
         [WebMethod]
         public objBasicResponse LoginSocial(string user, string idFacebook, string idTwiter, string validateToken, string name, string lastname)
         {
-            return new loginController().LoginSocial(user, idFacebook, idTwiter, validateToken, name, lastname);
+            return responseController.CheckJson(new loginController().LoginSocial(user, idFacebook, idTwiter, validateToken, name, lastname)) as objBasicResponse;
         }
 
         [WebMethod]
         public objBasicResponse Register(string user, string password, string name, string lastname)
         {
-            return new loginController().Register(user, password, name, lastname);
+            return responseController.CheckJson(new loginController().Register(user, password, name, lastname)) as objBasicResponse;
         }
 
         [WebMethod]
         public objFoodSearchResponse FoodSearch(string ID, string Description, string GroupID) {
-            return new foodController().FoodSearch(
-                String.IsNullOrEmpty(ID)?-1:Convert.ToInt32(ID),
-                Description, 
-                String.IsNullOrEmpty(GroupID) ? -1 : Convert.ToInt32(GroupID));
+            return 
+               responseController.CheckJson(
+                            new foodController().FoodSearch(
+                                String.IsNullOrEmpty(ID)? -1 : Convert.ToInt32(ID),
+                                Description, 
+                                String.IsNullOrEmpty(GroupID) ? -1 : Convert.ToInt32(GroupID)
+                           )) as objFoodSearchResponse;
         }
 
         [WebMethod]
         public objFoodTypesResponse GetFoodTypes()
         {
-            return new foodController().GetFoodTypes();
+            return responseController.CheckJson(new foodController().GetFoodTypes()) as objFoodTypesResponse;
         }
 
         [WebMethod]
         public objFoodDetailsSearchResponse GetFoodDetailsSearch(string idFood)
         {
-            return new foodController().GetFoodDetailsSearch(idFood);
+            return 
+                responseController.CheckJson(new foodController().GetFoodDetailsSearch(idFood) ) as objFoodDetailsSearchResponse;
         }
 
         [WebMethod]
         public objUtilitiResponse GetMealType() 
         {
-            return new foodController().GetMealType();
+            return responseController.CheckJson(new foodController().GetMealType()) as objUtilitiResponse;
         }
 
         [WebMethod]
-        public objBasicResponse SaveFood(string token, int idFood, double count, string scale, int meal)
+        public objBasicResponse SaveFood(string token, int idFood, double count, int scale, int meal, bool favorite)
         {
-            return new clientController().saveFood(token, idFood, count, scale, meal);
+            return responseController.CheckJson(new clientController().saveFood(token, idFood, count, scale, meal, favorite)) as objBasicResponse;
+        }
+        
+        [WebMethod]
+        public objDataClientFoodsResponse GetListFoodClient(string token, string date)
+        {
+            return responseController.CheckJson(new clientController().GetListFoodClient(token, date)) as objDataClientFoodsResponse;
         }
 
         [WebMethod]
-        public objDataClientFoodsResponse GetListFoodClient(string token, DateTime? date = null)
+        public objDataClientFoodsResponse GetRecordFood(string token, string date)
         {
-            return new clientController().GetListFoodClient(token, date);
+            return responseController.CheckJson(new clientController().GetRecordFood(token, date)) as objDataClientFoodsResponse;
         }
     }
 }

@@ -66,7 +66,7 @@
           <Key>
             <PropertyRef Name="id_favoriteFood" />
           </Key>
-          <Property Name="id_favoriteFood" Type="int" Nullable="false" />
+          <Property Name="id_favoriteFood" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="id_user" Type="int" Nullable="false" />
           <Property Name="id_food" Type="int" Nullable="false" />
         </EntityType>
@@ -93,7 +93,7 @@
           <Key>
             <PropertyRef Name="id_meal" />
           </Key>
-          <Property Name="id_meal" Type="int" Nullable="false" />
+          <Property Name="id_meal" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="description" Type="varchar" MaxLength="50" />
           <Property Name="activo" Type="int" Nullable="false" />
         </EntityType>
@@ -130,13 +130,13 @@
           <Key>
             <PropertyRef Name="id_userFood" />
           </Key>
-          <Property Name="id_userFood" Type="int" Nullable="false" />
+          <Property Name="id_userFood" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="id_user" Type="int" />
           <Property Name="id_food" Type="int" />
           <Property Name="date" Type="date" />
           <Property Name="count" Type="float" />
-          <Property Name="scale" Type="nchar" MaxLength="10" />
-          <Property Name="meal" Type="int" />
+          <Property Name="id_scale" Type="int" />
+          <Property Name="id_meal" Type="int" />
         </EntityType>
         <EntityType Name="tb_usuario">
           <Key>
@@ -339,7 +339,7 @@ advertencia 6002: La tabla o vista 'CalorieCounter.cc.vw_FoodDetail' no tiene de
               <PropertyRef Name="id_meal" />
             </Principal>
             <Dependent Role="tb_userFood">
-              <PropertyRef Name="meal" />
+              <PropertyRef Name="id_meal" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -541,12 +541,20 @@ FROM [cc].[vw_FoodDetail] AS [vw_FoodDetail]</DefiningQuery>
             <End Role="tb_usuarioPerfil" EntitySet="tb_usuarioPerfil" />
           </AssociationSet>
           <EntitySet Name="vw_FoodDetail" EntityType="CalorieCounterModel.vw_FoodDetail" />
-          <EntitySet Name="tb_favoriteFood" EntityType="CalorieCounterModel.tb_favoriteFood" />
+          <EntitySet Name="tb_food" EntityType="CalorieCounterModel.tb_food" />
+          <AssociationSet Name="FK_tb_foodtb_classificationFood" Association="CalorieCounterModel.FK_tb_foodtb_classificationFood">
+            <End Role="tb_food" EntitySet="tb_food" />
+            <End Role="tb_classificationFood" EntitySet="tb_classificationFood" />
+          </AssociationSet>
+          <AssociationSet Name="FK_tb_food_tb_foodtype" Association="CalorieCounterModel.FK_tb_food_tb_foodtype">
+            <End Role="tb_foodtype" EntitySet="tb_foodtype" />
+            <End Role="tb_food" EntitySet="tb_food" />
+          </AssociationSet>
           <EntitySet Name="tb_meal" EntityType="CalorieCounterModel.tb_meal" />
           <EntitySet Name="tb_userFood" EntityType="CalorieCounterModel.tb_userFood" />
-          <AssociationSet Name="FK_tb_favoriteFood_tb_usuario" Association="CalorieCounterModel.FK_tb_favoriteFood_tb_usuario">
-            <End Role="tb_usuario" EntitySet="tb_usuario" />
-            <End Role="tb_favoriteFood" EntitySet="tb_favoriteFood" />
+          <AssociationSet Name="FK_tb_userFood_tb_food" Association="CalorieCounterModel.FK_tb_userFood_tb_food">
+            <End Role="tb_food" EntitySet="tb_food" />
+            <End Role="tb_userFood" EntitySet="tb_userFood" />
           </AssociationSet>
           <AssociationSet Name="FK_tb_userFood_tb_meal" Association="CalorieCounterModel.FK_tb_userFood_tb_meal">
             <End Role="tb_meal" EntitySet="tb_meal" />
@@ -556,24 +564,16 @@ FROM [cc].[vw_FoodDetail] AS [vw_FoodDetail]</DefiningQuery>
             <End Role="tb_usuario" EntitySet="tb_usuario" />
             <End Role="tb_userFood" EntitySet="tb_userFood" />
           </AssociationSet>
-          <EntitySet Name="tb_food" EntityType="CalorieCounterModel.tb_food" />
-          <AssociationSet Name="FK_tb_foodtb_classificationFood" Association="CalorieCounterModel.FK_tb_foodtb_classificationFood">
-            <End Role="tb_food" EntitySet="tb_food" />
-            <End Role="tb_classificationFood" EntitySet="tb_classificationFood" />
-          </AssociationSet>
+          <EntitySet Name="tb_favoriteFood" EntityType="CalorieCounterModel.tb_favoriteFood" />
           <AssociationSet Name="FK_tb_favoriteFood_tb_food" Association="CalorieCounterModel.FK_tb_favoriteFood_tb_food">
             <End Role="tb_food" EntitySet="tb_food" />
             <End Role="tb_favoriteFood" EntitySet="tb_favoriteFood" />
           </AssociationSet>
-          <AssociationSet Name="FK_tb_food_tb_foodtype" Association="CalorieCounterModel.FK_tb_food_tb_foodtype">
-            <End Role="tb_foodtype" EntitySet="tb_foodtype" />
-            <End Role="tb_food" EntitySet="tb_food" />
+          <AssociationSet Name="FK_tb_favoriteFood_tb_usuario" Association="CalorieCounterModel.FK_tb_favoriteFood_tb_usuario">
+            <End Role="tb_usuario" EntitySet="tb_usuario" />
+            <End Role="tb_favoriteFood" EntitySet="tb_favoriteFood" />
           </AssociationSet>
-          <AssociationSet Name="FK_tb_userFood_tb_food" Association="CalorieCounterModel.FK_tb_userFood_tb_food">
-            <End Role="tb_food" EntitySet="tb_food" />
-            <End Role="tb_userFood" EntitySet="tb_userFood" />
-          </AssociationSet>
-        </EntityContainer>
+          </EntityContainer>
         <EntityType Name="tb_classificationDetail">
           <Key>
             <PropertyRef Name="id_classificationDetail" />
@@ -700,8 +700,8 @@ FROM [cc].[vw_FoodDetail] AS [vw_FoodDetail]</DefiningQuery>
           <NavigationProperty Name="tb_cliente" Relationship="CalorieCounterModel.FK_tb_usuariotb_cliente" FromRole="tb_usuario" ToRole="tb_cliente" />
           <NavigationProperty Name="tb_sesion" Relationship="CalorieCounterModel.FK_tb_usuariotb_sesion" FromRole="tb_usuario" ToRole="tb_sesion" />
           <NavigationProperty Name="tb_usuarioPerfil" Relationship="CalorieCounterModel.FK_tb_usuairotb_usuarioPerfil" FromRole="tb_usuario" ToRole="tb_usuarioPerfil" />
-          <NavigationProperty Name="tb_favoriteFood" Relationship="CalorieCounterModel.FK_tb_favoriteFood_tb_usuario" FromRole="tb_usuario" ToRole="tb_favoriteFood" />
           <NavigationProperty Name="tb_userFood" Relationship="CalorieCounterModel.FK_tb_userFood_tb_usuario" FromRole="tb_usuario" ToRole="tb_userFood" />
+          <NavigationProperty Name="tb_favoriteFood" Relationship="CalorieCounterModel.FK_tb_favoriteFood_tb_usuario" FromRole="tb_usuario" ToRole="tb_favoriteFood" />
         </EntityType>
         <EntityType Name="tb_usuarioPerfil">
           <Key>
@@ -857,76 +857,6 @@ FROM [cc].[vw_FoodDetail] AS [vw_FoodDetail]</DefiningQuery>
           <Property Name="Val" Type="Double" />
           <Property Name="UnitType" Type="String" Nullable="false" MaxLength="10" FixedLength="false" Unicode="false" />
         </EntityType>
-        <EntityType Name="tb_favoriteFood">
-          <Key>
-            <PropertyRef Name="id_favoriteFood" />
-          </Key>
-          <Property Name="id_favoriteFood" Type="Int32" Nullable="false" />
-          <Property Name="id_user" Type="Int32" Nullable="false" />
-          <Property Name="id_food" Type="Int32" Nullable="false" />
-          <NavigationProperty Name="tb_usuario" Relationship="CalorieCounterModel.FK_tb_favoriteFood_tb_usuario" FromRole="tb_favoriteFood" ToRole="tb_usuario" />
-          <NavigationProperty Name="tb_food" Relationship="CalorieCounterModel.FK_tb_favoriteFood_tb_food" FromRole="tb_favoriteFood" ToRole="tb_food" />
-        </EntityType>
-        <EntityType Name="tb_meal">
-          <Key>
-            <PropertyRef Name="id_meal" />
-          </Key>
-          <Property Name="id_meal" Type="Int32" Nullable="false" />
-          <Property Name="description" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="activo" Type="Int32" Nullable="false" />
-          <NavigationProperty Name="tb_userFood" Relationship="CalorieCounterModel.FK_tb_userFood_tb_meal" FromRole="tb_meal" ToRole="tb_userFood" />
-        </EntityType>
-        <EntityType Name="tb_userFood">
-          <Key>
-            <PropertyRef Name="id_userFood" />
-          </Key>
-          <Property Name="id_userFood" Type="Int32" Nullable="false" />
-          <Property Name="id_user" Type="Int32" />
-          <Property Name="id_food" Type="Int32" />
-          <Property Name="date" Type="DateTime" Precision="0" />
-          <Property Name="count" Type="Double" />
-          <Property Name="scale" Type="String" MaxLength="10" FixedLength="true" Unicode="true" />
-          <Property Name="meal" Type="Int32" />
-          <NavigationProperty Name="tb_meal" Relationship="CalorieCounterModel.FK_tb_userFood_tb_meal" FromRole="tb_userFood" ToRole="tb_meal" />
-          <NavigationProperty Name="tb_usuario" Relationship="CalorieCounterModel.FK_tb_userFood_tb_usuario" FromRole="tb_userFood" ToRole="tb_usuario" />
-          <NavigationProperty Name="tb_food" Relationship="CalorieCounterModel.FK_tb_userFood_tb_food" FromRole="tb_userFood" ToRole="tb_food" />
-        </EntityType>
-        <Association Name="FK_tb_favoriteFood_tb_usuario">
-          <End Type="CalorieCounterModel.tb_usuario" Role="tb_usuario" Multiplicity="1" />
-          <End Type="CalorieCounterModel.tb_favoriteFood" Role="tb_favoriteFood" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="tb_usuario">
-              <PropertyRef Name="id_usuario" />
-            </Principal>
-            <Dependent Role="tb_favoriteFood">
-              <PropertyRef Name="id_user" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_tb_userFood_tb_meal">
-          <End Type="CalorieCounterModel.tb_meal" Role="tb_meal" Multiplicity="0..1" />
-          <End Type="CalorieCounterModel.tb_userFood" Role="tb_userFood" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="tb_meal">
-              <PropertyRef Name="id_meal" />
-            </Principal>
-            <Dependent Role="tb_userFood">
-              <PropertyRef Name="meal" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_tb_userFood_tb_usuario">
-          <End Type="CalorieCounterModel.tb_usuario" Role="tb_usuario" Multiplicity="0..1" />
-          <End Type="CalorieCounterModel.tb_userFood" Role="tb_userFood" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="tb_usuario">
-              <PropertyRef Name="id_usuario" />
-            </Principal>
-            <Dependent Role="tb_userFood">
-              <PropertyRef Name="id_user" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <EntityType Name="tb_food">
           <Key>
             <PropertyRef Name="id_food" />
@@ -938,9 +868,9 @@ FROM [cc].[vw_FoodDetail] AS [vw_FoodDetail]</DefiningQuery>
           <Property Name="datecreated" Type="DateTime" Nullable="false" Precision="3" />
           <Property Name="active" Type="Boolean" Nullable="false" />
           <NavigationProperty Name="tb_classificationFood" Relationship="CalorieCounterModel.FK_tb_foodtb_classificationFood" FromRole="tb_food" ToRole="tb_classificationFood" />
-          <NavigationProperty Name="tb_favoriteFood" Relationship="CalorieCounterModel.FK_tb_favoriteFood_tb_food" FromRole="tb_food" ToRole="tb_favoriteFood" />
           <NavigationProperty Name="tb_foodtype" Relationship="CalorieCounterModel.FK_tb_food_tb_foodtype" FromRole="tb_food" ToRole="tb_foodtype" />
           <NavigationProperty Name="tb_userFood" Relationship="CalorieCounterModel.FK_tb_userFood_tb_food" FromRole="tb_food" ToRole="tb_userFood" />
+          <NavigationProperty Name="tb_favoriteFood" Relationship="CalorieCounterModel.FK_tb_favoriteFood_tb_food" FromRole="tb_food" ToRole="tb_favoriteFood" />
         </EntityType>
         <Association Name="FK_tb_foodtb_classificationFood">
           <End Type="CalorieCounterModel.tb_food" Role="tb_food" Multiplicity="1" />
@@ -950,18 +880,6 @@ FROM [cc].[vw_FoodDetail] AS [vw_FoodDetail]</DefiningQuery>
               <PropertyRef Name="id_food" />
             </Principal>
             <Dependent Role="tb_classificationFood">
-              <PropertyRef Name="id_food" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_tb_favoriteFood_tb_food">
-          <End Type="CalorieCounterModel.tb_food" Role="tb_food" Multiplicity="1" />
-          <End Type="CalorieCounterModel.tb_favoriteFood" Role="tb_favoriteFood" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="tb_food">
-              <PropertyRef Name="id_food" />
-            </Principal>
-            <Dependent Role="tb_favoriteFood">
               <PropertyRef Name="id_food" />
             </Dependent>
           </ReferentialConstraint>
@@ -978,6 +896,30 @@ FROM [cc].[vw_FoodDetail] AS [vw_FoodDetail]</DefiningQuery>
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <EntityType Name="tb_meal">
+          <Key>
+            <PropertyRef Name="id_meal" />
+          </Key>
+          <Property Name="id_meal" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="description" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="activo" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="tb_userFood" Relationship="CalorieCounterModel.FK_tb_userFood_tb_meal" FromRole="tb_meal" ToRole="tb_userFood" />
+        </EntityType>
+        <EntityType Name="tb_userFood">
+          <Key>
+            <PropertyRef Name="id_userFood" />
+          </Key>
+          <Property Name="id_userFood" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="id_user" Type="Int32" />
+          <Property Name="id_food" Type="Int32" />
+          <Property Name="date" Type="DateTime" Precision="0" />
+          <Property Name="count" Type="Double" />
+          <Property Name="id_scale" Type="Int32" />
+          <Property Name="id_meal" Type="Int32" />
+          <NavigationProperty Name="tb_food" Relationship="CalorieCounterModel.FK_tb_userFood_tb_food" FromRole="tb_userFood" ToRole="tb_food" />
+          <NavigationProperty Name="tb_meal" Relationship="CalorieCounterModel.FK_tb_userFood_tb_meal" FromRole="tb_userFood" ToRole="tb_meal" />
+          <NavigationProperty Name="tb_usuario" Relationship="CalorieCounterModel.FK_tb_userFood_tb_usuario" FromRole="tb_userFood" ToRole="tb_usuario" />
+        </EntityType>
         <Association Name="FK_tb_userFood_tb_food">
           <End Type="CalorieCounterModel.tb_food" Role="tb_food" Multiplicity="0..1" />
           <End Type="CalorieCounterModel.tb_userFood" Role="tb_userFood" Multiplicity="*" />
@@ -987,6 +929,64 @@ FROM [cc].[vw_FoodDetail] AS [vw_FoodDetail]</DefiningQuery>
             </Principal>
             <Dependent Role="tb_userFood">
               <PropertyRef Name="id_food" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_tb_userFood_tb_meal">
+          <End Type="CalorieCounterModel.tb_meal" Role="tb_meal" Multiplicity="0..1" />
+          <End Type="CalorieCounterModel.tb_userFood" Role="tb_userFood" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tb_meal">
+              <PropertyRef Name="id_meal" />
+            </Principal>
+            <Dependent Role="tb_userFood">
+              <PropertyRef Name="id_meal" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_tb_userFood_tb_usuario">
+          <End Type="CalorieCounterModel.tb_usuario" Role="tb_usuario" Multiplicity="0..1" />
+          <End Type="CalorieCounterModel.tb_userFood" Role="tb_userFood" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tb_usuario">
+              <PropertyRef Name="id_usuario" />
+            </Principal>
+            <Dependent Role="tb_userFood">
+              <PropertyRef Name="id_user" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="tb_favoriteFood">
+          <Key>
+            <PropertyRef Name="id_favoriteFood" />
+          </Key>
+          <Property Name="id_favoriteFood" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="id_user" Type="Int32" Nullable="false" />
+          <Property Name="id_food" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="tb_food" Relationship="CalorieCounterModel.FK_tb_favoriteFood_tb_food" FromRole="tb_favoriteFood" ToRole="tb_food" />
+          <NavigationProperty Name="tb_usuario" Relationship="CalorieCounterModel.FK_tb_favoriteFood_tb_usuario" FromRole="tb_favoriteFood" ToRole="tb_usuario" />
+        </EntityType>
+        <Association Name="FK_tb_favoriteFood_tb_food">
+          <End Type="CalorieCounterModel.tb_food" Role="tb_food" Multiplicity="1" />
+          <End Type="CalorieCounterModel.tb_favoriteFood" Role="tb_favoriteFood" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tb_food">
+              <PropertyRef Name="id_food" />
+            </Principal>
+            <Dependent Role="tb_favoriteFood">
+              <PropertyRef Name="id_food" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_tb_favoriteFood_tb_usuario">
+          <End Type="CalorieCounterModel.tb_usuario" Role="tb_usuario" Multiplicity="1" />
+          <End Type="CalorieCounterModel.tb_favoriteFood" Role="tb_favoriteFood" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tb_usuario">
+              <PropertyRef Name="id_usuario" />
+            </Principal>
+            <Dependent Role="tb_favoriteFood">
+              <PropertyRef Name="id_user" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -1150,12 +1150,15 @@ FROM [cc].[vw_FoodDetail] AS [vw_FoodDetail]</DefiningQuery>
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="tb_favoriteFood">
-            <EntityTypeMapping TypeName="CalorieCounterModel.tb_favoriteFood">
-              <MappingFragment StoreEntitySet="tb_favoriteFood">
+          <EntitySetMapping Name="tb_food">
+            <EntityTypeMapping TypeName="CalorieCounterModel.tb_food">
+              <MappingFragment StoreEntitySet="tb_food">
+                <ScalarProperty Name="active" ColumnName="active" />
+                <ScalarProperty Name="datecreated" ColumnName="datecreated" />
+                <ScalarProperty Name="description" ColumnName="description" />
+                <ScalarProperty Name="id_reference" ColumnName="id_reference" />
+                <ScalarProperty Name="id_foodtype" ColumnName="id_foodtype" />
                 <ScalarProperty Name="id_food" ColumnName="id_food" />
-                <ScalarProperty Name="id_user" ColumnName="id_user" />
-                <ScalarProperty Name="id_favoriteFood" ColumnName="id_favoriteFood" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -1171,8 +1174,8 @@ FROM [cc].[vw_FoodDetail] AS [vw_FoodDetail]</DefiningQuery>
           <EntitySetMapping Name="tb_userFood">
             <EntityTypeMapping TypeName="CalorieCounterModel.tb_userFood">
               <MappingFragment StoreEntitySet="tb_userFood">
-                <ScalarProperty Name="meal" ColumnName="meal" />
-                <ScalarProperty Name="scale" ColumnName="scale" />
+                <ScalarProperty Name="id_meal" ColumnName="id_meal" />
+                <ScalarProperty Name="id_scale" ColumnName="id_scale" />
                 <ScalarProperty Name="count" ColumnName="count" />
                 <ScalarProperty Name="date" ColumnName="date" />
                 <ScalarProperty Name="id_food" ColumnName="id_food" />
@@ -1181,15 +1184,12 @@ FROM [cc].[vw_FoodDetail] AS [vw_FoodDetail]</DefiningQuery>
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="tb_food">
-            <EntityTypeMapping TypeName="CalorieCounterModel.tb_food">
-              <MappingFragment StoreEntitySet="tb_food">
-                <ScalarProperty Name="active" ColumnName="active" />
-                <ScalarProperty Name="datecreated" ColumnName="datecreated" />
-                <ScalarProperty Name="description" ColumnName="description" />
-                <ScalarProperty Name="id_reference" ColumnName="id_reference" />
-                <ScalarProperty Name="id_foodtype" ColumnName="id_foodtype" />
+          <EntitySetMapping Name="tb_favoriteFood">
+            <EntityTypeMapping TypeName="CalorieCounterModel.tb_favoriteFood">
+              <MappingFragment StoreEntitySet="tb_favoriteFood">
                 <ScalarProperty Name="id_food" ColumnName="id_food" />
+                <ScalarProperty Name="id_user" ColumnName="id_user" />
+                <ScalarProperty Name="id_favoriteFood" ColumnName="id_favoriteFood" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

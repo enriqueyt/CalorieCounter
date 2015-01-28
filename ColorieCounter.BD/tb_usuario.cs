@@ -18,8 +18,8 @@ namespace CalorieCounter.BD
         {
             this.tb_sesion = new HashSet<tb_sesion>();
             this.tb_usuarioPerfil = new HashSet<tb_usuarioPerfil>();
-            this.tb_favoriteFood = new HashSet<tb_favoriteFood>();
             this.tb_userFood = new HashSet<tb_userFood>();
+            this.tb_favoriteFood = new HashSet<tb_favoriteFood>();
         }
     
         public int id_usuario { get; set; }
@@ -36,7 +36,7 @@ namespace CalorieCounter.BD
         public virtual tb_cliente tb_cliente { get; set; }
         public virtual ICollection<tb_sesion> tb_sesion { get; set; }
         public virtual ICollection<tb_usuarioPerfil> tb_usuarioPerfil { get; set; }
-        public virtual ICollection<tb_favoriteFood> tb_favoriteFood { get; set; }
         public virtual ICollection<tb_userFood> tb_userFood { get; set; }
+        public virtual ICollection<tb_favoriteFood> tb_favoriteFood { get; set; }
     }
 }
