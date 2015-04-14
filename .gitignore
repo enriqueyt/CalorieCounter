@@ -28,11 +28,6 @@
 /CalorieCounter.ServicioBD/Properties/
 /CalorieCounter.ServicioBD/*.csproj
 
-/CalorieCounter.ServicioBD/bin/
-/CalorieCounter.ServicioBD/obj/
-/CalorieCounter.ServicioBD/Properties/
-/CalorieCounter.ServicioBD/*.csproj
-
 /CalorieCounter.WS/bin/
 /CalorieCounter.WS/obj/
 /CalorieCounter.WS/Properties/
