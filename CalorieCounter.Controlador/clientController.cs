@@ -14,10 +14,16 @@ namespace CalorieCounter.Controlador
         {
             try
             {
-                if (new foodService().SaveFood(token, idFood, count, scale, meal, favorite))
-                    return new objBasicResponse { code = "200", result = "true" };
-                else
-                    return new objBasicResponse { code = "500", result = "false" };
+
+                using (foodService fs = new foodService())
+                {
+                    if (fs.SaveFood(token, idFood, count, scale, meal, favorite))
+                        return new objBasicResponse { code = "200", result = "true" };
+                    else
+                        return new objBasicResponse { code = "500", result = "false" };
+                }
+
+                
             }
             catch (Exception ex)
             {

@@ -8,7 +8,7 @@ using CalorieCounter.Objetos;
 
 namespace CalorieCounter.ServicioBD
 {
-    public class clientService
+    public class clientService : IDisposable
     {
 
         private CalorieCounterEntities calorieCounterBD = null;
@@ -28,6 +28,9 @@ namespace CalorieCounter.ServicioBD
             {
                 using (calorieCounterBD = new CalorieCounterEntities())
                 {
+
+                    calorieCounterBD.Database.Connection.Open();
+
                     calorieCounterBD
                         .tb_cliente.Add
                             (
@@ -269,6 +272,32 @@ namespace CalorieCounter.ServicioBD
                 throw new Exception(ex.Message, ex.InnerException);
             }
         }
-   
+
+        protected void Dispose(Boolean free)
+        {
+            if (free)
+            {
+                if (this.calorieCounterBD != null)
+                {
+                    if (this.calorieCounterBD.Database.Connection.State == System.Data.ConnectionState.Open)
+                        this.calorieCounterBD.Database.Connection.Close();
+
+                    this.calorieCounterBD.Dispose();
+                    this.calorieCounterBD = null;
+                }
+            }
+        }
+
+        public void Dispose()
+        {
+            Dispose(true);
+            GC.SuppressFinalize(this);
+        }
+
+        ~clientService()
+        {
+            Dispose();
+        }
+
     }
 }

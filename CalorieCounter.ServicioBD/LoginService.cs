@@ -8,12 +8,13 @@ using CalorieCounter.Objetos;
 
 namespace CalorieCounter.ServicioBD
 {
-    public class loginService
+    public class loginService : IDisposable
     {
         CalorieCounterEntities calorieCounterBD = null;
         public loginService() 
         {
             calorieCounterBD = new CalorieCounterEntities();
+            calorieCounterBD.Database.Connection.Open();
         }
 
         /// <summary>
@@ -232,6 +233,32 @@ namespace CalorieCounter.ServicioBD
             }
 
             return sesion;
+        }
+
+        protected void Dispose(Boolean free)
+        {
+            if (free)
+            {
+                if (this.calorieCounterBD != null)
+                {
+                    if (this.calorieCounterBD.Database.Connection.State == System.Data.ConnectionState.Open)
+                        this.calorieCounterBD.Database.Connection.Close();
+
+                    this.calorieCounterBD.Dispose();
+                    this.calorieCounterBD = null;
+                }
+            }
+        }
+
+        public void Dispose()
+        {
+            Dispose(true);
+            GC.SuppressFinalize(this);
+        }
+
+        ~loginService()
+        {
+            Dispose();
         }
 
     }

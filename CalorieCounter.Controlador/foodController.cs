@@ -20,8 +20,12 @@ namespace CalorieCounter.Controlador
         public objFoodSearchResponse FoodSearch(int ID, string Description, int GroupID) {
             var R = new objFoodSearchResponse();
             try {
-                R.Foods = new foodService().FoodSearch(ID,Description,GroupID);
-                R.code = "OK";
+
+                using (foodService fs = new foodService())
+                {
+                    R.Foods = fs.FoodSearch(ID, Description, GroupID);
+                    R.code = "OK";
+                }
             }
             catch (Exception e){
                 R.message = e.Message;
@@ -37,10 +41,15 @@ namespace CalorieCounter.Controlador
 
             try
             {
-                _objFoodTypesResponse = new objFoodTypesResponse {
-                    FoodTypes   = new foodService().FoodTypes(),
-                    code        = "OK"
-                };
+                using (foodService fs = new foodService())
+                {
+                    _objFoodTypesResponse = new objFoodTypesResponse
+                    {
+                        FoodTypes = fs.FoodTypes(),
+                        code = "OK"
+                    };
+                }
+               
             }
             catch (Exception ex)
             {
@@ -60,7 +69,11 @@ namespace CalorieCounter.Controlador
 
             try
             {
-                res = new foodService().FoodDetailsSearch(Convert.ToInt32(idFood));
+                using (foodService fs = new foodService())
+                {
+                    res = fs.FoodDetailsSearch(Convert.ToInt32(idFood));
+                }
+               
             }
             catch (Exception e)
             {
@@ -82,9 +95,14 @@ namespace CalorieCounter.Controlador
 
             try
             {
-                _objUtilitiResponse = new objUtilitiResponse {
-                    utiliti = new foodService().GetMealType()
-                } ;
+                using (foodService fs = new foodService())
+                {
+                    _objUtilitiResponse = new objUtilitiResponse
+                    {
+                        utiliti = fs.GetMealType()
+                    };
+                }
+                
             }
             catch (Exception ex)
             {
@@ -106,10 +124,14 @@ namespace CalorieCounter.Controlador
 
             try
             {
-                _objUtilitiResponse = new objUtilitiResponse
+                using (foodService fs = new foodService())
                 {
-                    utiliti = new foodService().GetListScale(id_food)
-                };
+                    _objUtilitiResponse = new objUtilitiResponse
+                    {
+                        utiliti = fs.GetListScale(id_food)
+                    };
+                }
+                
             }
             catch (Exception ex)
             {
@@ -129,10 +151,14 @@ namespace CalorieCounter.Controlador
 
             try
             {
-                _objUtilitiResponse = new objUtilitiResponse
+                using (foodService fs = new foodService())
                 {
-                    flag = new foodService().SaveFood(token, idFood, amount, scale, meal, favorite)
-                };
+                    _objUtilitiResponse = new objUtilitiResponse
+                    {
+                        flag = fs.SaveFood(token, idFood, amount, scale, meal, favorite)
+                    };
+                }
+                
             }
             catch (Exception ex)
             {

@@ -10,7 +10,7 @@ using CalorieCounter.Objetos;
 
 namespace CalorieCounter.ServicioBD
 {
-    public class foodService
+    public class foodService : IDisposable
     {
         private CalorieCounterEntities calorieCounterBD = null;
 
@@ -29,6 +29,8 @@ namespace CalorieCounter.ServicioBD
             {
                 using (calorieCounterBD = new CalorieCounterEntities())
                 {
+
+                    calorieCounterBD.Database.Connection.Open();
 
                     if (ID != -1) 
                     {
@@ -91,6 +93,8 @@ namespace CalorieCounter.ServicioBD
             {
                 using (calorieCounterBD = new CalorieCounterEntities())
                 {
+                    calorieCounterBD.Database.Connection.Open();
+
                     l_fiddType =
                         calorieCounterBD.tb_foodtype
                             .Select(s => new objFoodType{
@@ -122,6 +126,8 @@ namespace CalorieCounter.ServicioBD
             {
                 using (calorieCounterBD = new CalorieCounterEntities())
                 {
+                    calorieCounterBD.Database.Connection.Open();
+
                     _objClassificationFood =
                         calorieCounterBD.tb_classificationFood
                             .Where(w  => w.id_food == idFood)
@@ -213,6 +219,8 @@ namespace CalorieCounter.ServicioBD
             {
                 using (calorieCounterBD = new CalorieCounterEntities())
                 {
+                    calorieCounterBD.Database.Connection.Open();
+
                    return  calorieCounterBD.tb_meal.Select(s => new objUtiliti { id = s.id_meal, description = s.description }).ToList<objUtiliti>();
                 }
 
@@ -239,6 +247,7 @@ namespace CalorieCounter.ServicioBD
 
             try
             {
+                
                 _objSaveFood = new objSaveFood {
                     token   = token,
                     id_food = idFood,
@@ -253,6 +262,8 @@ namespace CalorieCounter.ServicioBD
 
                 using (calorieCounterBD = new CalorieCounterEntities())
                 {
+                    calorieCounterBD.Database.Connection.Open();
+
                     _tb_userFood = calorieCounterBD.tb_userFood.Where(w => w.id_food == _objSaveFood.id_food && w.id_meal == _objSaveFood.meal).FirstOrDefault();
 
                     if (_tb_userFood == null)
@@ -315,6 +326,8 @@ namespace CalorieCounter.ServicioBD
 
                 using (calorieCounterBD = new CalorieCounterEntities())
                 {
+                    calorieCounterBD.Database.Connection.Open();
+
                     resp =
                         calorieCounterBD.tb_food
                         .Join(calorieCounterBD.tb_classificationFood, food => food.id_food, claFood => claFood.id_food, (food, claFood) => new { food, claFood })
@@ -357,6 +370,8 @@ namespace CalorieCounter.ServicioBD
 
                 using (calorieCounterBD = new CalorieCounterEntities())
                 {
+                    calorieCounterBD.Database.Connection.Open();
+
                     value =
                         calorieCounterBD.tb_classificationFood
                         .Join(calorieCounterBD.tb_classificationDetail, a => a.id_classificationFood, b => b.id_classificationFood, (a, b) => new { a, b })
@@ -374,6 +389,32 @@ namespace CalorieCounter.ServicioBD
             }
         }
 
+
+        protected void Dispose(Boolean free)
+        {
+            if (free)
+            {
+                if (this.calorieCounterBD != null)
+                {
+                    if (this.calorieCounterBD.Database.Connection.State == System.Data.ConnectionState.Open)
+                        this.calorieCounterBD.Database.Connection.Close();
+
+                    this.calorieCounterBD.Dispose();
+                    this.calorieCounterBD = null;
+                }
+            }
+        }
+
+        public void Dispose()
+        {
+            Dispose(true);
+            GC.SuppressFinalize(this);
+        }
+
+        ~foodService()
+        {
+            Dispose();
+        }
 
     }
 
