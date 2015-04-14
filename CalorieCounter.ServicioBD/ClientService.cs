@@ -33,16 +33,17 @@ namespace CalorieCounter.ServicioBD
                             (
                                 new tb_cliente
                                 {
-                                    nombre      = registro.nombre,
-                                    apellido    = registro.apellido,
-                                    correo      = registro.correo,
+                                    nombre = registro.nombre.ToLower(),
+                                    apellido = registro.apellido.ToLower(),
+                                    correo = registro.correo.ToLower(),
                                     activo      = 1
                                 }
                             );
 
                     aux = Convert.ToInt32(calorieCounterBD.tb_cliente.OrderByDescending(o => o.id_cliente).Select(s => s.id_cliente).FirstOrDefault()) + 1;
 
-                    if (calorieCounterBD.tb_usuario.Any(a => a.usuario == login.usuario)){
+                    if (calorieCounterBD.tb_usuario.Any(a => a.usuario == login.usuario.ToLower()))
+                    {
                         registro.message = "existing user";
                         return registro;
                     }
@@ -54,8 +55,8 @@ namespace CalorieCounter.ServicioBD
                                     ?
                                         new tb_usuario
                                         {
-                                            usuario         = login.usuario,
-                                            contrasena      = login.contrasena,
+                                            usuario = login.usuario.ToLower(),
+                                            contrasena = login.contrasena.ToLower(),
                                             fechaRegistro   = DateTime.Now,
                                             activo          = 1,
                                             id_cliente      = aux
@@ -63,8 +64,8 @@ namespace CalorieCounter.ServicioBD
                                     :
                                         new tb_usuario
                                         {
-                                            usuario         = login.usuario,
-                                            contrasena      = login.contrasena,
+                                            usuario = login.usuario.ToLower(),
+                                            contrasena = login.contrasena.ToLower(),
                                             usuarioFacebook = login.usuarioFacebook,
                                             usuarioTwiter   = login.usuarioTwiter,
                                             validateToken   = login.validateToken,

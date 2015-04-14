@@ -100,6 +100,29 @@ namespace CalorieCounter.Controlador
 
         }
 
+        public objUtilitiResponse GetListScale(int id_food) {
+
+            objUtilitiResponse _objUtilitiResponse = null;
+
+            try
+            {
+                _objUtilitiResponse = new objUtilitiResponse
+                {
+                    utiliti = new foodService().GetListScale(id_food)
+                };
+            }
+            catch (Exception ex)
+            {
+                _objUtilitiResponse = new objUtilitiResponse
+                {
+                    message = ex.Message,
+                    tarce = ex.StackTrace,
+                    code = "500"
+                };
+            }
+
+            return _objUtilitiResponse;
+        }
         public objUtilitiResponse SaveFood(string token, int idFood, double amount, int scale, int meal, bool favorite) 
         {
             objUtilitiResponse _objUtilitiResponse = null;
