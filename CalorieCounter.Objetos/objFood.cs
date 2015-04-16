@@ -9,11 +9,11 @@ namespace CalorieCounter.Objetos
 {
     public class objFood
     {
-        public int? id_food          {get; set;}
+        public int? id_food         { get; set; }
 
-        public string description   {get; set;}
+        public string description   { get; set; }
 
-        public int groupID          {get; set;}
+        public int groupID          { get; set; }
 
         public string token         { get; set; }
 
@@ -21,13 +21,15 @@ namespace CalorieCounter.Objetos
 
         public DateTime? date       { get; set; }
 
-        public double? count         { get; set; }
+        public double? count        { get; set; }
 
-        public int? scale            { get; set; }
+        public int? scale           { get; set; }
 
-        public string descScale { get; set; }
+        public string descScale     { get; set; }
 
         public int meal             { get; set; }
+
+        public double? cantCalories { get; set; }
 
     }
 

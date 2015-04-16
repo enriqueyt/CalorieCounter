@@ -132,15 +132,16 @@ namespace CalorieCounter.ServicioBD
         /// <summary>
         /// obtiene una lista de mis comidas diarias
         /// </summary>
-        public objDataClientFoodsResponse GetListFoodClient(string token, string date = null)
+        public objDataClientFoodsResponse GetListFoodClient(string token, string date = "")
         {
 
             objClient _objClient = null;
             objDataClientFoodsResponse _objDataClientFoodsResponse = null;
-
+            DateTime auxDate = (date == "" ? DateTime.Now.Date : Convert.ToDateTime(date).Date);
             try
             {
                 _objClient = this.findClientebyToken(token);
+
 
                 using (calorieCounterBD = new CalorieCounterEntities())
                 {
@@ -148,7 +149,7 @@ namespace CalorieCounter.ServicioBD
                     _objDataClientFoodsResponse = new objDataClientFoodsResponse
                     {
                         objDataClientFoods = calorieCounterBD.tb_userFood
-                                .Where(w => w.id_user == _objClient.idUsuario)
+                                .Where(w => w.id_user == _objClient.idUsuario && w.date == auxDate)
                                 .Select(s => new objDataClientFoods
                                 {
                                     id_food = s.id_food,
@@ -209,6 +210,7 @@ namespace CalorieCounter.ServicioBD
                 objClient _objClient = this.findClientebyToken(token);
                 dia = (dia == null ? DateTime.Now.Date : dia);
                 double? _total = 0;
+                foodService _foodService = new foodService();
 
                 using (calorieCounterBD = new CalorieCounterEntities())
                 {
@@ -242,7 +244,8 @@ namespace CalorieCounter.ServicioBD
                                    date = sele.date,
                                    id_food = sele.id_food,
                                    description = sele.description,
-                                   descScale = calorieCounterBD.tb_columnsFood.Where(wh => wh.id_columnsfood == sele.scale).Select(selec => selec.descripcion).FirstOrDefault()
+                                   descScale = calorieCounterBD.tb_columnsFood.Where(wh => wh.id_columnsfood == sele.scale).Select(selec => selec.descripcion).FirstOrDefault(),
+                                   cantCalories = _foodService.GetGramoskalorias(sele.id_food)
                                }).ToList()
                         })
                         .ToList();
@@ -279,8 +282,6 @@ namespace CalorieCounter.ServicioBD
             {
                 if (this.calorieCounterBD != null)
                 {
-                    if (this.calorieCounterBD.Database.Connection.State == System.Data.ConnectionState.Open)
-                        this.calorieCounterBD.Database.Connection.Close();
 
                     this.calorieCounterBD.Dispose();
                     this.calorieCounterBD = null;

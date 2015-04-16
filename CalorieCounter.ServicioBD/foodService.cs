@@ -264,20 +264,18 @@ namespace CalorieCounter.ServicioBD
                 {
                     calorieCounterBD.Database.Connection.Open();
 
-                    _tb_userFood = calorieCounterBD.tb_userFood.Where(w => w.id_food == _objSaveFood.id_food && w.id_meal == _objSaveFood.meal).FirstOrDefault();
-
                     if (_tb_userFood == null)
                     {
 
                         calorieCounterBD.tb_userFood.Add(
                             new tb_userFood
                             {
-                                id_user = _objSaveFood.id_user,
-                                id_food = _objSaveFood.id_food,
-                                count = _objSaveFood.amount,
-                                date = DateTime.Now,
-                                id_scale = _objSaveFood.scale,
-                                id_meal = _objSaveFood.meal
+                                id_user     = _objSaveFood.id_user,
+                                id_food     = _objSaveFood.id_food,
+                                count       = _objSaveFood.amount,
+                                date        = DateTime.Now,
+                                id_scale    = _objSaveFood.scale,
+                                id_meal     = _objSaveFood.meal
                             }
                         );
 
@@ -362,7 +360,7 @@ namespace CalorieCounter.ServicioBD
         /// </summary>
         /// <param name="id_food"></param>
         /// <returns></returns>
-        private double? GetGramoskalorias(int id_food) 
+        public double? GetGramoskalorias(int? id_food) 
         {
             try
             {
@@ -389,16 +387,12 @@ namespace CalorieCounter.ServicioBD
             }
         }
 
-
         protected void Dispose(Boolean free)
         {
             if (free)
             {
                 if (this.calorieCounterBD != null)
                 {
-                    if (this.calorieCounterBD.Database.Connection.State == System.Data.ConnectionState.Open)
-                        this.calorieCounterBD.Database.Connection.Close();
-
                     this.calorieCounterBD.Dispose();
                     this.calorieCounterBD = null;
                 }

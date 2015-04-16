@@ -102,7 +102,6 @@ namespace CalorieCounter.Controlador
                         utiliti = fs.GetMealType()
                     };
                 }
-                
             }
             catch (Exception ex)
             {

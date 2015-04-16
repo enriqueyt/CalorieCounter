@@ -241,9 +241,6 @@ namespace CalorieCounter.ServicioBD
             {
                 if (this.calorieCounterBD != null)
                 {
-                    if (this.calorieCounterBD.Database.Connection.State == System.Data.ConnectionState.Open)
-                        this.calorieCounterBD.Database.Connection.Close();
-
                     this.calorieCounterBD.Dispose();
                     this.calorieCounterBD = null;
                 }

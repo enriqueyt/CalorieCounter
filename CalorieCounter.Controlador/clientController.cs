@@ -48,7 +48,7 @@ namespace CalorieCounter.Controlador
             try
             {
                 double? _total = 0;
-                return new objDataClientFoodsResponse { objResumenDiario = new clientService().GetRecordFood(token, out _total, null), total = _total };
+                return new objDataClientFoodsResponse { objResumenDiario = new clientService().GetRecordFood(token, out _total, date ==""?DateTime.Now.Date:Convert.ToDateTime(date).Date), total = _total };
             }
             catch (Exception ex)
             {
