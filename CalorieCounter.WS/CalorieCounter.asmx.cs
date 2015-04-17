@@ -120,9 +120,39 @@ namespace CalorieCounter.WS
         /// <param name="favorite"></param>
         /// <returns></returns>
         [WebMethod]
-        public objBasicResponse SaveFood(string token, int idFood, double count, int scale, int meal, bool favorite)
+        public objBasicResponse SaveFood(string token, int idFood, double count, int scale, int meal, bool favorite, string fecha)
         {
-            return responseController.CheckJson(new clientController().saveFood(token, idFood, count, scale, meal, favorite)) as objBasicResponse;
+            return responseController.CheckJson(new clientController().saveFood(token, idFood, count, scale, meal, favorite, fecha)) as objBasicResponse;
+        }
+
+        /// <summary>
+        /// actualiza la comida seleccionada segun parametros
+        /// </summary>
+        /// <param name="token"></param>
+        /// <param name="idFood"></param>
+        /// <param name="count"></param>
+        /// <param name="scale"></param>
+        /// <param name="meal"></param>
+        /// <param name="favorite"></param>
+        /// <param name="fecha"></param>
+        /// <returns></returns>
+        [WebMethod]
+        public objBasicResponse updateFood(string token, int idFood, double count, int scale, int meal, bool favorite, string fecha)
+        {
+            return responseController.CheckJson(new clientController().updateFood(token, idFood, count, scale, meal, favorite, fecha)) as objBasicResponse;
+        }
+
+        /// <summary>
+        /// elimina la comida seleccinada segun parametross
+        /// </summary>
+        /// <param name="token"></param>
+        /// <param name="idFood"></param>
+        /// <param name="fecha"></param>
+        /// <returns></returns>
+        [WebMethod]
+        public objBasicResponse removeFood(string token, int idFood, string fecha)
+        {
+            return responseController.CheckJson(new clientController().deleteFood(token, idFood, fecha)) as objBasicResponse;
         }
         
         /// <summary>

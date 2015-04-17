@@ -235,7 +235,8 @@ namespace CalorieCounter.ServicioBD
                                    date = sel.date,
                                    id_food = sel.id_food,
                                    description = sel.tb_food.description,
-                                   scale = sel.id_scale
+                                   scale = sel.id_scale,
+                                   id_meal = sel.id_meal
                                })
                                .AsEnumerable()
                                .Select(sele => new objFood
@@ -245,7 +246,10 @@ namespace CalorieCounter.ServicioBD
                                    id_food = sele.id_food,
                                    description = sele.description,
                                    descScale = calorieCounterBD.tb_columnsFood.Where(wh => wh.id_columnsfood == sele.scale).Select(selec => selec.descripcion).FirstOrDefault(),
-                                   cantCalories = _foodService.GetGramoskalorias(sele.id_food)
+                                   cantCalories = _foodService.GetGramoskalorias(sele.id_food),
+                                   scale = sele.scale,
+                                   meal = sele.id_meal,
+                                   favorite = calorieCounterBD.tb_favoriteFood.Any(a => a.id_food == sele.id_food && a.id_user == _objClient.idCliente)
                                }).ToList()
                         })
                         .ToList();

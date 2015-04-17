@@ -27,9 +27,11 @@ namespace CalorieCounter.Objetos
 
         public string descScale     { get; set; }
 
-        public int meal             { get; set; }
+        public int? meal             { get; set; }
 
         public double? cantCalories { get; set; }
+
+        public bool favorite        { get; set; }
 
     }
 

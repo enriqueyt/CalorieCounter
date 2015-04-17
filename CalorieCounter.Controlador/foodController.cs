@@ -144,34 +144,6 @@ namespace CalorieCounter.Controlador
 
             return _objUtilitiResponse;
         }
-        public objUtilitiResponse SaveFood(string token, int idFood, double amount, int scale, int meal, bool favorite) 
-        {
-            objUtilitiResponse _objUtilitiResponse = null;
-
-            try
-            {
-                using (foodService fs = new foodService())
-                {
-                    _objUtilitiResponse = new objUtilitiResponse
-                    {
-                        flag = fs.SaveFood(token, idFood, amount, scale, meal, favorite)
-                    };
-                }
-                
-            }
-            catch (Exception ex)
-            {
-                _objUtilitiResponse = new objUtilitiResponse
-                {
-                    message = ex.Message,
-                    tarce = ex.StackTrace,
-                    code = "500"
-                };
-            }
-
-            return _objUtilitiResponse;
-        }
-            
 
     }
 }

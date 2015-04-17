@@ -237,12 +237,13 @@ namespace CalorieCounter.ServicioBD
         /// </summary>
         /// <param name="token">sesion</param>
         /// <returns></returns>
-        public bool SaveFood(string token, int idFood, double amount, int scale, int meal, bool favorite) 
+        public bool SaveFood(string token, int idFood, double amount, int scale, int meal, bool favorite, string fecha) 
         {
 
             objSaveFood _objSaveFood    = null;
             objClient _objClient        = null;
             tb_userFood _tb_userFood    = null;
+            DateTime auxDate = (fecha == "" ? DateTime.Now.Date : Convert.ToDateTime(fecha).Date);
             bool ok = false;
 
             try
@@ -273,7 +274,7 @@ namespace CalorieCounter.ServicioBD
                                 id_user     = _objSaveFood.id_user,
                                 id_food     = _objSaveFood.id_food,
                                 count       = _objSaveFood.amount,
-                                date        = DateTime.Now,
+                                date        = auxDate,
                                 id_scale    = _objSaveFood.scale,
                                 id_meal     = _objSaveFood.meal
                             }
@@ -307,6 +308,117 @@ namespace CalorieCounter.ServicioBD
             }
 
             return ok;
+        }
+
+        /// <summary>
+        /// actualiza la comida seleccionada segun parametros
+        /// </summary>
+        /// <param name="token"></param>
+        /// <param name="idFood"></param>
+        /// <param name="amount"></param>
+        /// <param name="scale"></param>
+        /// <param name="meal"></param>
+        /// <param name="favorite"></param>
+        /// <param name="fecha"></param>
+        /// <returns></returns>
+        public bool updateFood(string token, int idFood, double amount, int scale, int meal, bool favorite, string fecha)
+        {
+
+            objSaveFood _objSaveFood = null;
+            tb_favoriteFood _tb_favoriteFood = null;
+            tb_userFood _tb_userFood = null;
+            DateTime auxDate = (fecha == "" ? DateTime.Now.Date : Convert.ToDateTime(fecha).Date);
+            try
+            {
+                _objSaveFood = new objSaveFood {
+                    token   = token,
+                    id_food = idFood,
+                    amount = amount,
+                    scale   = scale,
+                    meal    = meal,
+                    id_user = new clientService().findClientebyToken(token).idUsuario
+                };
+
+                using (calorieCounterBD = new CalorieCounterEntities())
+                {
+                    calorieCounterBD.Database.Connection.Open();
+
+                    _tb_userFood = calorieCounterBD.tb_userFood.Where(w => w.id_food == _objSaveFood.id_food && w.id_user == _objSaveFood.id_user && w.date == auxDate).FirstOrDefault();
+
+                    if (_tb_userFood!=null){
+                        _tb_userFood.count = _objSaveFood.amount;
+                        _tb_userFood.id_scale = _objSaveFood.scale;
+                        _tb_userFood.id_meal = _tb_userFood.id_meal;
+
+                        _tb_favoriteFood = calorieCounterBD.tb_favoriteFood.Where(w => w.id_food == _objSaveFood.id_food && w.id_user == _objSaveFood.id_user).FirstOrDefault();
+
+                        if (favorite)
+                        {
+
+                            if (_tb_favoriteFood == null)
+                            {
+                                calorieCounterBD.tb_favoriteFood.Add(
+                                        new tb_favoriteFood
+                                        {
+                                            id_user = _objSaveFood.id_user,
+                                            id_food = _objSaveFood.id_food
+                                        }
+                                    );
+                            }
+                        }
+                        else {
+                            if (_tb_favoriteFood != null){
+                                calorieCounterBD.tb_favoriteFood.Remove(_tb_favoriteFood);
+                            }
+                        }
+                        calorieCounterBD.SaveChanges();
+                        return true;
+                    }
+                }
+
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.Message, ex.InnerException);
+            }
+            return false;
+        }
+
+        /// <summary>
+        /// elimina la comida seleccinada segun parametros
+        /// </summary>
+        /// <param name="token"></param>
+        /// <param name="idFood"></param>
+        /// <param name="fecha"></param>
+        /// <returns></returns>
+        public bool deleteFood(string token, int idFood, string fecha)
+        {
+            objClient _objClient = null;
+            tb_userFood _tb_userFood = null;
+            DateTime auxDate = (fecha == "" ? DateTime.Now.Date : Convert.ToDateTime(fecha).Date);
+            try
+            {
+                _objClient = new clientService().findClientebyToken(token);
+
+                using (calorieCounterBD = new CalorieCounterEntities())
+                {
+                    calorieCounterBD.Database.Connection.Open();
+
+                    _tb_userFood = calorieCounterBD.tb_userFood.Where(w => w.id_food == idFood && w.id_user == _objClient.idUsuario && w.date == auxDate).FirstOrDefault();
+
+                    if (_tb_userFood != null) {
+                        calorieCounterBD.tb_userFood.Remove(_tb_userFood);
+                        calorieCounterBD.SaveChanges();
+                        return true;
+                    }
+                }
+
+                return true;
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.Message, ex.InnerException);
+            }
         }
 
         /// <summary>
