@@ -1,9 +1,7 @@
+C:\Projects\CalorieCounterServer\CalorieCounter.WS\obj\Debug\CalorieCounter.WS.csprojResolveAssemblyReference.cache
 C:\Projects\CalorieCounterServer\CalorieCounter.WS\bin\CalorieCounter.WS.dll.config
 C:\Projects\CalorieCounterServer\CalorieCounter.WS\bin\CalorieCounter.WS.dll
 C:\Projects\CalorieCounterServer\CalorieCounter.WS\bin\CalorieCounter.WS.pdb
-C:\Projects\CalorieCounterServer\CalorieCounter.WS\obj\Debug\CalorieCounter.WS.csprojResolveAssemblyReference.cache
-C:\Projects\CalorieCounterServer\CalorieCounter.WS\obj\Debug\CalorieCounter.WS.dll
-C:\Projects\CalorieCounterServer\CalorieCounter.WS\obj\Debug\CalorieCounter.WS.pdb
 C:\Projects\CalorieCounterServer\CalorieCounter.WS\bin\CalorieCounter.Controlador.dll
 C:\Projects\CalorieCounterServer\CalorieCounter.WS\bin\CalorieCounter.Objetos.dll
 C:\Projects\CalorieCounterServer\CalorieCounter.WS\bin\CalorieCounter.ServicioBD.dll
@@ -14,3 +12,5 @@ C:\Projects\CalorieCounterServer\CalorieCounter.WS\bin\CalorieCounter.Objetos.pd
 C:\Projects\CalorieCounterServer\CalorieCounter.WS\bin\CalorieCounter.ServicioBD.pdb
 C:\Projects\CalorieCounterServer\CalorieCounter.WS\bin\CalorieCounter.BD.pdb
 C:\Projects\CalorieCounterServer\CalorieCounter.WS\bin\EntityFramework.xml
+C:\Projects\CalorieCounterServer\CalorieCounter.WS\obj\Debug\CalorieCounter.WS.dll
+C:\Projects\CalorieCounterServer\CalorieCounter.WS\obj\Debug\CalorieCounter.WS.pdb

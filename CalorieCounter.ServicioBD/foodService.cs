@@ -259,6 +259,8 @@ namespace CalorieCounter.ServicioBD
 
                 _objClient = new clientService().findClientebyToken(token);
 
+                if (_objClient == null) throw new Exception("No existe la sesion");
+
                 _objSaveFood.id_user = _objClient.idUsuario;
 
                 using (calorieCounterBD = new CalorieCounterEntities())

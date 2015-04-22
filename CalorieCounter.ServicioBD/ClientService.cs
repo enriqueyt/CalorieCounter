@@ -107,6 +107,8 @@ namespace CalorieCounter.ServicioBD
             {
                 using (calorieCounterBD = new CalorieCounterEntities())
                 {
+                    calorieCounterBD.Database.Connection.Open();
+
                     _objClient = (
                                 calorieCounterBD.tb_sesion
                                 .Join(calorieCounterBD.tb_usuario, sesion => sesion.id_usuario, usuario => usuario.id_usuario, (sesion, usuario) => new { sesion, usuario })
@@ -142,9 +144,12 @@ namespace CalorieCounter.ServicioBD
             {
                 _objClient = this.findClientebyToken(token);
 
+                if (_objClient == null) throw new Exception("Usuario inexistente");
 
                 using (calorieCounterBD = new CalorieCounterEntities())
                 {
+
+                    calorieCounterBD.Database.Connection.Open();
 
                     _objDataClientFoodsResponse = new objDataClientFoodsResponse
                     {
@@ -208,12 +213,14 @@ namespace CalorieCounter.ServicioBD
             {
                 List<objResumenDiario> resumenDiario = null;
                 objClient _objClient = this.findClientebyToken(token);
+                if (_objClient == null) throw new Exception("Usuario inexistente");
                 dia = (dia == null ? DateTime.Now.Date : dia);
                 double? _total = 0;
                 foodService _foodService = new foodService();
 
                 using (calorieCounterBD = new CalorieCounterEntities())
                 {
+                    calorieCounterBD.Database.Connection.Open();
 
                     resumenDiario =
                         calorieCounterBD.tb_meal
@@ -273,6 +280,50 @@ namespace CalorieCounter.ServicioBD
                 }
                 total = _total;
                 return resumenDiario;
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.Message, ex.InnerException);
+            }
+        }
+
+        /// <summary>
+        /// obtiene la comidas favoritas del usuario conectado
+        /// </summary>
+        /// <returns></returns>
+        public List<objFood> getFavoriteFood(string token){
+            try
+            {
+                List<objFood> lfood = null;
+
+                objClient _objClient = this.findClientebyToken(token);
+
+                if (_objClient == null) throw new Exception("Usuario inexistente");
+
+                using (calorieCounterBD = new CalorieCounterEntities())
+                {
+                    calorieCounterBD.Database.Connection.Open();
+
+                    lfood =
+                    calorieCounterBD.tb_usuario
+                        .Join(calorieCounterBD.tb_favoriteFood, user => user.id_usuario, ffood => ffood.id_user, (user, ffood) => new { user, ffood })
+                        .Join(calorieCounterBD.tb_food, aux => aux.ffood.id_food, food => food.id_food, (aux, food) => new { aux, food })
+                        .Where(w => w.aux.user.id_usuario == _objClient.idUsuario)
+                        .Select(s => new
+                        {
+                            id_food     = s.food.id_food,
+                            description = s.food.description,
+                            groupID     = s.food.id_foodtype
+                        }).AsEnumerable()
+                        .Select(se => new objFood
+                        {
+                            id_food     = se.id_food,
+                            description = se.description,
+                            groupID     = se.groupID
+                        }).ToList<objFood>();
+                }
+
+                return lfood;
             }
             catch (Exception ex)
             {

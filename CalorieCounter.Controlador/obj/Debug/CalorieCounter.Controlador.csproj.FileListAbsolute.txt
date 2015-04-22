@@ -1,13 +1,13 @@
 C:\Projects\CalorieCounterServer\CalorieCounter.Controlador\bin\Debug\CalorieCounter.Controlador.dll
 C:\Projects\CalorieCounterServer\CalorieCounter.Controlador\bin\Debug\CalorieCounter.Controlador.pdb
 C:\Projects\CalorieCounterServer\CalorieCounter.Controlador\bin\Debug\CalorieCounter.Objetos.dll
-C:\Projects\CalorieCounterServer\CalorieCounter.Controlador\bin\Debug\CalorieCounter.Objetos.pdb
-C:\Projects\CalorieCounterServer\CalorieCounter.Controlador\obj\Debug\CalorieCounter.Controlador.csprojResolveAssemblyReference.cache
-C:\Projects\CalorieCounterServer\CalorieCounter.Controlador\obj\Debug\CalorieCounter.Controlador.dll
-C:\Projects\CalorieCounterServer\CalorieCounter.Controlador\obj\Debug\CalorieCounter.Controlador.pdb
 C:\Projects\CalorieCounterServer\CalorieCounter.Controlador\bin\Debug\CalorieCounter.ServicioBD.dll
 C:\Projects\CalorieCounterServer\CalorieCounter.Controlador\bin\Debug\CalorieCounter.BD.dll
 C:\Projects\CalorieCounterServer\CalorieCounter.Controlador\bin\Debug\EntityFramework.dll
+C:\Projects\CalorieCounterServer\CalorieCounter.Controlador\bin\Debug\CalorieCounter.Objetos.pdb
 C:\Projects\CalorieCounterServer\CalorieCounter.Controlador\bin\Debug\CalorieCounter.ServicioBD.pdb
 C:\Projects\CalorieCounterServer\CalorieCounter.Controlador\bin\Debug\CalorieCounter.BD.pdb
 C:\Projects\CalorieCounterServer\CalorieCounter.Controlador\bin\Debug\EntityFramework.xml
+C:\Projects\CalorieCounterServer\CalorieCounter.Controlador\obj\Debug\CalorieCounter.Controlador.csprojResolveAssemblyReference.cache
+C:\Projects\CalorieCounterServer\CalorieCounter.Controlador\obj\Debug\CalorieCounter.Controlador.dll
+C:\Projects\CalorieCounterServer\CalorieCounter.Controlador\obj\Debug\CalorieCounter.Controlador.pdb

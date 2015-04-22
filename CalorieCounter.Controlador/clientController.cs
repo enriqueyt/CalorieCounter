@@ -90,11 +90,29 @@ namespace CalorieCounter.Controlador
             try
             {
                 double? _total = 0;
-                return new objDataClientFoodsResponse { objResumenDiario = new clientService().GetRecordFood(token, out _total, date ==""?DateTime.Now.Date:Convert.ToDateTime(date).Date), total = _total };
+                return new objDataClientFoodsResponse { 
+                    objResumenDiario = new clientService().GetRecordFood(token, out _total, date ==""?DateTime.Now.Date:Convert.ToDateTime(date).Date), 
+                    total = _total 
+                };
             }
             catch (Exception ex)
             {
                 return new objDataClientFoodsResponse { message = ex.Message, tarce = ex.StackTrace };
+            }
+        }
+
+        public objFoodSearchResponse GetFavoriteFood(string token)
+        {
+            try
+            {
+                return new objFoodSearchResponse
+                {
+                    Foods = new clientService().getFavoriteFood(token)
+                };
+            }
+            catch (Exception ex)
+            {
+                return new objFoodSearchResponse { message = ex.Message, tarce = ex.StackTrace };
             }
         }
 

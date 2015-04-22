@@ -78,10 +78,17 @@ namespace CalorieCounter.WS
                            )) as objFoodSearchResponse;
         }
 
+        [WebMethod]
+        public objFoodSearchResponse GetfavoriteFood(string token) {
+            return
+                   responseController.CheckJson(
+                                new clientController().GetFavoriteFood(token)) as objFoodSearchResponse;
+        }
+
         /// <summary>
         /// obtiene una losta de tipos de comida
         /// </summary>
-        /// <returns></returns>
+        /// <returns></returns>s
         [WebMethod]
         public objFoodTypesResponse GetFoodTypes()
         {

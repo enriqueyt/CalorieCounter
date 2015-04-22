@@ -17,7 +17,7 @@
         <EntityTypeShape EntityType="CalorieCounterModel.tb_sesion" Width="1.5" PointX="2.25" PointY="5.375" IsExpanded="false" />
         <EntityTypeShape EntityType="CalorieCounterModel.tb_usuario" Width="1.5" PointX="3" PointY="4.375" IsExpanded="false" />
         <EntityTypeShape EntityType="CalorieCounterModel.tb_usuarioPerfil" Width="1.5" PointX="4.875" PointY="5.75" IsExpanded="false" />
-        <EntityTypeShape EntityType="CalorieCounterModel.sysdiagram" Width="1.5" PointX="7.75" PointY="7" IsExpanded="false" />
+        <EntityTypeShape EntityType="CalorieCounterModel.sysdiagram" Width="1.5" PointX="11.125" PointY="7.875" IsExpanded="false" />
         <AssociationConnector Association="CalorieCounterModel.FK_tb_classificationFoodtb_classificationDetail" />
         <AssociationConnector Association="CalorieCounterModel.FK_tb_detailFoodtb_classificationDetail" />
         <AssociationConnector Association="CalorieCounterModel.FK_tb_usuariotb_cliente" />
@@ -32,7 +32,7 @@
         <AssociationConnector Association="CalorieCounterModel.FK_tb_foodtb_classificationFood" />
         <AssociationConnector Association="CalorieCounterModel.FK_tb_food_tb_foodtype" />
         <EntityTypeShape EntityType="CalorieCounterModel.tb_meal" Width="1.5" PointX="9.125" PointY="4.375" IsExpanded="false" />
-        <EntityTypeShape EntityType="CalorieCounterModel.tb_userFood" Width="1.5" PointX="5.625" PointY="3.25" IsExpanded="false" />
+        <EntityTypeShape EntityType="CalorieCounterModel.tb_userFood" Width="1.5" PointX="5.5" PointY="3.5" IsExpanded="false" />
         <AssociationConnector Association="CalorieCounterModel.FK_tb_userFood_tb_food" />
         <AssociationConnector Association="CalorieCounterModel.FK_tb_userFood_tb_meal" />
         <AssociationConnector Association="CalorieCounterModel.FK_tb_userFood_tb_usuario" />
