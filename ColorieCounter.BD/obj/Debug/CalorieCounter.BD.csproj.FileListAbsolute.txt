@@ -3,6 +3,5 @@ C:\Projects\CalorieCounterServer\ColorieCounter.BD\bin\Debug\CalorieCounter.BD.d
 C:\Projects\CalorieCounterServer\ColorieCounter.BD\bin\Debug\CalorieCounter.BD.pdb
 C:\Projects\CalorieCounterServer\ColorieCounter.BD\bin\Debug\EntityFramework.dll
 C:\Projects\CalorieCounterServer\ColorieCounter.BD\bin\Debug\EntityFramework.xml
-C:\Projects\CalorieCounterServer\ColorieCounter.BD\obj\Debug\CalorieCounter.BD.csprojResolveAssemblyReference.cache
 C:\Projects\CalorieCounterServer\ColorieCounter.BD\obj\Debug\CalorieCounter.BD.dll
 C:\Projects\CalorieCounterServer\ColorieCounter.BD\obj\Debug\CalorieCounter.BD.pdb

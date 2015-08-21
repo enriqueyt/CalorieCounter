@@ -25,32 +25,42 @@ namespace CalorieCounter.Controlador
         public objBasicResponse Login(string usuario, string contrasena)
         {
 
-            objLogin login = new objLogin { usuario = usuario, contrasena = contrasena };
+            objSesion _objSesion = null;
+
+            objLogin login = new objLogin { 
+                usuario = usuario, 
+                contrasena = contrasena 
+            };
 
             loginService loginService = null;
 
             try 
             {
 
-                loginService = new loginService();
-
-                if (loginService.existeUsuario(login))
+                using (loginService = new loginService())
                 {
+                    if (loginService.existeUsuario(login))
+                    {
+                        _objSesion = loginService.login(login) as objSesion;
 
-                    if (loginService.login(login) != null)
-                    {
-                        respuesta.code = "100";
-                        //respuesta.result = (object)(loginService.inicioSesion(login));
+                        if (_objSesion != null)
+                        {
+                            respuesta.code = "100";
+                            respuesta.sesion = _objSesion.sesion;
+                            //respuesta.result = (object)(loginService.inicioSesion(login));
+                        }
+                        else
+                        {
+                            respuesta.code = "103";
+                        }
                     }
-                    else 
+                    else
                     {
-                        respuesta.code = "103";
+                        respuesta.code = "102";
                     }
                 }
-                else 
-                {
-                    respuesta.code = "102";
-                }
+                
+
   
             }
             catch (Exception e) 
@@ -75,26 +85,40 @@ namespace CalorieCounter.Controlador
         public objBasicResponse LoginSocial(string usuario, string idFacebook, string idTwiter, string validateToken, string name, string lastname) 
         {
 
-            objLogin login          = new objLogin { usuario = usuario, usuarioFacebook = idFacebook, usuarioTwiter = idTwiter, validateToken = validateToken };
-            objClient registro    = new objClient { nombre = name, apellido = lastname, correo = usuario };
+            objLogin login          = new objLogin {
+                usuario = usuario.ToLower(), 
+                usuarioFacebook = idFacebook, 
+                usuarioTwiter = idTwiter, 
+                validateToken = validateToken 
+            };
+
+            objClient registro    = new objClient {
+                nombre = name.ToLower(),
+                apellido = lastname.ToLower(),
+                correo = usuario.ToLower() 
+            };
+
             object res = null;
             loginService loginService = null;
 
             try
             {
-                loginService = new loginService();
-
-                res = loginService.loginSocial(login, registro);
-
-                if (res != null)
+               
+                using (loginService = new loginService())
                 {
-                    respuesta.code = "100";
-                    //respuesta.result = res;
+                    res = loginService.loginSocial(login, registro);
+
+                    if (res != null)
+                    {
+                        respuesta.code = "100";
+                        //respuesta.result = res;
+                    }
+                    else
+                    {
+                        respuesta.code = "105";
+                    }
                 }
-                else 
-                {
-                    respuesta.code = "105";
-                }
+                
 
             }
             catch (Exception e)
@@ -118,8 +142,17 @@ namespace CalorieCounter.Controlador
         public objBasicResponse Register(string Username, string Password, string name, string lastname)
         {
 
-            objLogin login        = new objLogin { usuario = Username, contrasena = Password, usuarioCorreo = Username };
-            objClient registro    = new objClient { nombre = name, apellido = lastname, correo = Username };
+            objLogin login        = new objLogin { 
+                    usuario = Username.ToLower(), 
+                    contrasena = Password, 
+                    usuarioCorreo = Username.ToLower()
+            };
+
+            objClient registro    = new objClient {
+                nombre = name.ToLower(),
+                apellido = lastname.ToLower(),
+                correo = Username.ToLower() 
+            };
 
             try
             {
@@ -140,5 +173,7 @@ namespace CalorieCounter.Controlador
             }
             return respuesta;
         }
+    
+    
     }
 }

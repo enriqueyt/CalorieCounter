@@ -16,5 +16,8 @@ namespace CalorieCounter.Objetos
 
         public string tarce { get; set; }
 
+        public string sesion { get; set; }
+
+
     }
 }

@@ -10,20 +10,68 @@ namespace CalorieCounter.Controlador
 {
     public class clientController
     {
-        public objBasicResponse saveFood(string token, int idFood, double count, int scale, int meal, bool favorite) 
+        public objBasicResponse saveFood(string token, int idFood, double count, int scale, int meal, bool favorite, string fecha) 
         {
             try
             {
-                if (new foodService().SaveFood(token, idFood, count, scale, meal, favorite))
-                    return new objBasicResponse { code = "200", result = "true" };
-                else
-                    return new objBasicResponse { code = "500", result = "false" };
+
+                using (foodService fs = new foodService())
+                {
+                    if (fs.SaveFood(token, idFood, count, scale, meal, favorite, fecha))
+                        return new objBasicResponse { code = "200", result = "true" };
+                    else
+                        return new objBasicResponse { code = "500", result = "false" };
+                }
+
+                
             }
             catch (Exception ex)
             {
                 return new objBasicResponse { message = ex.Message, tarce = ex.StackTrace };
             }
         }
+
+        public objBasicResponse updateFood(string token, int idFood, double count, int scale, int meal, bool favorite, string fecha)
+        {
+            try
+            {
+
+                using (foodService fs = new foodService())
+                {
+                    if (fs.updateFood(token, idFood, count, scale, meal, favorite, fecha))
+                        return new objBasicResponse { code = "200", result = "true" };
+                    else
+                        return new objBasicResponse { code = "500", result = "false" };
+                }
+
+
+            }
+            catch (Exception ex)
+            {
+                return new objBasicResponse { message = ex.Message, tarce = ex.StackTrace };
+            }
+        }
+
+        public objBasicResponse deleteFood(string token, int idFood, string fecha)
+        {
+            try
+            {
+
+                using (foodService fs = new foodService())
+                {
+                    if (fs.deleteFood(token, idFood, fecha))
+                        return new objBasicResponse { code = "200", result = "true" };
+                    else
+                        return new objBasicResponse { code = "500", result = "false" };
+                }
+
+
+            }
+            catch (Exception ex)
+            {
+                return new objBasicResponse { message = ex.Message, tarce = ex.StackTrace };
+            }
+        } 
 
         public objDataClientFoodsResponse GetListFoodClient(string token, string date ) 
         {
@@ -42,11 +90,29 @@ namespace CalorieCounter.Controlador
             try
             {
                 double? _total = 0;
-                return new objDataClientFoodsResponse { objResumenDiario = new clientService().GetRecordFood(token, out _total, null), total = _total };
+                return new objDataClientFoodsResponse { 
+                    objResumenDiario = new clientService().GetRecordFood(token, out _total, date ==""?DateTime.Now.Date:Convert.ToDateTime(date).Date), 
+                    total = _total 
+                };
             }
             catch (Exception ex)
             {
                 return new objDataClientFoodsResponse { message = ex.Message, tarce = ex.StackTrace };
+            }
+        }
+
+        public objFoodSearchResponse GetFavoriteFood(string token)
+        {
+            try
+            {
+                return new objFoodSearchResponse
+                {
+                    Foods = new clientService().getFavoriteFood(token)
+                };
+            }
+            catch (Exception ex)
+            {
+                return new objFoodSearchResponse { message = ex.Message, tarce = ex.StackTrace };
             }
         }
 

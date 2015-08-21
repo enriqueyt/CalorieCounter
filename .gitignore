@@ -6,13 +6,13 @@
 !/CalorieCounter.Controlador/*.cs
 !/CalorieCounter.Objetos/*.cs
 !/CalorieCounter.ServicioBD/*.cs
+!/ColorieCounter.BD/*.cs
 
 *.sln
 *.suo
 *.sql
 
 /packages/
-/ColorieCounter.BD/
 /CalorieCounter.Controlador/bin/
 /CalorieCounter.Controlador/obj/
 /CalorieCounter.Controlador/Properties/
@@ -22,11 +22,6 @@
 /CalorieCounter.Objetos/obj/
 /CalorieCounter.Objetos/Properties/
 /CalorieCounter.Objetos/*.csproj
-
-/CalorieCounter.ServicioBD/bin/
-/CalorieCounter.ServicioBD/obj/
-/CalorieCounter.ServicioBD/Properties/
-/CalorieCounter.ServicioBD/*.csproj
 
 /CalorieCounter.ServicioBD/bin/
 /CalorieCounter.ServicioBD/obj/

@@ -43,7 +43,6 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="clientController.cs" />
-    <Compile Include="JavaScriptSerializer.cs" />
     <Compile Include="loginController.cs" />
     <Compile Include="foodController.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
