@@ -31,14 +31,6 @@
         <EntityTypeShape EntityType="CalorieCounterModel.tb_food" Width="1.5" PointX="3" PointY="2.375" IsExpanded="false" />
         <AssociationConnector Association="CalorieCounterModel.FK_tb_foodtb_classificationFood" />
         <AssociationConnector Association="CalorieCounterModel.FK_tb_food_tb_foodtype" />
-        <EntityTypeShape EntityType="CalorieCounterModel.tb_meal" Width="1.5" PointX="9.125" PointY="4.375" IsExpanded="false" />
-        <EntityTypeShape EntityType="CalorieCounterModel.tb_userFood" Width="1.5" PointX="5.625" PointY="3.25" IsExpanded="false" />
-        <AssociationConnector Association="CalorieCounterModel.FK_tb_userFood_tb_food" />
-        <AssociationConnector Association="CalorieCounterModel.FK_tb_userFood_tb_meal" />
-        <AssociationConnector Association="CalorieCounterModel.FK_tb_userFood_tb_usuario" />
-        <EntityTypeShape EntityType="CalorieCounterModel.tb_favoriteFood" Width="1.5" PointX="3" PointY="3.125" IsExpanded="false" />
-        <AssociationConnector Association="CalorieCounterModel.FK_tb_favoriteFood_tb_food" />
-        <AssociationConnector Association="CalorieCounterModel.FK_tb_favoriteFood_tb_usuario" />
         </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>
