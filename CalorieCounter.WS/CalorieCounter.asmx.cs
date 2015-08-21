@@ -84,5 +84,11 @@ namespace CalorieCounter.WS
         {
             return responseController.CheckJson(new clientController().GetRecordFood(token, date)) as objDataClientFoodsResponse;
         }
+
+        [WebMethod]
+        public objUtilitiResponse GetListScale(int id_food)
+        {
+            return responseController.CheckJson(new foodController().GetListScale(id_food)) as objUtilitiResponse;
+        }
     }
 }
