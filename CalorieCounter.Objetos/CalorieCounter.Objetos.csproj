@@ -40,8 +40,13 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="objBasicResponse.cs" />
+    <Compile Include="objCategory.cs" />
     <Compile Include="objDataClientFoods.cs" />
     <Compile Include="objDataClientFoodsResponse.cs" />
+    <Compile Include="objExercise.cs" />
+    <Compile Include="objExerciseComment.cs" />
+    <Compile Include="objExerciseImage.cs" />
+    <Compile Include="objFavoriteExercise.cs" />
     <Compile Include="objFood.cs" />
     <Compile Include="objFoodDetailsSearchResponse.cs" />
     <Compile Include="objFoodSearchResponse.cs" />
@@ -51,7 +56,9 @@
     <Compile Include="objClient.cs" />
     <Compile Include="objSaveFood.cs" />
     <Compile Include="objSesion.cs" />
+    <Compile Include="objSubCategory.cs" />
     <Compile Include="objUtilitiResponse.cs" />
+    <Compile Include="objWorkoutLog.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

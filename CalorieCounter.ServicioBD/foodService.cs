@@ -237,7 +237,7 @@ namespace CalorieCounter.ServicioBD
         /// </summary>
         /// <param name="token">sesion</param>
         /// <returns></returns>
-        public bool SaveFood(string token, int idFood, double amount, int scale, int meal, bool favorite, string fecha) 
+        public bool SaveFood(string token, int idFood, double amount, int scale, int meal, bool favorite, string fecha = "") 
         {
 
             objSaveFood _objSaveFood    = null;

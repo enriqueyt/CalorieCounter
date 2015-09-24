@@ -7,20 +7,20 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace CalorieCounter.BD
+namespace CalorieCounter.API.BD
 {
     using System;
     using System.Collections.Generic;
     
-    public partial class vw_FoodDetail
+    public partial class tb_sesion
     {
-        public int FoodID { get; set; }
-        public int FoodReference { get; set; }
-        public Nullable<int> NDB { get; set; }
-        public string ValGroup { get; set; }
-        public string ValName { get; set; }
-        public string ValType { get; set; }
-        public Nullable<double> Val { get; set; }
-        public string UnitType { get; set; }
+        public int id_sesion { get; set; }
+        public string sesion { get; set; }
+        public System.DateTime fechaInicio { get; set; }
+        public System.DateTime fechaUlOper { get; set; }
+        public int activo { get; set; }
+        public int id_usuario { get; set; }
+    
+        public virtual tb_usuario tb_usuario { get; set; }
     }
 }

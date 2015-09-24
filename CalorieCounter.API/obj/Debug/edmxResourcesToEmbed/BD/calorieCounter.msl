@@ -1,0 +1,248 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+  <EntityContainerMapping StorageEntityContainer="calorieCounterModelStoreContainer" CdmEntityContainer="DB_9B84AE_a2zworkoutEntities">
+    <EntitySetMapping Name="tb_category">
+      <EntityTypeMapping TypeName="calorieCounterModel.tb_category">
+        <MappingFragment StoreEntitySet="tb_category">
+          <ScalarProperty Name="id_category" ColumnName="id_category" />
+          <ScalarProperty Name="name" ColumnName="name" />
+          <ScalarProperty Name="activo" ColumnName="activo" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="tb_classificationDetail">
+      <EntityTypeMapping TypeName="calorieCounterModel.tb_classificationDetail">
+        <MappingFragment StoreEntitySet="tb_classificationDetail">
+          <ScalarProperty Name="id_classificationDetail" ColumnName="id_classificationDetail" />
+          <ScalarProperty Name="id_classificationFood" ColumnName="id_classificationFood" />
+          <ScalarProperty Name="id_detailFood" ColumnName="id_detailFood" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="tb_classificationFood">
+      <EntityTypeMapping TypeName="calorieCounterModel.tb_classificationFood">
+        <MappingFragment StoreEntitySet="tb_classificationFood">
+          <ScalarProperty Name="id_classificationFood" ColumnName="id_classificationFood" />
+          <ScalarProperty Name="id_food" ColumnName="id_food" />
+          <ScalarProperty Name="descripcion" ColumnName="descripcion" />
+          <ScalarProperty Name="activo" ColumnName="activo" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="tb_cliente">
+      <EntityTypeMapping TypeName="calorieCounterModel.tb_cliente">
+        <MappingFragment StoreEntitySet="tb_cliente">
+          <ScalarProperty Name="id_cliente" ColumnName="id_cliente" />
+          <ScalarProperty Name="nombre" ColumnName="nombre" />
+          <ScalarProperty Name="apellido" ColumnName="apellido" />
+          <ScalarProperty Name="correo" ColumnName="correo" />
+          <ScalarProperty Name="tipoDocumento" ColumnName="tipoDocumento" />
+          <ScalarProperty Name="documento" ColumnName="documento" />
+          <ScalarProperty Name="telefono" ColumnName="telefono" />
+          <ScalarProperty Name="activo" ColumnName="activo" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="tb_columnsFood">
+      <EntityTypeMapping TypeName="calorieCounterModel.tb_columnsFood">
+        <MappingFragment StoreEntitySet="tb_columnsFood">
+          <ScalarProperty Name="id_columnsfood" ColumnName="id_columnsfood" />
+          <ScalarProperty Name="descripcion" ColumnName="descripcion" />
+          <ScalarProperty Name="activo" ColumnName="activo" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="tb_detailFood">
+      <EntityTypeMapping TypeName="calorieCounterModel.tb_detailFood">
+        <MappingFragment StoreEntitySet="tb_detailFood">
+          <ScalarProperty Name="id_detailFood" ColumnName="id_detailFood" />
+          <ScalarProperty Name="descripcion" ColumnName="descripcion" />
+          <ScalarProperty Name="id_measurementType" ColumnName="id_measurementType" />
+          <ScalarProperty Name="activo" ColumnName="activo" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="tb_detailFoodColumn">
+      <EntityTypeMapping TypeName="calorieCounterModel.tb_detailFoodColumn">
+        <MappingFragment StoreEntitySet="tb_detailFoodColumn">
+          <ScalarProperty Name="id_detailFoodColumn" ColumnName="id_detailFoodColumn" />
+          <ScalarProperty Name="id_detailFood" ColumnName="id_detailFood" />
+          <ScalarProperty Name="id_columnsfood" ColumnName="id_columnsfood" />
+          <ScalarProperty Name="foodValue" ColumnName="foodValue" />
+          <ScalarProperty Name="activo" ColumnName="activo" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="tb_exercise">
+      <EntityTypeMapping TypeName="calorieCounterModel.tb_exercise">
+        <MappingFragment StoreEntitySet="tb_exercise">
+          <ScalarProperty Name="id_exercise" ColumnName="id_exercise" />
+          <ScalarProperty Name="id_category" ColumnName="id_category" />
+          <ScalarProperty Name="creation_date" ColumnName="creation_date" />
+          <ScalarProperty Name="name" ColumnName="name" />
+          <ScalarProperty Name="description" ColumnName="description" />
+          <ScalarProperty Name="value" ColumnName="value" />
+          <ScalarProperty Name="calculateType" ColumnName="calculateType" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="tb_exerciseComment">
+      <EntityTypeMapping TypeName="calorieCounterModel.tb_exerciseComment">
+        <MappingFragment StoreEntitySet="tb_exerciseComment">
+          <ScalarProperty Name="id_exerciseComment" ColumnName="id_exerciseComment" />
+          <ScalarProperty Name="id_exercise" ColumnName="id_exercise" />
+          <ScalarProperty Name="comment" ColumnName="comment" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="tb_exerciseImage">
+      <EntityTypeMapping TypeName="calorieCounterModel.tb_exerciseImage">
+        <MappingFragment StoreEntitySet="tb_exerciseImage">
+          <ScalarProperty Name="id_exerciseImage" ColumnName="id_exerciseImage" />
+          <ScalarProperty Name="id_exercise" ColumnName="id_exercise" />
+          <ScalarProperty Name="image" ColumnName="image" />
+          <ScalarProperty Name="isMain" ColumnName="isMain" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="tb_favoriteExercise">
+      <EntityTypeMapping TypeName="calorieCounterModel.tb_favoriteExercise">
+        <MappingFragment StoreEntitySet="tb_favoriteExercise">
+          <ScalarProperty Name="id_favoriteExercise" ColumnName="id_favoriteExercise" />
+          <ScalarProperty Name="id_user" ColumnName="id_user" />
+          <ScalarProperty Name="id_exercise" ColumnName="id_exercise" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="tb_favoriteFood">
+      <EntityTypeMapping TypeName="calorieCounterModel.tb_favoriteFood">
+        <MappingFragment StoreEntitySet="tb_favoriteFood">
+          <ScalarProperty Name="id_favoriteFood" ColumnName="id_favoriteFood" />
+          <ScalarProperty Name="id_user" ColumnName="id_user" />
+          <ScalarProperty Name="id_food" ColumnName="id_food" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="tb_food">
+      <EntityTypeMapping TypeName="calorieCounterModel.tb_food">
+        <MappingFragment StoreEntitySet="tb_food">
+          <ScalarProperty Name="id_food" ColumnName="id_food" />
+          <ScalarProperty Name="id_foodtype" ColumnName="id_foodtype" />
+          <ScalarProperty Name="id_reference" ColumnName="id_reference" />
+          <ScalarProperty Name="description" ColumnName="description" />
+          <ScalarProperty Name="datecreated" ColumnName="datecreated" />
+          <ScalarProperty Name="active" ColumnName="active" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="tb_foodtype">
+      <EntityTypeMapping TypeName="calorieCounterModel.tb_foodtype">
+        <MappingFragment StoreEntitySet="tb_foodtype">
+          <ScalarProperty Name="id_foodtype" ColumnName="id_foodtype" />
+          <ScalarProperty Name="description" ColumnName="description" />
+          <ScalarProperty Name="active" ColumnName="active" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="tb_meal">
+      <EntityTypeMapping TypeName="calorieCounterModel.tb_meal">
+        <MappingFragment StoreEntitySet="tb_meal">
+          <ScalarProperty Name="id_meal" ColumnName="id_meal" />
+          <ScalarProperty Name="description" ColumnName="description" />
+          <ScalarProperty Name="activo" ColumnName="activo" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="tb_measurementType">
+      <EntityTypeMapping TypeName="calorieCounterModel.tb_measurementType">
+        <MappingFragment StoreEntitySet="tb_measurementType">
+          <ScalarProperty Name="id_measurementType" ColumnName="id_measurementType" />
+          <ScalarProperty Name="unit" ColumnName="unit" />
+          <ScalarProperty Name="activo" ColumnName="activo" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="tb_perfil">
+      <EntityTypeMapping TypeName="calorieCounterModel.tb_perfil">
+        <MappingFragment StoreEntitySet="tb_perfil">
+          <ScalarProperty Name="id_perfil" ColumnName="id_perfil" />
+          <ScalarProperty Name="perfil" ColumnName="perfil" />
+          <ScalarProperty Name="descripcion" ColumnName="descripcion" />
+          <ScalarProperty Name="fechaRegistro" ColumnName="fechaRegistro" />
+          <ScalarProperty Name="activo" ColumnName="activo" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="tb_sesion">
+      <EntityTypeMapping TypeName="calorieCounterModel.tb_sesion">
+        <MappingFragment StoreEntitySet="tb_sesion">
+          <ScalarProperty Name="id_sesion" ColumnName="id_sesion" />
+          <ScalarProperty Name="sesion" ColumnName="sesion" />
+          <ScalarProperty Name="fechaInicio" ColumnName="fechaInicio" />
+          <ScalarProperty Name="fechaUlOper" ColumnName="fechaUlOper" />
+          <ScalarProperty Name="activo" ColumnName="activo" />
+          <ScalarProperty Name="id_usuario" ColumnName="id_usuario" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="tb_subCategory">
+      <EntityTypeMapping TypeName="calorieCounterModel.tb_subCategory">
+        <MappingFragment StoreEntitySet="tb_subCategory">
+          <ScalarProperty Name="id_subCategory" ColumnName="id_subCategory" />
+          <ScalarProperty Name="name" ColumnName="name" />
+          <ScalarProperty Name="id_category" ColumnName="id_category" />
+          <ScalarProperty Name="activo" ColumnName="activo" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="tb_userFood">
+      <EntityTypeMapping TypeName="calorieCounterModel.tb_userFood">
+        <MappingFragment StoreEntitySet="tb_userFood">
+          <ScalarProperty Name="id_userFood" ColumnName="id_userFood" />
+          <ScalarProperty Name="id_user" ColumnName="id_user" />
+          <ScalarProperty Name="id_food" ColumnName="id_food" />
+          <ScalarProperty Name="date" ColumnName="date" />
+          <ScalarProperty Name="count" ColumnName="count" />
+          <ScalarProperty Name="id_scale" ColumnName="id_scale" />
+          <ScalarProperty Name="id_meal" ColumnName="id_meal" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="tb_usuario">
+      <EntityTypeMapping TypeName="calorieCounterModel.tb_usuario">
+        <MappingFragment StoreEntitySet="tb_usuario">
+          <ScalarProperty Name="id_usuario" ColumnName="id_usuario" />
+          <ScalarProperty Name="usuario" ColumnName="usuario" />
+          <ScalarProperty Name="usuarioCorreo" ColumnName="usuarioCorreo" />
+          <ScalarProperty Name="usuarioFacebook" ColumnName="usuarioFacebook" />
+          <ScalarProperty Name="usuarioTwiter" ColumnName="usuarioTwiter" />
+          <ScalarProperty Name="contrasena" ColumnName="contrasena" />
+          <ScalarProperty Name="fechaRegistro" ColumnName="fechaRegistro" />
+          <ScalarProperty Name="id_cliente" ColumnName="id_cliente" />
+          <ScalarProperty Name="activo" ColumnName="activo" />
+          <ScalarProperty Name="validateToken" ColumnName="validateToken" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="tb_usuarioPerfil">
+      <EntityTypeMapping TypeName="calorieCounterModel.tb_usuarioPerfil">
+        <MappingFragment StoreEntitySet="tb_usuarioPerfil">
+          <ScalarProperty Name="id_usuarioPerfil" ColumnName="id_usuarioPerfil" />
+          <ScalarProperty Name="id_usuario" ColumnName="id_usuario" />
+          <ScalarProperty Name="id_perfil" ColumnName="id_perfil" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="tb_workoutLog">
+      <EntityTypeMapping TypeName="calorieCounterModel.tb_workoutLog">
+        <MappingFragment StoreEntitySet="tb_workoutLog">
+          <ScalarProperty Name="id_workoutLog" ColumnName="id_workoutLog" />
+          <ScalarProperty Name="id_user" ColumnName="id_user" />
+          <ScalarProperty Name="id_exercise" ColumnName="id_exercise" />
+          <ScalarProperty Name="date" ColumnName="date" />
+          <ScalarProperty Name="reps" ColumnName="reps" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+  </EntityContainerMapping>
+</Mapping>

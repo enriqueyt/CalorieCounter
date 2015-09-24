@@ -13,6 +13,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CalorieCounter.Objetos", "C
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CalorieCounter.WS", "CalorieCounter.WS\CalorieCounter.WS.csproj", "{32DFFCD0-86E2-45BD-B2F5-F4A4F62AF82D}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CalorieCounter.API", "CalorieCounter.API\CalorieCounter.API.csproj", "{423C0731-0F00-474D-B406-491F05DB3FD3}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -39,6 +41,10 @@ Global
 		{32DFFCD0-86E2-45BD-B2F5-F4A4F62AF82D}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{32DFFCD0-86E2-45BD-B2F5-F4A4F62AF82D}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{32DFFCD0-86E2-45BD-B2F5-F4A4F62AF82D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{423C0731-0F00-474D-B406-491F05DB3FD3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{423C0731-0F00-474D-B406-491F05DB3FD3}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{423C0731-0F00-474D-B406-491F05DB3FD3}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{423C0731-0F00-474D-B406-491F05DB3FD3}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
