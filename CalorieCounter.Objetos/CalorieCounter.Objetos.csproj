@@ -41,6 +41,7 @@
   <ItemGroup>
     <Compile Include="objBasicResponse.cs" />
     <Compile Include="objCategory.cs" />
+    <Compile Include="objColumnFood.cs" />
     <Compile Include="objDataClientFoods.cs" />
     <Compile Include="objDataClientFoodsResponse.cs" />
     <Compile Include="objExercise.cs" />
@@ -48,16 +49,21 @@
     <Compile Include="objExerciseImage.cs" />
     <Compile Include="objFavoriteExercise.cs" />
     <Compile Include="objFood.cs" />
+    <Compile Include="objFoodDetails.cs" />
+    <Compile Include="objFoodDetailsResponce.cs" />
     <Compile Include="objFoodDetailsSearchResponse.cs" />
     <Compile Include="objFoodSearchResponse.cs" />
     <Compile Include="objFoodType.cs" />
     <Compile Include="objFoodTypesResponse.cs" />
+    <Compile Include="objGoalCalories.cs" />
     <Compile Include="objLogin.cs" />
     <Compile Include="objClient.cs" />
     <Compile Include="objSaveFood.cs" />
     <Compile Include="objSesion.cs" />
     <Compile Include="objSubCategory.cs" />
     <Compile Include="objUtilitiResponse.cs" />
+    <Compile Include="objWater.cs" />
+    <Compile Include="objWeight.cs" />
     <Compile Include="objWorkoutLog.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

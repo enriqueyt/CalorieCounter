@@ -6,13 +6,10 @@ using System.Threading.Tasks;
 using CalorieCounter.BD;
 using CalorieCounter.Objetos;
 
-namespace CalorieCounter.ServicioBD
-{
-    public class loginService : IDisposable
-    {
+namespace CalorieCounter.ServicioBD {
+    public class loginService : IDisposable {
         CalorieCounterEntities calorieCounterBD = null;
-        public loginService() 
-        {
+        public loginService() {
             calorieCounterBD = new CalorieCounterEntities();
             calorieCounterBD.Database.Connection.Open();
         }
@@ -20,16 +17,13 @@ namespace CalorieCounter.ServicioBD
         /// <summary>
         /// Valida si el cliente existe o no
         /// </summary>
-        public bool existeUsuario(objLogin login) 
-        {
-            try 
-	        {
-                return calorieCounterBD.tb_usuario.Any(a => a.usuario == login.usuario);
-	        }
-	        catch (Exception ex)
-	        {
-		        throw new Exception(ex.Message);
-	        }
+        public bool existeUsuario(objLogin login) {
+            try {
+                return calorieCounterBD.tb_usuario.Any(a => a.usuario == login.user);
+            }
+            catch(Exception ex) {
+                throw new Exception(ex.Message);
+            }
         }
 
         /// <summary>
@@ -37,17 +31,14 @@ namespace CalorieCounter.ServicioBD
         /// </summary>
         /// <param name="_objSesion"></param>
         /// <returns></returns>
-        public bool cerrarSesion(objSesion _objSesion)
-        {
+        public bool logOut(string token) {
 
             tb_sesion sesion = null;
 
-            try
-            {
-                sesion = calorieCounterBD.tb_sesion.Where(w => w.id_usuario == _objSesion.idUsuario && w.sesion == _objSesion.sesion && w.activo == 1).FirstOrDefault();
+            try {
+                sesion = calorieCounterBD.tb_sesion.Where(w => w.sesion == token && w.activo == 1).FirstOrDefault();
 
-                if (sesion != null)
-                {
+                if(sesion != null) {
                     sesion.sesion = "";
                     sesion.fechaUlOper = DateTime.Now;
                     sesion.activo = 0;
@@ -59,8 +50,7 @@ namespace CalorieCounter.ServicioBD
 
                 return false;
             }
-            catch (Exception ex)
-            {
+            catch(Exception ex) {
                 throw new Exception(ex.Message + " " + ex.StackTrace, ex.InnerException);
             }
         }
@@ -70,14 +60,11 @@ namespace CalorieCounter.ServicioBD
         /// </summary>
         /// <param name="login"></param>
         /// <returns></returns>
-        public object login(objLogin login) 
-        {
-            try
-            {
+        public object login(objLogin login) {
+            try {
                 return this._login(login);
             }
-            catch (Exception ex)
-            {
+            catch(Exception ex) {
                 throw new Exception(ex.Message + " " + ex.StackTrace, ex.InnerException);
             }
         }
@@ -88,63 +75,54 @@ namespace CalorieCounter.ServicioBD
         /// <param name="login"></param>
         /// <param name="registro"></param>
         /// <returns></returns>
-        public object loginSocial(objLogin login, objClient registro) 
-        {
+        public object loginSocial(objLogin login, objClient registro) {
             tb_usuario usuario = null;
 
-            try
-            {
-                usuario = calorieCounterBD.tb_usuario.Where(w => w.usuario == login.usuario && (w.usuarioFacebook == login.usuarioFacebook || w.usuarioTwiter == login.usuarioTwiter) ).FirstOrDefault();
+            try {
+                usuario = calorieCounterBD.tb_usuario.Where(w => w.usuario == login.user && (w.usuarioFacebook == login.userFacebook || w.usuarioTwiter == login.userTwiter)).FirstOrDefault();
 
-                if (usuario != null && registro == null)
-                {
-                    usuario.usuarioFacebook = login.usuarioFacebook;
-                    usuario.usuarioTwiter   = login.usuarioTwiter;
-                    usuario.validateToken   = login.validateToken;
+                if(usuario != null && registro == null) {
+                    usuario.usuarioFacebook = login.userFacebook;
+                    usuario.usuarioTwiter = login.userTwiter;
+                    usuario.validateToken = login.validateToken;
                     calorieCounterBD.SaveChanges();
 
-                    login.idUsuario = usuario.id_usuario;
+                    login.id_user = usuario.id_usuario;
                 }
-                else 
-                {
-                    registro        = new clientService().saveClient(registro, login, false);
-                    login.idUsuario = registro.idUsuario;
+                else {
+                    registro = new clientService().saveClient(registro, login, false);
+                    login.id_user = registro.id_usuario;
                 }
 
                 return (object)this.inicioSesion(login);
 
             }
-            catch (Exception ex)
-            {
+            catch(Exception ex) {
                 throw new Exception(ex.Message + " " + ex.StackTrace, ex.InnerException);
             }
         }
-   
+
         /// <summary>
         /// Inicio la sesion del usuario y devuelve un objSesion
         /// </summary>
         /// <param name="login"></param>
-        public objSesion inicioSesion(objLogin login) 
-        {
+        public objSesion inicioSesion(objLogin login) {
 
             objSesion _objSesion = null;
 
-            try
-            {
+            try {
 
                 _objSesion =
-                    new objSesion
-                    {
-                        idUsuario       = login.idUsuario,
-                        sesion          = Guid.NewGuid().ToString(),
-                        fechaInicio     = DateTime.Now,
-                        fechaUltimaOp   = DateTime.Now
+                    new objSesion {
+                        idUsuario = login.id_user,
+                        sesion = Guid.NewGuid().ToString(),
+                        fechaInicio = DateTime.Now,
+                        fechaUltimaOp = DateTime.Now
                     };
 
                 tb_sesion sesion = calorieCounterBD.tb_sesion.Where(w => w.id_usuario == _objSesion.idUsuario && w.activo == 1).FirstOrDefault();
 
-                if (sesion != null) 
-                {
+                if(sesion != null) {
                     sesion.activo = 0;
                     sesion.sesion = "";
                     calorieCounterBD.SaveChanges();
@@ -153,13 +131,12 @@ namespace CalorieCounter.ServicioBD
                 calorieCounterBD
                     .tb_sesion.Add
                         (
-                            new tb_sesion 
-                            {
-                                id_usuario  = _objSesion.idUsuario,
-                                sesion      = _objSesion.sesion,
+                            new tb_sesion {
+                                id_usuario = _objSesion.idUsuario,
+                                sesion = _objSesion.sesion,
                                 fechaInicio = _objSesion.fechaInicio,
                                 fechaUlOper = _objSesion.fechaUltimaOp,
-                                activo      = 1
+                                activo = 1
                             }
                         );
 
@@ -167,8 +144,7 @@ namespace CalorieCounter.ServicioBD
 
                 return _objSesion;
             }
-            catch (Exception ex)
-            {
+            catch(Exception ex) {
                 throw new Exception(ex.Message + " " + ex.StackTrace, ex.InnerException);
             }
         }
@@ -178,31 +154,27 @@ namespace CalorieCounter.ServicioBD
         /// </summary>
         /// <param name="_objSesion">recibe un objSesion de la sesion del WS ojo</param>
         /// <returns></returns>
-        public objSesion actualizarSesion(objSesion _objSesion) 
-        {
+        public objSesion actualizarSesion(objSesion _objSesion) {
 
             tb_sesion sesion = null;
 
-            try
-            {
+            try {
                 sesion = calorieCounterBD.tb_sesion.Where(w => w.id_usuario == _objSesion.idUsuario && w.sesion == _objSesion.sesion && w.activo == 1).FirstOrDefault();
 
-                if (sesion != null)
-                {
-                    _objSesion.sesion           = Guid.NewGuid().ToString();
-                    _objSesion.fechaUltimaOp    = DateTime.Now;
+                if(sesion != null) {
+                    _objSesion.sesion = Guid.NewGuid().ToString();
+                    _objSesion.fechaUltimaOp = DateTime.Now;
 
-                    sesion.sesion       = _objSesion.sesion;
-                    sesion.fechaUlOper  = _objSesion.fechaUltimaOp;
+                    sesion.sesion = _objSesion.sesion;
+                    sesion.fechaUlOper = _objSesion.fechaUltimaOp;
 
                     calorieCounterBD.SaveChanges();
-                    
+
                 }
 
                 return _objSesion;
             }
-            catch (Exception ex)
-            {
+            catch(Exception ex) {
                 throw new Exception(ex.Message + " " + ex.StackTrace, ex.InnerException);
             }
         }
@@ -213,21 +185,19 @@ namespace CalorieCounter.ServicioBD
         /// <param name="login"></param>
         /// <param name="modo"></param>
         /// <returns></returns>
-        private objSesion _login(objLogin login, int modo = 0)
-        {
+        private objSesion _login(objLogin login, int modo = 0) {
             tb_usuario usuario = null;
             objSesion sesion = null;
 
             usuario =
                     (modo == 0)
                     ?
-                        calorieCounterBD.tb_usuario.Where(w => w.usuario == login.usuario && w.contrasena == login.contrasena).FirstOrDefault()
+                        calorieCounterBD.tb_usuario.Where(w => w.usuario == login.user && w.contrasena == login.password).FirstOrDefault()
                     :
                         null;
 
-            if (usuario != null)
-            {
-                login.idUsuario = usuario.id_usuario;
+            if(usuario != null) {
+                login.id_user = usuario.id_usuario;
 
                 sesion = this.inicioSesion(login);
             }
@@ -235,26 +205,101 @@ namespace CalorieCounter.ServicioBD
             return sesion;
         }
 
-        protected void Dispose(Boolean free)
-        {
-            if (free)
-            {
-                if (this.calorieCounterBD != null)
-                {
+        /// <summary>
+        /// lista el sexo
+        /// </summary>
+        /// <returns></returns>
+        public List<objUtility> getListSexo() {
+
+            try {
+                
+                return calorieCounterBD.tb_sexo.Select(s => new objUtility() {
+                    id = s.id_sexo,
+                    description = s.description
+                }).ToList<objUtility>();
+                
+            }
+            catch(Exception ex) {
+                throw new Exception(ex.Message);
+            }
+        }
+
+        /// <summary>
+        /// lista las unidades de medición
+        /// </summary>
+        /// <returns></returns>
+        public List<objUtility> getListMeasurementUnits() {
+            List<objUtility> list = null;
+
+            try {
+
+                list = calorieCounterBD.tb_measurementUnits.Select(s => new objUtility {
+                    id = s.id_measurementUnits,
+                    description = s.description
+                }).ToList();
+
+                return list;
+            }
+            catch(Exception ex) {
+                throw new Exception(ex.Message);
+            } 
+            
+        }
+
+        /// <summary>
+        /// lista las actividades
+        /// </summary>
+        /// <returns></returns>
+        public List<objUtility> getListActivities() {
+            try {
+
+                return calorieCounterBD.tb_activityType.Select(s => new objUtility() {
+                    id = s.id_activityType,
+                    description = s.description
+                }).ToList<objUtility>();
+
+            }
+            catch(Exception ex) {
+                throw new Exception(ex.Message);
+            } 
+        }
+
+        public objClient getPassword(string email) {
+            objClient _objClient = null;
+            try {
+               
+                _objClient = calorieCounterBD.tb_client
+                    .Where(w => w.email == email)
+                    .Select(s =>
+                        new objClient {
+                            token = s.tb_usuario
+                                .Where(wh => wh.id_cliente == s.id_client)
+                                .Select(se => se.contrasena).FirstOrDefault()
+                        }).FirstOrDefault();
+                
+            }
+            catch(Exception ex) {
+                throw new Exception(ex.Message + " " + ex.StackTrace, ex.InnerException);
+            }
+
+            return _objClient;
+        }
+
+        protected void Dispose(Boolean free) {
+            if(free) {
+                if(this.calorieCounterBD != null) {
                     this.calorieCounterBD.Dispose();
                     this.calorieCounterBD = null;
                 }
             }
         }
 
-        public void Dispose()
-        {
+        public void Dispose() {
             Dispose(true);
             GC.SuppressFinalize(this);
         }
 
-        ~loginService()
-        {
+        ~loginService() {
             Dispose();
         }
 

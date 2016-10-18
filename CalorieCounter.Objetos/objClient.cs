@@ -8,15 +8,15 @@ namespace CalorieCounter.Objetos
 {
     public class objClient
     {
-        public int idCliente        { get; set; }
+        public int id_client        { get; set; }
 
-        public int idUsuario        { get; set; }
+        public int id_usuario        { get; set; }
 
-        public string nombre        { get; set; }
+        public string name        { get; set; }
 
-        public string apellido      { get; set; }
+        public string lastname      { get; set; }
 
-        public string correo        { get; set; }
+        public string email        { get; set; }
 
         public string tipoDocumento { get; set; }
 
@@ -24,6 +24,25 @@ namespace CalorieCounter.Objetos
 
         public string telefono      { get; set; }
 
-        public string message       { get; set; }
+        public int? currentWeight { get; set; }
+
+        public int? goalWeight { get; set; }
+
+        public int? height { get; set; }
+
+        public DateTime birthDate { get; set; }
+
+        public int id_sexo { get; set; }
+
+        public int id_activity { get; set; }
+
+        public double activityValue { get; set; }
+
+        public int id_measurementUnits { get; set; }
+
+        public string token { get; set; }
+
+        public string message { get; set; }
+       
     }
 }

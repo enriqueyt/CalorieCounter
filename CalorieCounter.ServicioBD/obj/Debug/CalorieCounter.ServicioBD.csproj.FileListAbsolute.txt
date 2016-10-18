@@ -17,7 +17,7 @@ C:\Proyectos\CalorieCounterServer\CalorieCounter.ServicioBD\bin\Debug\EntityFram
 C:\Proyectos\CalorieCounterServer\CalorieCounter.ServicioBD\bin\Debug\CalorieCounter.Objetos.pdb
 C:\Proyectos\CalorieCounterServer\CalorieCounter.ServicioBD\bin\Debug\CalorieCounter.BD.pdb
 C:\Proyectos\CalorieCounterServer\CalorieCounter.ServicioBD\bin\Debug\EntityFramework.xml
+C:\Proyectos\CalorieCounterServer\CalorieCounter.ServicioBD\bin\Debug\es\EntityFramework.resources.dll
 C:\Proyectos\CalorieCounterServer\CalorieCounter.ServicioBD\obj\Debug\CalorieCounter.ServicioBD.csprojResolveAssemblyReference.cache
 C:\Proyectos\CalorieCounterServer\CalorieCounter.ServicioBD\obj\Debug\CalorieCounter.ServicioBD.dll
 C:\Proyectos\CalorieCounterServer\CalorieCounter.ServicioBD\obj\Debug\CalorieCounter.ServicioBD.pdb
-C:\Proyectos\CalorieCounterServer\CalorieCounter.ServicioBD\bin\Debug\es\EntityFramework.resources.dll

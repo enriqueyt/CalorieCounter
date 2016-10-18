@@ -8,19 +8,19 @@ namespace CalorieCounter.Objetos
 {
     public class objLogin 
     {
-        public string usuario           { get; set; }
+        public string user           { get; set; }
 
-        public string usuarioCorreo     { get; set; }
+        public string userMail     { get; set; }
 
-        public string usuarioFacebook   { get; set; }
+        public string userFacebook   { get; set; }
 
-        public string usuarioTwiter     { get; set; }
+        public string userTwiter     { get; set; }
 
-        public string contrasena        { get; set; }
+        public string password        { get; set; }
 
         public string validateToken     { get; set; }
 
-        public int idUsuario            { get; set; }
+        public int id_user            { get; set; }
 
        
     }

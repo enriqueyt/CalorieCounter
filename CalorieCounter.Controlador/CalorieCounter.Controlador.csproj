@@ -30,6 +30,10 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="EASendMail40, Version=7.1.0.2, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>bin\Debug\EASendMail40.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Runtime.Serialization" />
@@ -43,11 +47,13 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="clientController.cs" />
+    <Compile Include="exerciseController.cs" />
     <Compile Include="loginController.cs" />
     <Compile Include="foodController.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="responseController.cs" />
     <Compile Include="test.cs" />
+    <Compile Include="utilityController.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\CalorieCounter.Objetos\CalorieCounter.Objetos.csproj">

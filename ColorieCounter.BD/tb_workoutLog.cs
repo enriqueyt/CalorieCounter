@@ -18,7 +18,11 @@ namespace CalorieCounter.BD
         public int id_user { get; set; }
         public int id_exercise { get; set; }
         public System.DateTime date { get; set; }
-        public Nullable<System.DateTime> reps { get; set; }
+        public Nullable<int> reps { get; set; }
+        public double minutes { get; set; }
+        public Nullable<int> sets { get; set; }
+        public Nullable<double> weight { get; set; }
+        public byte favorito { get; set; }
     
         public virtual tb_exercise tb_exercise { get; set; }
         public virtual tb_usuario tb_usuario { get; set; }

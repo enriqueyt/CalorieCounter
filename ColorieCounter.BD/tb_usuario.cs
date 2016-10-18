@@ -16,11 +16,13 @@ namespace CalorieCounter.BD
     {
         public tb_usuario()
         {
-            this.tb_sesion = new HashSet<tb_sesion>();
-            this.tb_usuarioPerfil = new HashSet<tb_usuarioPerfil>();
-            this.tb_userFood = new HashSet<tb_userFood>();
-            this.tb_favoriteFood = new HashSet<tb_favoriteFood>();
             this.tb_favoriteExercise = new HashSet<tb_favoriteExercise>();
+            this.tb_favoriteFood = new HashSet<tb_favoriteFood>();
+            this.tb_sesion = new HashSet<tb_sesion>();
+            this.tb_userFood = new HashSet<tb_userFood>();
+            this.tb_usuarioPerfil = new HashSet<tb_usuarioPerfil>();
+            this.tb_water = new HashSet<tb_water>();
+            this.tb_weight = new HashSet<tb_weight>();
             this.tb_workoutLog = new HashSet<tb_workoutLog>();
         }
     
@@ -35,12 +37,14 @@ namespace CalorieCounter.BD
         public int activo { get; set; }
         public string validateToken { get; set; }
     
-        public virtual tb_cliente tb_cliente { get; set; }
-        public virtual ICollection<tb_sesion> tb_sesion { get; set; }
-        public virtual ICollection<tb_usuarioPerfil> tb_usuarioPerfil { get; set; }
-        public virtual ICollection<tb_userFood> tb_userFood { get; set; }
-        public virtual ICollection<tb_favoriteFood> tb_favoriteFood { get; set; }
+        public virtual tb_client tb_client { get; set; }
         public virtual ICollection<tb_favoriteExercise> tb_favoriteExercise { get; set; }
+        public virtual ICollection<tb_favoriteFood> tb_favoriteFood { get; set; }
+        public virtual ICollection<tb_sesion> tb_sesion { get; set; }
+        public virtual ICollection<tb_userFood> tb_userFood { get; set; }
+        public virtual ICollection<tb_usuarioPerfil> tb_usuarioPerfil { get; set; }
+        public virtual ICollection<tb_water> tb_water { get; set; }
+        public virtual ICollection<tb_weight> tb_weight { get; set; }
         public virtual ICollection<tb_workoutLog> tb_workoutLog { get; set; }
     }
 }

@@ -1,5 +1,14 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Schema Namespace="CalorieCounterModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2008" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+  <EntityType Name="tb_activityType">
+    <Key>
+      <PropertyRef Name="id_activityType" />
+    </Key>
+    <Property Name="id_activityType" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="description" Type="varchar" MaxLength="60" Nullable="false" />
+    <Property Name="value" Type="float" Nullable="false" />
+    <Property Name="activo" Type="int" Nullable="false" />
+  </EntityType>
   <EntityType Name="tb_category">
     <Key>
       <PropertyRef Name="id_category" />
@@ -25,17 +34,21 @@
     <Property Name="descripcion" Type="varchar" MaxLength="100" />
     <Property Name="activo" Type="int" Nullable="false" />
   </EntityType>
-  <EntityType Name="tb_cliente">
+  <EntityType Name="tb_client">
     <Key>
-      <PropertyRef Name="id_cliente" />
+      <PropertyRef Name="id_client" />
     </Key>
-    <Property Name="id_cliente" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-    <Property Name="nombre" Type="varchar" MaxLength="50" />
-    <Property Name="apellido" Type="varchar" MaxLength="50" />
-    <Property Name="correo" Type="varchar" MaxLength="50" Nullable="false" />
-    <Property Name="tipoDocumento" Type="varchar" MaxLength="2" />
-    <Property Name="documento" Type="int" />
-    <Property Name="telefono" Type="varchar" MaxLength="20" />
+    <Property Name="id_client" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="name" Type="varchar" MaxLength="50" />
+    <Property Name="lastname" Type="varchar" MaxLength="50" />
+    <Property Name="email" Type="varchar" MaxLength="50" Nullable="false" />
+    <Property Name="currentWeight" Type="int" />
+    <Property Name="goalWeight" Type="int" />
+    <Property Name="height" Type="int" />
+    <Property Name="birthDate" Type="datetime" Nullable="false" />
+    <Property Name="id_Sexo" Type="int" Nullable="false" />
+    <Property Name="id_activityType" Type="int" Nullable="false" />
+    <Property Name="id_measurementUnits" Type="int" Nullable="false" />
     <Property Name="activo" Type="int" Nullable="false" />
   </EntityType>
   <EntityType Name="tb_columnsFood">
@@ -145,6 +158,15 @@
     <Property Name="unit" Type="varchar" MaxLength="10" Nullable="false" />
     <Property Name="activo" Type="int" Nullable="false" />
   </EntityType>
+  <EntityType Name="tb_measurementUnits">
+    <Key>
+      <PropertyRef Name="id_measurementUnits" />
+    </Key>
+    <Property Name="id_measurementUnits" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="description" Type="varchar" MaxLength="30" Nullable="false" />
+    <Property Name="value" Type="float" Nullable="false" />
+    <Property Name="activo" Type="int" Nullable="false" />
+  </EntityType>
   <EntityType Name="tb_perfil">
     <Key>
       <PropertyRef Name="id_perfil" />
@@ -165,6 +187,14 @@
     <Property Name="fechaUlOper" Type="datetime" Nullable="false" />
     <Property Name="activo" Type="int" Nullable="false" />
     <Property Name="id_usuario" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityType Name="tb_sexo">
+    <Key>
+      <PropertyRef Name="id_sexo" />
+    </Key>
+    <Property Name="id_sexo" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="description" Type="varchar" MaxLength="10" Nullable="false" />
+    <Property Name="activo" Type="int" Nullable="false" />
   </EntityType>
   <EntityType Name="tb_subCategory">
     <Key>
@@ -210,6 +240,24 @@
     <Property Name="id_usuario" Type="int" Nullable="false" />
     <Property Name="id_perfil" Type="int" Nullable="false" />
   </EntityType>
+  <EntityType Name="tb_water">
+    <Key>
+      <PropertyRef Name="id_water" />
+    </Key>
+    <Property Name="id_water" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="cups" Type="int" Nullable="false" />
+    <Property Name="date" Type="datetime" Nullable="false" />
+    <Property Name="id_usuario" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityType Name="tb_weight">
+    <Key>
+      <PropertyRef Name="id_weight" />
+    </Key>
+    <Property Name="id_weight" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="weight" Type="float" Nullable="false" />
+    <Property Name="date" Type="datetime" Nullable="false" />
+    <Property Name="id_usuario" Type="int" Nullable="false" />
+  </EntityType>
   <EntityType Name="tb_workoutLog">
     <Key>
       <PropertyRef Name="id_workoutLog" />
@@ -218,20 +266,12 @@
     <Property Name="id_user" Type="int" Nullable="false" />
     <Property Name="id_exercise" Type="int" Nullable="false" />
     <Property Name="date" Type="datetime" Nullable="false" />
-    <Property Name="reps" Type="datetime" />
+    <Property Name="reps" Type="int" />
+    <Property Name="minutes" Type="float" Nullable="false" />
+    <Property Name="sets" Type="int" />
+    <Property Name="weight" Type="float" />
+    <Property Name="favorito" Type="tinyint" Nullable="false" />
   </EntityType>
-  <EntityType Name="sysdiagrams">
-    <Key>
-      <PropertyRef Name="diagram_id" />
-    </Key>
-    <Property Name="name" Type="nvarchar" MaxLength="128" Nullable="false" />
-    <Property Name="principal_id" Type="int" Nullable="false" />
-    <Property Name="diagram_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-    <Property Name="version" Type="int" />
-    <Property Name="definition" Type="varbinary(max)" />
-  </EntityType>
-  <!--Errores durante la generación:
-advertencia 6002: La tabla o vista 'DB_9B84AE_a2zworkout.cc.vw_FoodDetail' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
   <Association Name="FK_tb_category_tb_subCategory">
     <End Role="tb_category" Type="Self.tb_category" Multiplicity="1" />
     <End Role="tb_subCategory" Type="Self.tb_subCategory" Multiplicity="*" />
@@ -255,6 +295,62 @@ advertencia 6002: La tabla o vista 'DB_9B84AE_a2zworkout.cc.vw_FoodDetail' no ti
       </Principal>
       <Dependent Role="tb_classificationDetail">
         <PropertyRef Name="id_classificationFood" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_tb_client_activityType">
+    <End Role="tb_activityType" Type="Self.tb_activityType" Multiplicity="1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Role="tb_client" Type="Self.tb_client" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="tb_activityType">
+        <PropertyRef Name="id_activityType" />
+      </Principal>
+      <Dependent Role="tb_client">
+        <PropertyRef Name="id_activityType" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_tb_client_measurementUnits">
+    <End Role="tb_measurementUnits" Type="Self.tb_measurementUnits" Multiplicity="1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Role="tb_client" Type="Self.tb_client" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="tb_measurementUnits">
+        <PropertyRef Name="id_measurementUnits" />
+      </Principal>
+      <Dependent Role="tb_client">
+        <PropertyRef Name="id_measurementUnits" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_tb_client_sexo">
+    <End Role="tb_sexo" Type="Self.tb_sexo" Multiplicity="1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Role="tb_client" Type="Self.tb_client" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="tb_sexo">
+        <PropertyRef Name="id_sexo" />
+      </Principal>
+      <Dependent Role="tb_client">
+        <PropertyRef Name="id_Sexo" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_tb_client_usuario">
+    <End Role="tb_client" Type="Self.tb_client" Multiplicity="1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Role="tb_usuario" Type="Self.tb_usuario" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="tb_client">
+        <PropertyRef Name="id_client" />
+      </Principal>
+      <Dependent Role="tb_usuario">
+        <PropertyRef Name="id_cliente" />
       </Dependent>
     </ReferentialConstraint>
   </Association>
@@ -482,18 +578,6 @@ advertencia 6002: La tabla o vista 'DB_9B84AE_a2zworkout.cc.vw_FoodDetail' no ti
       </Dependent>
     </ReferentialConstraint>
   </Association>
-  <Association Name="FK_tb_usuariotb_cliente">
-    <End Role="tb_cliente" Type="Self.tb_cliente" Multiplicity="1" />
-    <End Role="tb_usuario" Type="Self.tb_usuario" Multiplicity="*" />
-    <ReferentialConstraint>
-      <Principal Role="tb_cliente">
-        <PropertyRef Name="id_cliente" />
-      </Principal>
-      <Dependent Role="tb_usuario">
-        <PropertyRef Name="id_cliente" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
   <Association Name="FK_tb_usuariotb_sesion">
     <End Role="tb_usuario" Type="Self.tb_usuario" Multiplicity="1" />
     <End Role="tb_sesion" Type="Self.tb_sesion" Multiplicity="*" />
@@ -502,6 +586,30 @@ advertencia 6002: La tabla o vista 'DB_9B84AE_a2zworkout.cc.vw_FoodDetail' no ti
         <PropertyRef Name="id_usuario" />
       </Principal>
       <Dependent Role="tb_sesion">
+        <PropertyRef Name="id_usuario" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_tb_usuariotb_water">
+    <End Role="tb_usuario" Type="Self.tb_usuario" Multiplicity="1" />
+    <End Role="tb_water" Type="Self.tb_water" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="tb_usuario">
+        <PropertyRef Name="id_usuario" />
+      </Principal>
+      <Dependent Role="tb_water">
+        <PropertyRef Name="id_usuario" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_tb_usuariotb_weight">
+    <End Role="tb_usuario" Type="Self.tb_usuario" Multiplicity="1" />
+    <End Role="tb_weight" Type="Self.tb_weight" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="tb_usuario">
+        <PropertyRef Name="id_usuario" />
+      </Principal>
+      <Dependent Role="tb_weight">
         <PropertyRef Name="id_usuario" />
       </Dependent>
     </ReferentialConstraint>
@@ -531,10 +639,11 @@ advertencia 6002: La tabla o vista 'DB_9B84AE_a2zworkout.cc.vw_FoodDetail' no ti
     </ReferentialConstraint>
   </Association>
   <EntityContainer Name="CalorieCounterModelStoreContainer">
+    <EntitySet Name="tb_activityType" EntityType="Self.tb_activityType" Schema="cc" store:Type="Tables" />
     <EntitySet Name="tb_category" EntityType="Self.tb_category" Schema="cc" store:Type="Tables" />
     <EntitySet Name="tb_classificationDetail" EntityType="Self.tb_classificationDetail" Schema="cc" store:Type="Tables" />
     <EntitySet Name="tb_classificationFood" EntityType="Self.tb_classificationFood" Schema="cc" store:Type="Tables" />
-    <EntitySet Name="tb_cliente" EntityType="Self.tb_cliente" Schema="cc" store:Type="Tables" />
+    <EntitySet Name="tb_client" EntityType="Self.tb_client" Schema="cc" store:Type="Tables" />
     <EntitySet Name="tb_columnsFood" EntityType="Self.tb_columnsFood" Schema="cc" store:Type="Tables" />
     <EntitySet Name="tb_detailFood" EntityType="Self.tb_detailFood" Schema="cc" store:Type="Tables" />
     <EntitySet Name="tb_detailFoodColumn" EntityType="Self.tb_detailFoodColumn" Schema="cc" store:Type="Tables" />
@@ -547,14 +656,17 @@ advertencia 6002: La tabla o vista 'DB_9B84AE_a2zworkout.cc.vw_FoodDetail' no ti
     <EntitySet Name="tb_foodtype" EntityType="Self.tb_foodtype" Schema="cc" store:Type="Tables" />
     <EntitySet Name="tb_meal" EntityType="Self.tb_meal" Schema="cc" store:Type="Tables" />
     <EntitySet Name="tb_measurementType" EntityType="Self.tb_measurementType" Schema="cc" store:Type="Tables" />
+    <EntitySet Name="tb_measurementUnits" EntityType="Self.tb_measurementUnits" Schema="cc" store:Type="Tables" />
     <EntitySet Name="tb_perfil" EntityType="Self.tb_perfil" Schema="cc" store:Type="Tables" />
     <EntitySet Name="tb_sesion" EntityType="Self.tb_sesion" Schema="cc" store:Type="Tables" />
+    <EntitySet Name="tb_sexo" EntityType="Self.tb_sexo" Schema="cc" store:Type="Tables" />
     <EntitySet Name="tb_subCategory" EntityType="Self.tb_subCategory" Schema="cc" store:Type="Tables" />
     <EntitySet Name="tb_userFood" EntityType="Self.tb_userFood" Schema="cc" store:Type="Tables" />
     <EntitySet Name="tb_usuario" EntityType="Self.tb_usuario" Schema="cc" store:Type="Tables" />
     <EntitySet Name="tb_usuarioPerfil" EntityType="Self.tb_usuarioPerfil" Schema="cc" store:Type="Tables" />
+    <EntitySet Name="tb_water" EntityType="Self.tb_water" Schema="cc" store:Type="Tables" />
+    <EntitySet Name="tb_weight" EntityType="Self.tb_weight" Schema="cc" store:Type="Tables" />
     <EntitySet Name="tb_workoutLog" EntityType="Self.tb_workoutLog" Schema="cc" store:Type="Tables" />
-    <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" Schema="dbo" store:Type="Tables" />
     <AssociationSet Name="FK_tb_category_tb_subCategory" Association="Self.FK_tb_category_tb_subCategory">
       <End Role="tb_category" EntitySet="tb_category" />
       <End Role="tb_subCategory" EntitySet="tb_subCategory" />
@@ -562,6 +674,22 @@ advertencia 6002: La tabla o vista 'DB_9B84AE_a2zworkout.cc.vw_FoodDetail' no ti
     <AssociationSet Name="FK_tb_classificationFoodtb_classificationDetail" Association="Self.FK_tb_classificationFoodtb_classificationDetail">
       <End Role="tb_classificationFood" EntitySet="tb_classificationFood" />
       <End Role="tb_classificationDetail" EntitySet="tb_classificationDetail" />
+    </AssociationSet>
+    <AssociationSet Name="FK_tb_client_activityType" Association="Self.FK_tb_client_activityType">
+      <End Role="tb_activityType" EntitySet="tb_activityType" />
+      <End Role="tb_client" EntitySet="tb_client" />
+    </AssociationSet>
+    <AssociationSet Name="FK_tb_client_measurementUnits" Association="Self.FK_tb_client_measurementUnits">
+      <End Role="tb_measurementUnits" EntitySet="tb_measurementUnits" />
+      <End Role="tb_client" EntitySet="tb_client" />
+    </AssociationSet>
+    <AssociationSet Name="FK_tb_client_sexo" Association="Self.FK_tb_client_sexo">
+      <End Role="tb_sexo" EntitySet="tb_sexo" />
+      <End Role="tb_client" EntitySet="tb_client" />
+    </AssociationSet>
+    <AssociationSet Name="FK_tb_client_usuario" Association="Self.FK_tb_client_usuario">
+      <End Role="tb_client" EntitySet="tb_client" />
+      <End Role="tb_usuario" EntitySet="tb_usuario" />
     </AssociationSet>
     <AssociationSet Name="FK_tb_detailFood_tb_measurementType" Association="Self.FK_tb_detailFood_tb_measurementType">
       <End Role="tb_measurementType" EntitySet="tb_measurementType" />
@@ -635,13 +763,17 @@ advertencia 6002: La tabla o vista 'DB_9B84AE_a2zworkout.cc.vw_FoodDetail' no ti
       <End Role="tb_usuario" EntitySet="tb_usuario" />
       <End Role="tb_usuarioPerfil" EntitySet="tb_usuarioPerfil" />
     </AssociationSet>
-    <AssociationSet Name="FK_tb_usuariotb_cliente" Association="Self.FK_tb_usuariotb_cliente">
-      <End Role="tb_cliente" EntitySet="tb_cliente" />
-      <End Role="tb_usuario" EntitySet="tb_usuario" />
-    </AssociationSet>
     <AssociationSet Name="FK_tb_usuariotb_sesion" Association="Self.FK_tb_usuariotb_sesion">
       <End Role="tb_usuario" EntitySet="tb_usuario" />
       <End Role="tb_sesion" EntitySet="tb_sesion" />
+    </AssociationSet>
+    <AssociationSet Name="FK_tb_usuariotb_water" Association="Self.FK_tb_usuariotb_water">
+      <End Role="tb_usuario" EntitySet="tb_usuario" />
+      <End Role="tb_water" EntitySet="tb_water" />
+    </AssociationSet>
+    <AssociationSet Name="FK_tb_usuariotb_weight" Association="Self.FK_tb_usuariotb_weight">
+      <End Role="tb_usuario" EntitySet="tb_usuario" />
+      <End Role="tb_weight" EntitySet="tb_weight" />
     </AssociationSet>
     <AssociationSet Name="FK_tb_workoutLog_tb_exercise" Association="Self.FK_tb_workoutLog_tb_exercise">
       <End Role="tb_exercise" EntitySet="tb_exercise" />

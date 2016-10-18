@@ -44,5 +44,7 @@ namespace CalorieCounter.Objetos
         public double? cant { get; set; }
 
         public List<objFood> objfood { get; set; }
+
+        public List<objWorkoutLog> objWlog { get; set; }
     }
 }

@@ -13,7 +13,7 @@ C:\Proyectos\CalorieCounterServer\CalorieCounter.Objetos\bin\Debug\CalorieCounte
 C:\Proyectos\CalorieCounterServer\CalorieCounter.Objetos\bin\Debug\EntityFramework.dll
 C:\Proyectos\CalorieCounterServer\CalorieCounter.Objetos\bin\Debug\CalorieCounter.BD.pdb
 C:\Proyectos\CalorieCounterServer\CalorieCounter.Objetos\bin\Debug\EntityFramework.xml
+C:\Proyectos\CalorieCounterServer\CalorieCounter.Objetos\bin\Debug\es\EntityFramework.resources.dll
 C:\Proyectos\CalorieCounterServer\CalorieCounter.Objetos\obj\Debug\CalorieCounter.Objetos.csprojResolveAssemblyReference.cache
 C:\Proyectos\CalorieCounterServer\CalorieCounter.Objetos\obj\Debug\CalorieCounter.Objetos.dll
 C:\Proyectos\CalorieCounterServer\CalorieCounter.Objetos\obj\Debug\CalorieCounter.Objetos.pdb
-C:\Proyectos\CalorieCounterServer\CalorieCounter.Objetos\bin\Debug\es\EntityFramework.resources.dll

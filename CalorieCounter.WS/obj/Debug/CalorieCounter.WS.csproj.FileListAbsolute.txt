@@ -31,3 +31,4 @@ C:\Proyectos\CalorieCounterServer\CalorieCounter.WS\bin\CalorieCounter.BD.pdb
 C:\Proyectos\CalorieCounterServer\CalorieCounter.WS\bin\EntityFramework.xml
 C:\Proyectos\CalorieCounterServer\CalorieCounter.WS\obj\Debug\CalorieCounter.WS.pdb
 C:\Proyectos\CalorieCounterServer\CalorieCounter.WS\bin\es\EntityFramework.resources.dll
+C:\Proyectos\CalorieCounterServer\CalorieCounter.WS\bin\EASendMail40.dll

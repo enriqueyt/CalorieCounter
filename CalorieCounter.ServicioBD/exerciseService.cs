@@ -13,7 +13,7 @@ namespace CalorieCounter.ServicioBD
         private CalorieCounterEntities calorieCounterBD = null;
 
         /// <summary>
-        /// 
+        /// obtiene una lista de categorias
         /// </summary>
         /// <returns></returns>
         public List<objCategory> getCategories() {
@@ -96,21 +96,23 @@ namespace CalorieCounter.ServicioBD
         }
 
         /// <summary>
-        /// 
+        /// obtiene lista de favoritos de un cliente
         /// </summary>
-        /// <param name="id"></param>
+        /// <param name="token">guid</param>
         /// <returns></returns>
-        public List<objFavoriteExercise> favoriteExercise(int id) {
+        public List<objFavoriteExercise> favoriteExercise(string token) {
 
             List<objFavoriteExercise> objfavoriteExercise = null;
             try {
+
+                objClient _objClient = new clientService().findClientebyToken(token);
 
                 using(calorieCounterBD = new CalorieCounterEntities()) {
                     
                     objfavoriteExercise =
                         calorieCounterBD.tb_favoriteExercise
                         .Join(calorieCounterBD.tb_exercise, fe => fe.id_exercise, e => e.id_exercise, (fe, e) => new { fe, e })
-                        .Where(w => w.fe.id_user == id)
+                        .Where(w => w.fe.id_user == _objClient.id_usuario)
                         .Select(s => new {
                             s.fe.id_exercise,
                             s.fe.id_favoriteExercise,
@@ -169,10 +171,10 @@ namespace CalorieCounter.ServicioBD
         }
 
         /// <summary>
-        /// 
+        /// almacena la preferencia de actividades de un cliente
         /// </summary>
-        /// <param name="token"></param>
-        /// <param name="fe"></param>
+        /// <param name="token">guid</param>
+        /// <param name="fe">obj proviene de una formulario</param>
         /// <returns></returns>
         public int saveFavoriteExercise(string token, objFavoriteExercise fe) {
             try {
@@ -188,7 +190,7 @@ namespace CalorieCounter.ServicioBD
                         .tb_favoriteExercise.Add(
                             new tb_favoriteExercise {
                                 id_exercise = fe.id_exercise,
-                                id_user = _objClient.idUsuario
+                                id_user = _objClient.id_usuario
                             });
 
                     calorieCounterBD.SaveChanges();
@@ -203,18 +205,20 @@ namespace CalorieCounter.ServicioBD
         }
 
         /// <summary>
-        /// 
+        /// elimina un ejercicio de la lista de favoritos
         /// </summary>
-        /// <param name="id"></param>
+        /// <param name="token">guid</param>
         /// <returns></returns>
-        public bool deleteFavoriteExercise(int id) {
+        public bool deleteFavoriteExercise(string token, int id_exercise) {
             try {
+
+                objClient _objClient = new clientService().findClientebyToken(token);
 
                 using(calorieCounterBD = new CalorieCounterEntities()) {
 
                     calorieCounterBD.Database.Connection.Open();
 
-                    tb_favoriteExercise fe = calorieCounterBD.tb_favoriteExercise.Where(w => w.id_user == id).FirstOrDefault();
+                    tb_favoriteExercise fe = calorieCounterBD.tb_favoriteExercise.Where(w => w.id_user == _objClient.id_usuario && w.id_exercise == id_exercise).FirstOrDefault();
 
                     if(fe != null) {
                         calorieCounterBD.tb_favoriteExercise.Remove(fe);
@@ -233,9 +237,9 @@ namespace CalorieCounter.ServicioBD
         }
 
         /// <summary>
-        /// 
+        /// Almacena comentarios de un ejercicio
         /// </summary>
-        /// <param name="ec"></param>
+        /// <param name="ec">obj proviene de una formulario</param>
         /// <returns></returns>
         public int saveCommentExercise(objExerciseComment ec) {
             try {
@@ -262,17 +266,17 @@ namespace CalorieCounter.ServicioBD
         }
 
         /// <summary>
-        /// 
+        /// Almacena la actividad seleccionada por un cliente.
         /// </summary>
-        /// <param name="token"></param>
-        /// <param name="wlog"></param>
+        /// <param name="token">guid</param>
+        /// <param name="wlog">obj proviene de una formulario</param>
         /// <returns></returns>
         public bool saveWorkoutLog(string token, objWorkoutLog wlog) {
             try {
 
                 objClient _objClient = new clientService().findClientebyToken(token);
 
-                wlog.id_user = _objClient.idUsuario;
+                wlog.id_user = _objClient.id_usuario;
 
                 using(calorieCounterBD = new CalorieCounterEntities()) {
 
@@ -282,7 +286,11 @@ namespace CalorieCounter.ServicioBD
                         id_exercise = wlog.id_exercise,
                         id_user = wlog.id_user,
                         date = DateTime.Now,
-                        reps = wlog.reps
+                        minutes = wlog.minutes,
+                        sets = wlog.sets,
+                        reps = wlog.reps,
+                        weight = wlog.weight,
+                        favorito  = wlog.favorito
                     });
 
                     calorieCounterBD.SaveChanges();
@@ -297,10 +305,10 @@ namespace CalorieCounter.ServicioBD
         }
 
         /// <summary>
-        /// 
+        /// obtiene una lista de trabajos de un user.
         /// </summary>
-        /// <param name="token"></param>
-        /// <param name="date"></param>
+        /// <param name="token">guid</param>
+        /// <param name="date">opcional, obtiene por fecha seleccionada</param>
         /// <returns></returns>
         public List<objWorkoutLog> getWorkoutLogs(string token, DateTime? date = null) {
             try {
@@ -315,19 +323,28 @@ namespace CalorieCounter.ServicioBD
                 using(calorieCounterBD = new CalorieCounterEntities()) {
 
                     wlog = calorieCounterBD.tb_workoutLog
-                            .Where(w => w.id_user == _objClient.idUsuario && w.date == date)
+                            .Where(w => w.id_user == _objClient.id_usuario && w.date == date)
                             .Select(s => new {
                                 s.id_workoutLog,
                                 s.id_exercise,
                                 s.id_user,
+                                s.date,
+                                s.minutes,
+                                s.sets,
                                 s.reps,
-                                s.date
+                                s.weight,
+                                s.favorito
                             }).AsEnumerable()
                             .Select(s => new objWorkoutLog {
                                 id_workoutLog = s.id_workoutLog,
                                 id_user = s.id_user,
                                 date = s.date,
                                 id_exercise = s.id_exercise,
+                                sets = s.sets,
+                                reps = s.reps,
+                                minutes = s.minutes,
+                                weight = s.weight,
+                                favorito = s.favorito,
                                 list_exercise =
                                     calorieCounterBD.tb_exercise
                                         .Where(w => w.id_exercise == s.id_exercise)

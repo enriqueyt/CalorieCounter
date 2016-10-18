@@ -83,7 +83,7 @@ namespace CalorieCounter.Controlador
             try
             {
                 _objUtilitiResponse = new objUtilitiResponse {
-                    utiliti = new foodService().GetMealType()
+                    utility = new foodService().GetMealType()
                 } ;
             }
             catch (Exception ex)
@@ -108,7 +108,7 @@ namespace CalorieCounter.Controlador
             {
                 _objUtilitiResponse = new objUtilitiResponse
                 {
-                    utiliti = new foodService().GetListScale(id_food)
+                    utility = new foodService().GetListScale(id_food)
                 };
             }
             catch (Exception ex)
@@ -123,30 +123,7 @@ namespace CalorieCounter.Controlador
 
             return _objUtilitiResponse;
         }
-        public objUtilitiResponse SaveFood(string token, int idFood, double amount, int scale, int meal, bool favorite) 
-        {
-            objUtilitiResponse _objUtilitiResponse = null;
-
-            try
-            {
-                _objUtilitiResponse = new objUtilitiResponse
-                {
-                    flag = new foodService().SaveFood(token, idFood, amount, scale, meal, favorite)
-                };
-            }
-            catch (Exception ex)
-            {
-                _objUtilitiResponse = new objUtilitiResponse
-                {
-                    message = ex.Message,
-                    tarce = ex.StackTrace,
-                    code = "500"
-                };
-            }
-
-            return _objUtilitiResponse;
-        }
-            
+  
 
     }
 }

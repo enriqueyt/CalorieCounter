@@ -8,7 +8,7 @@ namespace CalorieCounter.Objetos
 {
     public class objBasicResponse
     {
-        public string result { get; set; }
+        public object result { get; set; }
 
         public string code { get; set; }
 
@@ -17,6 +17,8 @@ namespace CalorieCounter.Objetos
         public string tarce { get; set; }
 
         public string sesion { get; set; }
+
+        public object obj { get; set; }
 
 
     }

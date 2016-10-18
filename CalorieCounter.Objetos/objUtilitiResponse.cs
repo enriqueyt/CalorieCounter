@@ -8,13 +8,12 @@ namespace CalorieCounter.Objetos
 {
     public class objUtilitiResponse : objBasicResponse
     {
-        public List<objUtiliti> utiliti { get; set; }
+        public List<objUtility> utility { get; set; }
 
         public bool flag { get; set; }
     }
 
-    public class objUtiliti 
-    {
+    public class objUtility {
         public int id { get; set; }
 
         public string description { get; set; }

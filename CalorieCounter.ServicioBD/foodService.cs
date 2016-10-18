@@ -8,10 +8,8 @@ using System.Threading.Tasks;
 using CalorieCounter.BD;
 using CalorieCounter.Objetos;
 
-namespace CalorieCounter.ServicioBD
-{
-    public class foodService : IDisposable
-    {
+namespace CalorieCounter.ServicioBD {
+    public class foodService : IDisposable {
         private CalorieCounterEntities calorieCounterBD = null;
 
         /// <summary>
@@ -25,57 +23,48 @@ namespace CalorieCounter.ServicioBD
 
             List<objFood> l_objFood = null;
 
-            try
-            {
-                using (calorieCounterBD = new CalorieCounterEntities())
-                {
+            try {
+                using(calorieCounterBD = new CalorieCounterEntities()) {
 
                     calorieCounterBD.Database.Connection.Open();
 
-                    if (ID != -1) 
-                    {
+                    if(ID != -1) {
                         l_objFood =
                            calorieCounterBD.tb_food
                                .Where(w => w.id_food == ID)
-                               .Select(s => new objFood
-                               {
+                               .Select(s => new objFood {
                                    id_food = s.id_food,
                                    description = s.description,
                                    groupID = s.id_foodtype
                                }).ToList<objFood>();
                     }
-                    else if (GroupID != -1) 
-                    {
+                    else if(GroupID != -1) {
                         l_objFood =
                            calorieCounterBD.tb_food
                                .Where(w => w.id_foodtype == GroupID)
-                               .Select(s => new objFood
-                               {
+                               .Select(s => new objFood {
                                    id_food = s.id_food,
                                    description = s.description,
                                    groupID = s.id_foodtype
                                }).ToList<objFood>();
                     }
-                    else if (!string.IsNullOrEmpty(Description)) 
-                    {
+                    else if(!string.IsNullOrEmpty(Description)) {
                         l_objFood =
                            calorieCounterBD.tb_food
                                .Where(w => w.description.Contains(Description))
-                               .Select(s => new objFood
-                               {
+                               .Select(s => new objFood {
                                    id_food = s.id_food,
                                    description = s.description,
                                    groupID = s.id_foodtype
                                }).ToList<objFood>();
                     }
 
-                   
+
                 }
 
                 return l_objFood;
             }
-            catch (Exception ex)
-            {
+            catch(Exception ex) {
                 throw new Exception(ex.Message, ex.InnerException);
             }
 
@@ -85,19 +74,16 @@ namespace CalorieCounter.ServicioBD
         /// return a list of type foods
         /// </summary>
         /// <returns></returns>
-        public List<objFoodType> FoodTypes() 
-        {
+        public List<objFoodType> FoodTypes() {
             List<objFoodType> l_fiddType = null;
 
-            try
-            {
-                using (calorieCounterBD = new CalorieCounterEntities())
-                {
+            try {
+                using(calorieCounterBD = new CalorieCounterEntities()) {
                     calorieCounterBD.Database.Connection.Open();
 
                     l_fiddType =
                         calorieCounterBD.tb_foodtype
-                            .Select(s => new objFoodType{
+                            .Select(s => new objFoodType {
                                 Id = s.id_foodtype,
                                 Description = s.description
                             }).ToList<objFoodType>();
@@ -105,8 +91,7 @@ namespace CalorieCounter.ServicioBD
 
                 return l_fiddType;
             }
-            catch (Exception ex)
-            {
+            catch(Exception ex) {
                 throw new Exception(ex.Message, ex.InnerException);
             }
 
@@ -116,94 +101,84 @@ namespace CalorieCounter.ServicioBD
         /// Busca un detalle de una comida
         /// </summary>
         /// <param name="idFood"></param>
-        public objFoodDetailsSearchResponse FoodDetailsSearch(int idFood) 
-        {
+        public objFoodDetailsSearchResponse FoodDetailsSearch(int idFood) {
 
             List<objClassificationFood> _objClassificationFood = null;
             List<objClasificationDef> clasifications = new List<objClasificationDef>();
 
-            try
-            {
-                using (calorieCounterBD = new CalorieCounterEntities())
-                {
+            try {
+                using(calorieCounterBD = new CalorieCounterEntities()) {
                     calorieCounterBD.Database.Connection.Open();
 
                     _objClassificationFood =
                         calorieCounterBD.tb_classificationFood
-                            .Where(w  => w.id_food == idFood)
-                            .Select(s => new
-                            {
-                                name    = s.descripcion,
-                                id      = s.id_classificationFood
+                            .Where(w => w.id_food == idFood)
+                            .Select(s => new {
+                                name = s.descripcion,
+                                id = s.id_classificationFood
                             }).AsEnumerable()
-                            .Select(se => new objClassificationFood
-                            {
-                                name    = se.name,
-                                id      = se.id,
+                            .Select(se => new objClassificationFood {
+                                name = se.name,
+                                id = se.id,
                                 list_foodDetails =
                                 (
                                     from cd in calorieCounterBD.tb_classificationDetail
                                     join df in calorieCounterBD.tb_detailFood on cd.id_detailFood equals df.id_detailFood
                                     join mt in calorieCounterBD.tb_measurementType on df.id_measurementType equals mt.id_measurementType
                                     where cd.id_classificationFood == se.id
-                                    select new 
-                                    {
+                                    select new {
                                         descripcion = df.descripcion,
-                                        unit        = mt.unit,
-                                        id          = df.id_detailFood
+                                        unit = mt.unit,
+                                        id = df.id_detailFood
                                     }
                                  ).AsEnumerable()
                                     .Select(sel => new objFoodDetail {
                                         descripcion = sel.descripcion,
-                                        unit        = sel.unit,
-                                        count       = 
+                                        unit = sel.unit,
+                                        count =
                                                 calorieCounterBD.tb_detailFoodColumn
-                                                    .Join(calorieCounterBD.tb_columnsFood, a => a.id_columnsfood, b => b.id_columnsfood, (a,b) => new {a,b})
-                                                    .Where(w=>w.a.id_detailFood == sel.id)
-                                                    .Select(s=>s.a.id_detailFood).Count(),
+                                                    .Join(calorieCounterBD.tb_columnsFood, a => a.id_columnsfood, b => b.id_columnsfood, (a, b) => new { a, b })
+                                                    .Where(w => w.a.id_detailFood == sel.id)
+                                                    .Select(s => s.a.id_detailFood).Count(),
                                         valuesFoodDetail =
                                             calorieCounterBD.tb_detailFoodColumn
-                                                .Where(w  => w.id_detailFood == sel.id)
+                                                .Where(w => w.id_detailFood == sel.id)
                                                 .Select(s => new objFoodDetailValues {
                                                     value = s.foodValue
                                                 }).ToList()
                                     }).ToList()
                             }).ToList();
 
-                    if (_objClassificationFood.Count == 0) return new objFoodDetailsSearchResponse {code = "100"};
+                    if(_objClassificationFood.Count == 0) return new objFoodDetailsSearchResponse { code = "100" };
 
                     _objClassificationFood.ForEach(f => {
 
                         objClasificationDef _objClasificationDef = clasifications.Find(fin => fin.name == f.name);
 
-                        if (_objClasificationDef == null)
-                        {
+                        if(_objClasificationDef == null) {
 
-                            clasifications.Add(new objClasificationDef
-                            {
-                                name                = f.name,
-                                listObjFoodDetail   = new List<List<objFoodDetail>>()
+                            clasifications.Add(new objClasificationDef {
+                                name = f.name,
+                                listObjFoodDetail = new List<List<objFoodDetail>>()
                             });
 
                             clasifications.Find(fin => fin.name == f.name).listObjFoodDetail.Add(f.list_foodDetails);
-                        
+
                         }
-                        else
-                        {
+                        else {
                             _objClasificationDef.listObjFoodDetail.Add(f.list_foodDetails);
                         }
 
                     });
 
-                    return new objFoodDetailsSearchResponse {   
-                        _objClasificationDef    = clasifications,
-                        listScale               = this.GetListScale(idFood),
-                        columnsCount            = clasifications[0].listObjFoodDetail[0].FirstOrDefault().count 
+                    return new objFoodDetailsSearchResponse {
+                        _objClasificationDef = clasifications,
+                        listScale = this.GetListScale(idFood),
+                        columnsCount = clasifications[0].listObjFoodDetail[0].FirstOrDefault().count
                     };
                 }
             }
-            catch (Exception ex)
-            {
+            catch(Exception ex) {
                 throw new Exception(ex.Message, ex.InnerException);
             }
         }
@@ -212,21 +187,17 @@ namespace CalorieCounter.ServicioBD
         /// obtiene meal (breakfast, lunch, etc)
         /// </summary>
         /// <returns></returns>
-        public List<objUtiliti> GetMealType() 
-        {
+        public List<objUtility> GetMealType() {
 
-            try
-            {
-                using (calorieCounterBD = new CalorieCounterEntities())
-                {
+            try {
+                using(calorieCounterBD = new CalorieCounterEntities()) {
                     calorieCounterBD.Database.Connection.Open();
 
-                   return  calorieCounterBD.tb_meal.Select(s => new objUtiliti { id = s.id_meal, description = s.description }).ToList<objUtiliti>();
+                    return calorieCounterBD.tb_meal.Select(s => new objUtility { id = s.id_meal, description = s.description }).ToList<objUtility>();
                 }
 
             }
-            catch (Exception ex)
-            {
+            catch(Exception ex) {
                 throw new Exception(ex.Message, ex.InnerException);
             }
 
@@ -237,63 +208,56 @@ namespace CalorieCounter.ServicioBD
         /// </summary>
         /// <param name="token">sesion</param>
         /// <returns></returns>
-        public bool SaveFood(string token, int idFood, double amount, int scale, int meal, bool favorite, string fecha = "") 
-        {
+        public bool SaveFood(string token, int idFood, double amount, int scale, int meal, bool favorite, string fecha) {
 
-            objSaveFood _objSaveFood    = null;
-            objClient _objClient        = null;
-            tb_userFood _tb_userFood    = null;
+            objSaveFood _objSaveFood = null;
+            objClient _objClient = null;
+            tb_userFood _tb_userFood = null;
             DateTime auxDate = (fecha == "" ? DateTime.Now.Date : Convert.ToDateTime(fecha).Date);
             bool ok = false;
 
-            try
-            {
-                
+            try {
+
                 _objSaveFood = new objSaveFood {
-                    token   = token,
+                    token = token,
                     id_food = idFood,
                     amount = amount,
-                    scale   = scale,
-                    meal    = meal
+                    scale = scale,
+                    meal = meal
                 };
 
                 _objClient = new clientService().findClientebyToken(token);
 
-                if (_objClient == null) throw new Exception("No existe la sesion");
+                if(_objClient == null) throw new Exception("No existe la sesion");
 
-                _objSaveFood.id_user = _objClient.idUsuario;
+                _objSaveFood.id_user = _objClient.id_usuario;
 
-                using (calorieCounterBD = new CalorieCounterEntities())
-                {
+                using(calorieCounterBD = new CalorieCounterEntities()) {
                     calorieCounterBD.Database.Connection.Open();
 
-                    if (_tb_userFood == null)
-                    {
+                    if(_tb_userFood == null) {
 
                         calorieCounterBD.tb_userFood.Add(
-                            new tb_userFood
-                            {
-                                id_user     = _objSaveFood.id_user,
-                                id_food     = _objSaveFood.id_food,
-                                count       = _objSaveFood.amount,
-                                date        = auxDate,
-                                id_scale    = _objSaveFood.scale,
-                                id_meal     = _objSaveFood.meal
+                            new tb_userFood {
+                                id_user = _objSaveFood.id_user,
+                                id_food = _objSaveFood.id_food,
+                                count = _objSaveFood.amount,
+                                date = auxDate,
+                                id_scale = _objSaveFood.scale,
+                                id_meal = _objSaveFood.meal
                             }
                         );
 
-                        if (favorite) 
-                        {
-                            if (!calorieCounterBD.tb_favoriteFood.Any(a => a.id_food == _objSaveFood.id_food && a.id_user == _objSaveFood.id_user)) {
+                        if(favorite) {
+                            if(!calorieCounterBD.tb_favoriteFood.Any(a => a.id_food == _objSaveFood.id_food && a.id_user == _objSaveFood.id_user)) {
                                 calorieCounterBD.tb_favoriteFood.Add(
-                                       new tb_favoriteFood
-                                       {
+                                       new tb_favoriteFood {
                                            id_user = _objSaveFood.id_user,
                                            id_food = _objSaveFood.id_food
                                        }
                                    );
                             }
-                           
+
                         }
 
                         calorieCounterBD.SaveChanges();
@@ -304,8 +268,7 @@ namespace CalorieCounter.ServicioBD
                 }
 
             }
-            catch (Exception ex)
-            {
+            catch(Exception ex) {
                 throw new Exception(ex.Message, ex.InnerException);
             }
 
@@ -323,45 +286,39 @@ namespace CalorieCounter.ServicioBD
         /// <param name="favorite"></param>
         /// <param name="fecha"></param>
         /// <returns></returns>
-        public bool updateFood(string token, int idFood, double amount, int scale, int meal, bool favorite, string fecha)
-        {
+        public bool updateFood(string token, int idFood, double amount, int scale, int meal, bool favorite, string fecha) {
 
             objSaveFood _objSaveFood = null;
             tb_favoriteFood _tb_favoriteFood = null;
             tb_userFood _tb_userFood = null;
             DateTime auxDate = (fecha == "" ? DateTime.Now.Date : Convert.ToDateTime(fecha).Date);
-            try
-            {
+            try {
                 _objSaveFood = new objSaveFood {
-                    token   = token,
+                    token = token,
                     id_food = idFood,
                     amount = amount,
-                    scale   = scale,
-                    meal    = meal,
-                    id_user = new clientService().findClientebyToken(token).idUsuario
+                    scale = scale,
+                    meal = meal,
+                    id_user = new clientService().findClientebyToken(token).id_usuario
                 };
 
-                using (calorieCounterBD = new CalorieCounterEntities())
-                {
+                using(calorieCounterBD = new CalorieCounterEntities()) {
                     calorieCounterBD.Database.Connection.Open();
 
                     _tb_userFood = calorieCounterBD.tb_userFood.Where(w => w.id_food == _objSaveFood.id_food && w.id_user == _objSaveFood.id_user && w.date == auxDate).FirstOrDefault();
 
-                    if (_tb_userFood!=null){
+                    if(_tb_userFood != null) {
                         _tb_userFood.count = _objSaveFood.amount;
                         _tb_userFood.id_scale = _objSaveFood.scale;
                         _tb_userFood.id_meal = _tb_userFood.id_meal;
 
                         _tb_favoriteFood = calorieCounterBD.tb_favoriteFood.Where(w => w.id_food == _objSaveFood.id_food && w.id_user == _objSaveFood.id_user).FirstOrDefault();
 
-                        if (favorite)
-                        {
+                        if(favorite) {
 
-                            if (_tb_favoriteFood == null)
-                            {
+                            if(_tb_favoriteFood == null) {
                                 calorieCounterBD.tb_favoriteFood.Add(
-                                        new tb_favoriteFood
-                                        {
+                                        new tb_favoriteFood {
                                             id_user = _objSaveFood.id_user,
                                             id_food = _objSaveFood.id_food
                                         }
@@ -369,7 +326,7 @@ namespace CalorieCounter.ServicioBD
                             }
                         }
                         else {
-                            if (_tb_favoriteFood != null){
+                            if(_tb_favoriteFood != null) {
                                 calorieCounterBD.tb_favoriteFood.Remove(_tb_favoriteFood);
                             }
                         }
@@ -379,8 +336,7 @@ namespace CalorieCounter.ServicioBD
                 }
 
             }
-            catch (Exception ex)
-            {
+            catch(Exception ex) {
                 throw new Exception(ex.Message, ex.InnerException);
             }
             return false;
@@ -393,22 +349,19 @@ namespace CalorieCounter.ServicioBD
         /// <param name="idFood"></param>
         /// <param name="fecha"></param>
         /// <returns></returns>
-        public bool deleteFood(string token, int idFood, string fecha)
-        {
+        public bool deleteFood(string token, int idFood, string fecha) {
             objClient _objClient = null;
             tb_userFood _tb_userFood = null;
             DateTime auxDate = (fecha == "" ? DateTime.Now.Date : Convert.ToDateTime(fecha).Date);
-            try
-            {
+            try {
                 _objClient = new clientService().findClientebyToken(token);
 
-                using (calorieCounterBD = new CalorieCounterEntities())
-                {
+                using(calorieCounterBD = new CalorieCounterEntities()) {
                     calorieCounterBD.Database.Connection.Open();
 
-                    _tb_userFood = calorieCounterBD.tb_userFood.Where(w => w.id_food == idFood && w.id_user == _objClient.idUsuario && w.date == auxDate).FirstOrDefault();
+                    _tb_userFood = calorieCounterBD.tb_userFood.Where(w => w.id_food == idFood && w.id_user == _objClient.id_usuario && w.date == auxDate).FirstOrDefault();
 
-                    if (_tb_userFood != null) {
+                    if(_tb_userFood != null) {
                         calorieCounterBD.tb_userFood.Remove(_tb_userFood);
                         calorieCounterBD.SaveChanges();
                         return true;
@@ -417,8 +370,7 @@ namespace CalorieCounter.ServicioBD
 
                 return true;
             }
-            catch (Exception ex)
-            {
+            catch(Exception ex) {
                 throw new Exception(ex.Message, ex.InnerException);
             }
         }
@@ -428,16 +380,13 @@ namespace CalorieCounter.ServicioBD
         /// </summary>
         /// <param name="id_food"></param>
         /// <returns></returns>
-        public List<objUtiliti> GetListScale(int id_food) 
-        {
-            try
-            {
-                List<objUtiliti> resp = null;
+        public List<objUtility> GetListScale(int id_food) {
+            try {
+                List<objUtility> resp = null;
 
                 double? aux = this.GetGramoskalorias(id_food);
 
-                using (calorieCounterBD = new CalorieCounterEntities())
-                {
+                using(calorieCounterBD = new CalorieCounterEntities()) {
                     calorieCounterBD.Database.Connection.Open();
 
                     resp =
@@ -449,11 +398,10 @@ namespace CalorieCounter.ServicioBD
                         .Join(calorieCounterBD.tb_columnsFood, detFoodCol_colFood => detFoodCol_colFood.detFoodCol.id_columnsfood, colFood => colFood.id_columnsfood, (detFoodCol_colFood, colFood) => new { detFoodCol_colFood, colFood })
                         .Where(w => w.detFoodCol_colFood.detFood_detFoodCol.claDe_detFood.tbClaFo.food.id_food == id_food)
                         .GroupBy(g => g.colFood.descripcion)
-                        .Select(s => new { description = s.Select(se => se.colFood.descripcion).FirstOrDefault(), id = s.Select(sel=> sel.colFood.id_columnsfood).FirstOrDefault() })
+                        .Select(s => new { description = s.Select(se => se.colFood.descripcion).FirstOrDefault(), id = s.Select(sel => sel.colFood.id_columnsfood).FirstOrDefault() })
                         .AsEnumerable()
-                        .Select(s => new objUtiliti
-                        {
-                            id  = s.id,
+                        .Select(s => new objUtility {
+                            id = s.id,
                             description = new Regex(@"-?[0-9]*(\.|)[0-9]+(\s|)g", RegexOptions.IgnoreCase).Replace(s.description, "").Trim(),
                             value = new Regex(@"-?[0-9]*(\.|)[0-9]+(\s|)g", RegexOptions.IgnoreCase).Match(s.description).Value,
                             value1 = ((Double.Parse((new Regex(@"-?[0-9]*(\.|)[0-9]+(\s|)g", RegexOptions.IgnoreCase).Match(s.description).Value).Replace("g", ""), CultureInfo.InvariantCulture) * (aux)) / 100),
@@ -463,8 +411,7 @@ namespace CalorieCounter.ServicioBD
                     return resp;
                 }
             }
-            catch (Exception ex)
-            {
+            catch(Exception ex) {
                 throw new Exception(ex.Message, ex.InnerException);
             }
         }
@@ -474,14 +421,11 @@ namespace CalorieCounter.ServicioBD
         /// </summary>
         /// <param name="id_food"></param>
         /// <returns></returns>
-        public double? GetGramoskalorias(int? id_food) 
-        {
-            try
-            {
+        public double? GetGramoskalorias(int? id_food) {
+            try {
                 double? value = 0;
 
-                using (calorieCounterBD = new CalorieCounterEntities())
-                {
+                using(calorieCounterBD = new CalorieCounterEntities()) {
                     calorieCounterBD.Database.Connection.Open();
 
                     value =
@@ -490,37 +434,31 @@ namespace CalorieCounter.ServicioBD
                         .Join(calorieCounterBD.tb_detailFood, c => c.b.id_detailFood, d => d.id_detailFood, (c, d) => new { c, d })
                         .Join(calorieCounterBD.tb_detailFoodColumn, e => e.d.id_detailFood, f => f.id_detailFood, (e, f) => new { e, f })
                         .Where(w => w.e.c.a.id_food == id_food && w.e.c.a.descripcion.Contains("Proximates") && w.e.d.descripcion.Contains("Energy"))
-                        .Select(s =>  s.f.foodValue).FirstOrDefault();
+                        .Select(s => s.f.foodValue).FirstOrDefault();
 
                 }
                 return value;
             }
-            catch (Exception ex)
-            {
+            catch(Exception ex) {
                 throw new Exception(ex.Message, ex.InnerException);
             }
         }
 
-        protected void Dispose(Boolean free)
-        {
-            if (free)
-            {
-                if (this.calorieCounterBD != null)
-                {
+        protected void Dispose(Boolean free) {
+            if(free) {
+                if(this.calorieCounterBD != null) {
                     this.calorieCounterBD.Dispose();
                     this.calorieCounterBD = null;
                 }
             }
         }
 
-        public void Dispose()
-        {
+        public void Dispose() {
             Dispose(true);
             GC.SuppressFinalize(this);
         }
 
-        ~foodService()
-        {
+        ~foodService() {
             Dispose();
         }
 
@@ -530,4 +468,4 @@ namespace CalorieCounter.ServicioBD
 
 
 
-    
+
