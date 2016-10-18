@@ -6,7 +6,7 @@
 !/CalorieCounter.Controlador/*.cs
 !/CalorieCounter.Objetos/*.cs
 !/CalorieCounter.ServicioBD/*.cs
-!/ColorieCounter.BD/*.cs
+/ColorieCounter.BD/*.cs
 
 *.sln
 *.suo
